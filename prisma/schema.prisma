@@ -1,0 +1,57 @@
+// Job aggregator schema. SQLite for v1 — swap `provider = "postgresql"` to
+// move to Supabase without code changes; the model shape is portable.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Job {
+  id            String   @id // hash(source + sourceJobId)
+  source        String
+  sourceJobId   String
+  title         String
+  company       String
+  companyLogo   String?
+  location      String
+  salary        String?
+  description   String
+  requirements  String   // JSON array as string (SQLite has no native arrays)
+  tags          String   // JSON array
+  technologies  String   // JSON array
+  visaSupport   Boolean  @default(false)
+  remote        Boolean  @default(false)
+  relocation    Boolean  @default(false)
+  seniority     String   @default("mid") // junior | mid | senior | unknown
+  applyUrl      String
+  sourceUrl     String
+  postedAt      DateTime?
+  matchedScore  Int      @default(0)
+  fingerprint   String   // for dedup: normalized(company)+normalized(title)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@unique([source, sourceJobId])
+  @@index([fingerprint])
+  @@index([matchedScore])
+  @@index([postedAt])
+  @@index([source])
+}
+
+model FetchRun {
+  id         String   @id @default(cuid())
+  source     String
+  startedAt  DateTime @default(now())
+  finishedAt DateTime?
+  ok         Boolean  @default(false)
+  fetched    Int      @default(0)
+  inserted   Int      @default(0)
+  updated    Int      @default(0)
+  error      String?
+
+  @@index([source, startedAt])
+}
