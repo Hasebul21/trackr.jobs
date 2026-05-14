@@ -22,7 +22,6 @@ export function filtersFromSearchParams(sp: SP): JobFilters {
   if (levels.length) f.seniority = levels;
   if (sp.visa === "1") f.visaOnly = true;
   if (sp.remote === "1") f.remoteOnly = true;
-  if (sp.salary === "1") f.hasSalary = true;
   if (typeof sp.days === "string") {
     const n = Number(sp.days);
     if (Number.isFinite(n) && n > 0) f.postedWithinDays = n;

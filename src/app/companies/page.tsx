@@ -1,12 +1,13 @@
-// Curated company directory — the 14 career sites from the user's
-// bookmarks (career sites.md). Some are wired into the auto-ingest
-// pipeline (badge: "Auto"), the rest are link-only because their sites
-// have no public JSON API and would need brittle HTML scraping.
+// Curated company directory — the 16 career sites from the user's
+// bookmarks (career sites.md). The "auto-ingest vs link-only" split
+// lives only in the per-card Auto/Link badge; the grid renders them
+// all together in one paginated list.
 
 import { ExternalLink, CheckCircle2 } from "lucide-react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Pagination } from "@/components/pagination";
 
 type Company = {
   name: string;
@@ -19,8 +20,8 @@ type Company = {
   note?: string;
 };
 
-// Order: ones we auto-ingest first, then the link-only ones. Within
-// each group, alphabetical so the page is easy to scan.
+// Auto-ingested entries first, then link-only. Alphabetical within
+// each group so the page is easy to scan even without the headings.
 const COMPANIES: Company[] = [
   { name: "Agoda", url: "https://careersatagoda.com/vacancies/?keyword=software&team%5B%5D=Technology&location%5B%5D=Bangkok&job_type%5B%5D=Regular", country: "Thailand", auto: true },
   { name: "AirAsia", url: "https://mycareer.airasia.com/gb/en/search-results?keywords=Software%20Engineer", country: "Malaysia", auto: true },
@@ -41,63 +42,49 @@ const COMPANIES: Company[] = [
   { name: "Zoho", url: "https://www.zoho.com/careers/#jobs", country: "India", auto: false, note: "Custom platform" },
 ];
 
-export default function CompaniesPage() {
-  const autoCount = COMPANIES.filter((c) => c.auto).length;
+// 12 = 4 rows × 3 cols on the dashboard grid; matches the job list's
+// per-page count for visual consistency.
+const PAGE_SIZE = 12;
+
+export default async function CompaniesPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: string }>;
+}) {
+  const sp = await searchParams;
+  const totalPages = Math.max(1, Math.ceil(COMPANIES.length / PAGE_SIZE));
+  const requested = Number(sp.page);
+  const page =
+    Number.isFinite(requested) && requested >= 1
+      ? Math.min(requested, totalPages)
+      : 1;
+  const start = (page - 1) * PAGE_SIZE;
+  const end = Math.min(start + PAGE_SIZE, COMPANIES.length);
+  const slice = COMPANIES.slice(start, end);
+
   return (
-    <div className="mx-auto w-full max-w-7xl px-4 py-6">
-      <header className="mb-6">
-        <h1 className="text-2xl font-semibold tracking-tight">Target companies</h1>
-        <p className="text-sm text-[var(--muted-foreground)]">
-          {COMPANIES.length} curated employers · {autoCount} auto-ingested into
-          the dashboard · the rest open their careers page in a new tab.
-        </p>
+    <div className="mx-auto w-full max-w-7xl px-4 py-4">
+      <header className="mb-4">
+        <h1 className="text-xl font-semibold tracking-tight">
+          Target companies
+        </h1>
       </header>
 
-      <Section
-        title="Auto-ingested"
-        hint="Jobs from these companies show up on the dashboard automatically."
-        companies={COMPANIES.filter((c) => c.auto)}
-      />
-      <Section
-        title="Link only"
-        hint="No public API — visit these career pages directly."
-        companies={COMPANIES.filter((c) => !c.auto)}
-      />
-
-      <p className="mt-8 text-xs text-[var(--muted-foreground)]">
-        Curated from your bookmarks (Job Hunt → Company). Want to add another
-        target? Edit{" "}
-        <code className="rounded bg-[var(--muted)] px-1 py-0.5 text-xs">
-          src/app/companies/page.tsx
-        </code>
-        .
-      </p>
-    </div>
-  );
-}
-
-function Section({
-  title,
-  hint,
-  companies,
-}: {
-  title: string;
-  hint: string;
-  companies: Company[];
-}) {
-  if (companies.length === 0) return null;
-  return (
-    <section className="mb-10">
-      <div className="mb-3 flex items-baseline gap-3">
-        <h2 className="text-lg font-medium">{title}</h2>
-        <span className="text-xs text-[var(--muted-foreground)]">{hint}</span>
-      </div>
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-        {companies.map((c) => (
+        {slice.map((c) => (
           <CompanyCard key={c.name} c={c} />
         ))}
       </div>
-    </section>
+
+      <Pagination
+        page={page}
+        totalPages={totalPages}
+        rangeStart={start + 1}
+        rangeEnd={end}
+        total={COMPANIES.length}
+        hrefFor={(n) => (n <= 1 ? "/companies" : `/companies?page=${n}`)}
+      />
+    </div>
   );
 }
 
@@ -141,8 +128,3 @@ function CompanyCard({ c }: { c: Company }) {
     </Card>
   );
 }
-
-// Force-dynamic isn't needed here — no DB reads — but we still want
-// Next.js to skip the static optimization since the page is so light
-// the savings are negligible and dev/preview parity is more useful.
-export const dynamic = "force-static";

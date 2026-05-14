@@ -33,7 +33,6 @@ export async function queryJobs(filters: JobFilters): Promise<{
   }
   if (filters.visaOnly) and.push({ visaSupport: true });
   if (filters.remoteOnly) and.push({ remote: true });
-  if (filters.hasSalary) and.push({ NOT: { salary: null } });
   if (filters.seniority && filters.seniority.length > 0) {
     and.push({ seniority: { in: filters.seniority } });
   }

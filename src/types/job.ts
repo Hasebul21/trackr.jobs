@@ -59,7 +59,6 @@ export type JobFilters = {
   remoteOnly?: boolean;
   seniority?: Seniority[];
   postedWithinDays?: number;
-  hasSalary?: boolean;
   sort?: "score" | "recent" | "country";
   page?: number;
   pageSize?: number;

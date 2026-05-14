@@ -76,7 +76,7 @@ export function FiltersPanel({ facets }: { facets: Facets }) {
   const senioritySelected = params.getAll("level").length;
   const sourceSelected = params.getAll("source").length;
   const visaRemoteSelected =
-    (isOn("visa") ? 1 : 0) + (isOn("remote") ? 1 : 0) + (isOn("salary") ? 1 : 0);
+    (isOn("visa") ? 1 : 0) + (isOn("remote") ? 1 : 0);
   const postedSelected = params.get("days") ? 1 : 0;
 
   return (
@@ -123,11 +123,6 @@ export function FiltersPanel({ facets }: { facets: Facets }) {
             label="Remote only"
             checked={isOn("remote")}
             onChange={(v) => setBoolParam("remote", v)}
-          />
-          <SwitchRow
-            label="Has salary"
-            checked={isOn("salary")}
-            onChange={(v) => setBoolParam("salary", v)}
           />
         </Group>
 
