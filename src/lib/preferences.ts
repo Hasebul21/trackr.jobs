@@ -108,9 +108,31 @@ export const SENIORITY_HINTS = {
 } as const;
 
 export const COUNTRY_HINTS: Record<string, string[]> = {
-  Japan: ["japan", "tokyo", "osaka", "kyoto", "yokohama", "fukuoka"],
-  Singapore: ["singapore"],
-  Malaysia: ["malaysia", "kuala lumpur", "penang"],
+  Japan: [
+    "japan",
+    "tokyo",
+    "osaka",
+    "kyoto",
+    "yokohama",
+    "fukuoka",
+    "nagoya",
+    ", jp",
+    " jp",
+  ],
+  Singapore: ["singapore", ", sg", " sg"],
+  Malaysia: [
+    "malaysia",
+    "kuala lumpur",
+    "petaling jaya",
+    "penang",
+    "cyberjaya",
+    ", my",
+    " my",
+  ],
+  Thailand: ["thailand", "bangkok", "phuket", "chiang mai", ", th", " th"],
+  Indonesia: ["indonesia", "jakarta", "bali", ", id", " id"],
+  Philippines: ["philippines", "manila", "cebu", ", ph", " ph"],
+  Vietnam: ["vietnam", "ho chi minh", "hanoi", ", vn", " vn"],
   Remote: ["remote", "anywhere"],
 };
 

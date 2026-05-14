@@ -59,10 +59,15 @@ export async function queryJobs(filters: JobFilters): Promise<{
   }
   if (and.length > 0) where.AND = and;
 
+  // "country" sort buckets jobs by location alphabetically so the user
+  // can scan country-by-country. Within a country we keep the same
+  // best-match → recent ordering as the score view.
   const orderBy: Prisma.JobOrderByWithRelationInput[] =
     filters.sort === "recent"
       ? [{ postedAt: "desc" }, { matchedScore: "desc" }]
-      : [{ matchedScore: "desc" }, { postedAt: "desc" }];
+      : filters.sort === "country"
+        ? [{ location: "asc" }, { matchedScore: "desc" }, { postedAt: "desc" }]
+        : [{ matchedScore: "desc" }, { postedAt: "desc" }];
 
   const [rows, total] = await Promise.all([
     prisma.job.findMany({

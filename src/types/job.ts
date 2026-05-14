@@ -61,7 +61,7 @@ export type JobFilters = {
   tech?: string[];
   postedWithinDays?: number;
   hasSalary?: boolean;
-  sort?: "score" | "recent";
+  sort?: "score" | "recent" | "country";
   page?: number;
   pageSize?: number;
 };

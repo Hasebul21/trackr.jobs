@@ -23,6 +23,7 @@ export function SortSelect() {
       >
         <option value="score">Best match</option>
         <option value="recent">Most recent</option>
+        <option value="country">By country</option>
       </select>
     </label>
   );

@@ -30,6 +30,7 @@ export function filtersFromSearchParams(sp: SP): JobFilters {
     if (Number.isFinite(n) && n > 0) f.postedWithinDays = n;
   }
   if (sp.sort === "recent") f.sort = "recent";
+  else if (sp.sort === "country") f.sort = "country";
   if (typeof sp.page === "string") {
     const n = Number(sp.page);
     if (Number.isFinite(n) && n >= 1) f.page = n;

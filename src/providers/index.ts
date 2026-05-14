@@ -11,6 +11,9 @@ import { moneylion } from "./moneylion";
 import { agoda } from "./agoda";
 import { grab } from "./grab";
 import { woven } from "./woven";
+import { booking } from "./booking";
+import { airasia } from "./airasia";
+import { astro } from "./astro";
 import { rakuten } from "./rakuten";
 import { adzuna } from "./adzuna";
 import { careerjet } from "./careerjet";
@@ -34,6 +37,9 @@ export function getProviders(): JobProvider[] {
     agoda,
     grab,
     woven,
+    booking,
+    airasia,
+    astro,
     rakuten,
     adzuna,
     careerjet,
@@ -56,6 +62,9 @@ export const ALL_PROVIDERS: JobProvider[] = [
   agoda,
   grab,
   woven,
+  booking,
+  airasia,
+  astro,
   rakuten,
   adzuna,
   careerjet,
