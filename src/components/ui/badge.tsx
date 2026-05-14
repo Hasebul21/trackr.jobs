@@ -13,9 +13,9 @@ const badgeVariants = cva(
         accent:
           "bg-[var(--accent)] text-[var(--accent-foreground)] border-transparent",
         success:
-          "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20",
-        info: "bg-sky-500/10 text-sky-600 dark:text-sky-400 border-sky-500/20",
-        warn: "bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20",
+          "bg-[var(--gain-50)] text-[var(--gain-700)] border-[var(--gain-200)]",
+        info: "bg-[var(--accent-50)] text-[var(--accent-700)] border-[var(--accent-200)]",
+        warn: "bg-[var(--warn-50)] text-[var(--warn-700)] border-[var(--warn-200)]",
       },
     },
     defaultVariants: { variant: "default" },

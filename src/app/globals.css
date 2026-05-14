@@ -1,51 +1,39 @@
 @import "tailwindcss";
+@import "./tokens.css";
 
 /* Tailwind v4: tell it to use class-based dark mode driven by next-themes. */
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* Design tokens — shadcn-flavored, but defined inline here so we don't
- * pull the whole shadcn install dance with Tailwind v4. Light theme. */
+/*
+ * Bridge layer. Every component in this codebase reads tokens with the
+ * shadcn-style names (--background, --foreground, --card, --muted, …).
+ * We re-bind those names to the trading "Coffee" palette tokens from
+ * tokens.css so the whole UI inherits the new look without touching
+ * any component code. The dark-mode flip happens automatically: the
+ * .dark scope in tokens.css updates --bg-canvas, --ink-strong, etc., and
+ * because the bindings below reference those via var(), they pick up
+ * the new values dynamically.
+ */
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.5 0 0);
-  --border: oklch(0.92 0 0);
-  --input: oklch(0.92 0 0);
-  --ring: oklch(0.5 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.985 0 0);
-  --radius: 0.625rem;
-  --score-good: oklch(0.7 0.18 145);
-  --score-mid: oklch(0.75 0.15 85);
-  --score-low: oklch(0.55 0 0);
-}
-
-.dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.18 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.22 0 0);
-  --muted-foreground: oklch(0.65 0 0);
-  --border: oklch(0.27 0 0);
-  --input: oklch(0.27 0 0);
-  --ring: oklch(0.7 0 0);
-  --primary: oklch(0.985 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --accent: oklch(0.27 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.6 0.22 27);
-  --destructive-foreground: oklch(0.985 0 0);
-  --score-good: oklch(0.78 0.22 145);
-  --score-mid: oklch(0.82 0.18 85);
-  --score-low: oklch(0.65 0 0);
+  --background: var(--bg-canvas);
+  --foreground: var(--ink-strong);
+  --card: var(--bg-surface);
+  --card-foreground: var(--ink-strong);
+  --muted: var(--bg-inset);
+  --muted-foreground: var(--ink-muted);
+  --border: var(--line);
+  --input: var(--line);
+  --ring: var(--accent-500);
+  --primary: var(--ink-strong);
+  --primary-foreground: var(--bg-canvas);
+  --accent: var(--bg-inset);
+  --accent-foreground: var(--ink-strong);
+  --destructive: var(--loss-600);
+  --destructive-foreground: var(--bg-canvas);
+  --radius: var(--radius-lg);
+  --score-good: var(--gain-600);
+  --score-mid: var(--warn-600);
+  --score-low: var(--ink-muted);
 }
 
 @theme inline {
@@ -68,32 +56,51 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-lato);
+  --font-mono: var(--font-jetbrains);
 }
 
 * {
   border-color: var(--border);
 }
 
+html,
 body {
   background: var(--background);
   color: var(--foreground);
-  font-feature-settings: "rlig" 1, "calt" 1;
-  -webkit-font-smoothing: antialiased;
+  font-family: var(--font-sans);
 }
 
-/* Subtle scrollbar that matches the theme. */
+body {
+  font-size: var(--fs-body);
+  line-height: var(--lh-normal);
+  font-weight: var(--fw-regular);
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "rlig" 1, "calt" 1;
+}
+
+/* Mono utility — symbols, tabular numbers. */
+.font-mono {
+  font-family: var(--font-mono);
+  font-feature-settings: "tnum";
+}
+
+.tabular,
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Subtle scrollbar that matches the new palette. */
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--muted);
+  background: var(--bg-inset);
   border-radius: 6px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--border);
+  background: var(--line);
 }
 
 /* Shimmer used by skeletons. */

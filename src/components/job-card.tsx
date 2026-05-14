@@ -56,9 +56,9 @@ function initials(company: string): string {
 function ScoreChip({ score }: { score: number }) {
   const color =
     score >= 100
-      ? "bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border-emerald-500/20"
+      ? "bg-[var(--gain-50)] text-[var(--gain-700)] border-[var(--gain-200)]"
       : score >= 50
-        ? "bg-amber-500/10 text-amber-700 dark:text-amber-400 border-amber-500/20"
+        ? "bg-[var(--warn-50)] text-[var(--warn-700)] border-[var(--warn-200)]"
         : "bg-[var(--muted)] text-[var(--muted-foreground)] border-[var(--border)]";
   return (
     <span
@@ -165,7 +165,7 @@ export function JobCard({ job }: { job: Job }) {
           <Button
             asChild
             size="sm"
-            className="bg-emerald-600 text-white hover:bg-emerald-700 dark:bg-emerald-600 dark:hover:bg-emerald-500"
+            className="bg-[var(--gain-700)] text-[var(--bg-canvas)] hover:bg-[var(--gain-600)]"
           >
             <a href={job.applyUrl} target="_blank" rel="noreferrer noopener">
               Apply

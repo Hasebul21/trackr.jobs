@@ -51,8 +51,8 @@ function Stat({
       <div
         className={cn(
           "text-2xl font-semibold leading-tight tracking-tight",
-          tone === "success" && "text-emerald-600 dark:text-emerald-400",
-          tone === "info" && "text-sky-600 dark:text-sky-400",
+          tone === "success" && "text-[var(--gain-700)]",
+          tone === "info" && "text-[var(--accent-700)]",
         )}
       >
         {value}
