@@ -9,7 +9,12 @@ import { jaabz } from "./jaabz";
 import { paypay } from "./paypay";
 import { moneylion } from "./moneylion";
 import { agoda } from "./agoda";
+import { grab } from "./grab";
+import { woven } from "./woven";
 import { rakuten } from "./rakuten";
+import { adzuna } from "./adzuna";
+import { careerjet } from "./careerjet";
+import { theirstack } from "./theirstack";
 import { mock } from "./mock";
 
 /** Live providers run on every cron tick. The mock provider only runs
@@ -27,7 +32,12 @@ export function getProviders(): JobProvider[] {
     paypay,
     moneylion,
     agoda,
+    grab,
+    woven,
     rakuten,
+    adzuna,
+    careerjet,
+    theirstack,
   ];
   if (process.env.SEED_MOCK === "1") live.push(mock);
   return live;
@@ -44,7 +54,12 @@ export const ALL_PROVIDERS: JobProvider[] = [
   paypay,
   moneylion,
   agoda,
+  grab,
+  woven,
   rakuten,
+  adzuna,
+  careerjet,
+  theirstack,
   mock,
 ];
 

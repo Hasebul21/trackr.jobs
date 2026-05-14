@@ -19,6 +19,25 @@ export const INCLUDE_TITLE_KEYWORDS = [
   "site reliability",
 ];
 
+/**
+ * Hard allowlist applied at ingest time. A job is dropped before it ever
+ * reaches the database unless its title matches one of these role patterns.
+ * Variants (back-end, front end, fullstack, etc.) are baked in.
+ */
+export const ALLOWED_TITLE_PATTERNS: RegExp[] = [
+  /\bback[\s-]?end\b.*\b(engineer|developer)\b/i,
+  /\bfront[\s-]?end\b.*\b(engineer|developer)\b/i,
+  /\bfull[\s-]?stack\b.*\b(engineer|developer)\b/i,
+  /\bdev[\s-]?ops\b.*\b(engineer|developer)\b/i,
+  /\bsite reliability\b.*\bengineer\b/i,
+  /\bsre\b/i,
+  /\bcloud\b.*\b(engineer|developer)\b/i,
+];
+
+export function matchesAllowedTitle(title: string): boolean {
+  return ALLOWED_TITLE_PATTERNS.some((re) => re.test(title));
+}
+
 export const EXCLUDE_TITLE_KEYWORDS = [
   "intern",
   "internship",

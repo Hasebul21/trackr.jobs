@@ -1,6 +1,7 @@
 // JobStreet (SEEK group) exposes a public search endpoint that returns
-// JSON. We hit it for Malaysia + Singapore with a software-engineering
-// classification. The endpoint sometimes rate-limits — degrade to [].
+// JSON. We hit it for Malaysia, Singapore, and Thailand with a
+// software-engineering keyword. The endpoint sometimes rate-limits —
+// degrade to [].
 
 import { httpJson } from "@/lib/http";
 import type { RawJob } from "@/types/job";
@@ -21,14 +22,15 @@ type JobStreetResp = {
   data?: JobStreetHit[];
 };
 
-const QUERIES: Array<{ site: string; country: string; tld: string }> = [
-  { site: "jobstreet-my", country: "Malaysia", tld: "my" },
-  { site: "jobstreet-sg", country: "Singapore", tld: "sg" },
+const QUERIES: Array<{ country: string; tld: string; siteKey: string }> = [
+  { country: "Malaysia", tld: "my", siteKey: "MY-Main" },
+  { country: "Singapore", tld: "sg", siteKey: "SG-Main" },
+  { country: "Thailand", tld: "th", siteKey: "TH-Main" },
 ];
 
 export const jobstreet: JobProvider = {
   name: "jobstreet",
-  label: "JobStreet (MY/SG)",
+  label: "JobStreet (MY/SG/TH)",
   reliable: false,
   async fetchJobs() {
     const out: RawJob[] = [];
@@ -37,7 +39,7 @@ export const jobstreet: JobProvider = {
         `https://${q.tld}.jobstreet.com/api/jobsearch/v5/search?` +
         new URLSearchParams({
           keywords: "software engineer",
-          siteKey: `MY-Main`,
+          siteKey: q.siteKey,
           sourcesystem: "houston",
           pageSize: "30",
         }).toString();

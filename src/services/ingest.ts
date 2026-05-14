@@ -6,6 +6,7 @@ import { prisma } from "@/lib/prisma";
 import { getProviders } from "@/providers";
 import type { JobProvider } from "@/providers";
 import type { Job, RawJob } from "@/types/job";
+import { matchesAllowedTitle } from "@/lib/preferences";
 import { normalizeJob } from "./normalize";
 import { scoreJob } from "./scoring";
 import { dedupeJobs } from "./dedup";
@@ -40,7 +41,8 @@ export async function runIngest(opts: {
       });
       try {
         const raws = await p.fetchJobs();
-        const normalized: Job[] = raws.map((r) => fullJob(r, p.name));
+        const filteredRaws = raws.filter((r) => matchesAllowedTitle(r.title));
+        const normalized: Job[] = filteredRaws.map((r) => fullJob(r, p.name));
         await prisma.fetchRun.update({
           where: { id: run.id },
           data: {

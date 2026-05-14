@@ -24,6 +24,9 @@ const SOURCE_LABELS: Record<string, string> = {
   moneylion: "MoneyLion",
   agoda: "Agoda",
   rakuten: "Rakuten",
+  adzuna: "Adzuna",
+  careerjet: "Careerjet",
+  theirstack: "TheirStack",
   mock: "Sample",
 };
 
