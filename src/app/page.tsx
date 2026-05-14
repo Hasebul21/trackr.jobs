@@ -40,8 +40,13 @@ export default async function Home({
     ]);
 
     const page = filters.page ?? 1;
-    const pageSize = filters.pageSize ?? 30;
+    // 12 lines up with the 3-col grid (4 rows). Smaller than the old 30
+    // so the dataset always paginates, which is what the user wants to
+    // see — "page 1 of N · M results" is meaningful even at low totals.
+    const pageSize = filters.pageSize ?? 12;
     const totalPages = Math.max(1, Math.ceil(total / pageSize));
+    const rangeStart = total === 0 ? 0 : (page - 1) * pageSize + 1;
+    const rangeEnd = Math.min(total, page * pageSize);
 
     return (
         <div className="mx-auto w-full max-w-7xl px-4 py-6">
@@ -96,10 +101,13 @@ export default async function Home({
                         </div>
                     )}
 
-                    {totalPages > 1 && (
+                    {total > 0 && (
                         <Pagination
                             page={page}
                             totalPages={totalPages}
+                            rangeStart={rangeStart}
+                            rangeEnd={rangeEnd}
+                            total={total}
                             currentParams={sp}
                         />
                     )}
@@ -112,10 +120,16 @@ export default async function Home({
 function Pagination({
     page,
     totalPages,
+    rangeStart,
+    rangeEnd,
+    total,
     currentParams,
 }: {
     page: number;
     totalPages: number;
+    rangeStart: number;
+    rangeEnd: number;
+    total: number;
     currentParams: SP;
 }) {
     const hrefFor = (n: number) => {
@@ -136,7 +150,8 @@ function Pagination({
     return (
         <nav className="mt-8 flex flex-wrap items-center justify-between gap-3 text-sm">
             <div className="text-[var(--muted-foreground)]">
-                Page {page} of {totalPages}
+                Showing {rangeStart.toLocaleString()}–{rangeEnd.toLocaleString()}{" "}
+                of {total.toLocaleString()} · page {page} of {totalPages}
             </div>
             <div className="flex items-center gap-1.5">
                 {prevDisabled ? (
