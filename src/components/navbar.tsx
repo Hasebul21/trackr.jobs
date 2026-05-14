@@ -15,7 +15,7 @@ export function Navbar() {
           href="/"
           className="font-semibold tracking-tight text-[var(--foreground)] hover:opacity-80"
         >
-          job<span className="text-[var(--muted-foreground)]">·stes</span>
+          Trackr<span className="text-[var(--muted-foreground)]">.jobs</span>
         </Link>
         <div className="flex-1 px-4">
           {/* SearchInput uses useSearchParams() — must be inside a Suspense

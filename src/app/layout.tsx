@@ -23,7 +23,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "job·stes — international tech jobs",
+  title: "Trackr.jobs — international tech jobs",
   description:
     "Aggregated software-engineering jobs with visa sponsorship and relocation support from TokyoDev, Japan Dev, Relocate.me, and more.",
 };
