@@ -1,10 +1,5 @@
 # Deploying job·stes to Vercel
 
-A start-to-finish guide. Following this in order should get you from a fresh
-clone to a live, populated dashboard in roughly 15 minutes.
-
-If you already shipped once and just need the cheat sheet, jump to
-[§ TL;DR](#tldr).
 
 ---
 
