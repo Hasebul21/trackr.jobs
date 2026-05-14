@@ -12,6 +12,20 @@ import { BookmarkButton } from "./bookmark-button";
 import type { Job } from "@/types/job";
 import { formatRelative } from "@/lib/utils";
 
+const SOURCE_LABELS: Record<string, string> = {
+  tokyodev: "TokyoDev",
+  japandev: "Japan Dev",
+  relocate: "Relocate.me",
+  techinasia: "Tech in Asia",
+  jobstreet: "JobStreet",
+  linkedin: "LinkedIn",
+  mock: "Sample",
+};
+
+function sourceLabel(source: string) {
+  return SOURCE_LABELS[source] ?? source;
+}
+
 function ScoreChip({ score }: { score: number }) {
   const color =
     score >= 100
@@ -59,7 +73,7 @@ export function JobCard({ job }: { job: Job }) {
               {job.title}
             </Link>
             <div className="text-sm text-[var(--muted-foreground)] truncate">
-              {job.company}
+              {job.company === "Unknown" ? sourceLabel(job.source) : job.company}
             </div>
           </div>
           <ScoreChip score={job.matchedScore} />
@@ -97,6 +111,9 @@ export function JobCard({ job }: { job: Job }) {
             {job.description.length > 180 ? "…" : ""}
           </p>
         )}
+        <div className="text-xs text-[var(--muted-foreground)]">
+          via <span className="font-medium text-[var(--foreground)]">{sourceLabel(job.source)}</span>
+        </div>
         {techs.length > 0 && (
           <div className="flex flex-wrap gap-1.5 mt-auto pt-2">
             {techs.map((t) => (
