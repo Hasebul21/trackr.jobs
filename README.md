@@ -1,4 +1,4 @@
-# job·stes
+# Trackr.jobs
 
 Aggregator for international software-engineering jobs (Japan / Singapore / SEA, plus remote-friendly roles), with a focus on visa sponsorship and relocation support. Pulls from TokyoDev, Japan Dev, Relocate.me, Tech in Asia, JobStreet, and LinkedIn, normalizes them into a single schema, scores by relevance, deduplicates across sources, and serves a fast filterable dashboard.
 
@@ -15,9 +15,9 @@ Requirements: Node 20+, a PostgreSQL instance.
 npm install
 
 # 2. Spin up Postgres locally (or use any hosted instance)
-docker run -d --name jobstes-pg \
+docker run -d --name trackr-pg \
   -e POSTGRES_PASSWORD=postgres \
-  -e POSTGRES_DB=jobstes \
+  -e POSTGRES_DB=trackr_jobs \
   -p 5432:5432 postgres:16
 
 # 3. Configure env
