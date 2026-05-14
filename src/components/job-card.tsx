@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ExternalLink, MapPin, Coins, Plane } from "lucide-react";
+import { MapPin, Coins, Plane } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -40,17 +40,30 @@ function sourceLabel(source: string) {
   return SOURCE_LABELS[source] ?? source;
 }
 
+/** Two-letter initials for the avatar tile. We try the first two
+ * meaningful words ("MoneyLion" → "ML", "Booking.com" → "Bo") rather
+ * than the first two letters, which would give "Mo" / "Bo" anyway but
+ * fails for things like "AirAsia" → "AA" vs "Ai". */
+function initials(company: string): string {
+  const cleaned = company.replace(/\.(com|sg|my|jp|co|io)$/i, "").trim();
+  const words = cleaned.split(/\s+/).filter(Boolean);
+  if (words.length >= 2) {
+    return (words[0]![0]! + words[1]![0]!).toUpperCase();
+  }
+  return cleaned.slice(0, 2).toUpperCase();
+}
+
 function ScoreChip({ score }: { score: number }) {
   const color =
     score >= 100
-      ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20"
+      ? "bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border-emerald-500/20"
       : score >= 50
-        ? "bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20"
+        ? "bg-amber-500/10 text-amber-700 dark:text-amber-400 border-amber-500/20"
         : "bg-[var(--muted)] text-[var(--muted-foreground)] border-[var(--border)]";
   return (
     <span
       title="Relevance score"
-      className={`inline-flex items-center gap-1 rounded-md border px-2 py-0.5 text-xs font-mono ${color}`}
+      className={`inline-flex shrink-0 items-center justify-center rounded-md border px-2 py-0.5 text-xs font-semibold tabular-nums ${color}`}
     >
       {score}
     </span>
@@ -59,41 +72,44 @@ function ScoreChip({ score }: { score: number }) {
 
 export function JobCard({ job }: { job: Job }) {
   const summary = job.description.slice(0, 180).replace(/\s+/g, " ");
-  const techs = job.technologies.slice(0, 5);
+  const techs = job.technologies.slice(0, 3);
+  const company =
+    job.company === "Unknown" ? sourceLabel(job.source) : job.company;
   return (
-    <Card className="group flex flex-col h-full hover:border-[var(--ring)]/40 hover:shadow-md transition">
-      <CardHeader>
+    <Card className="group flex h-full flex-col transition hover:border-[var(--ring)]/40 hover:shadow-md">
+      <CardHeader className="pb-2">
         <div className="flex items-start gap-3">
           {job.companyLogo ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
               src={job.companyLogo}
               alt=""
-              width={32}
-              height={32}
-              className="h-8 w-8 rounded-md object-contain bg-white p-0.5 border border-[var(--border)]"
+              width={40}
+              height={40}
+              className="h-10 w-10 shrink-0 rounded-md border border-[var(--border)] bg-white object-contain p-0.5"
               loading="lazy"
             />
           ) : (
-            <div className="h-8 w-8 rounded-md bg-[var(--muted)] grid place-items-center text-xs font-mono text-[var(--muted-foreground)]">
-              {job.company.slice(0, 2).toUpperCase()}
+            <div className="grid h-10 w-10 shrink-0 place-items-center rounded-md bg-[var(--muted)] text-xs font-semibold text-[var(--muted-foreground)]">
+              {initials(company)}
             </div>
           )}
           <div className="min-w-0 flex-1">
             <Link
               href={`/jobs/${job.id}`}
-              className="font-semibold text-[var(--foreground)] leading-tight line-clamp-2 hover:underline"
+              className="font-semibold leading-tight text-[var(--foreground)] line-clamp-2 hover:underline"
             >
               {job.title}
             </Link>
-            <div className="text-sm text-[var(--muted-foreground)] truncate">
-              {job.company === "Unknown" ? sourceLabel(job.source) : job.company}
+            <div className="truncate text-sm text-[var(--muted-foreground)]">
+              {company}
             </div>
           </div>
           <ScoreChip score={job.matchedScore} />
         </div>
       </CardHeader>
-      <CardContent className="flex-1 flex flex-col gap-2">
+
+      <CardContent className="flex flex-1 flex-col gap-2 pt-0">
         <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-[var(--muted-foreground)]">
           <span className="inline-flex items-center gap-1">
             <MapPin className="h-3.5 w-3.5" /> {job.location || "—"}
@@ -105,6 +121,7 @@ export function JobCard({ job }: { job: Job }) {
           )}
           {job.postedAt && <span>{formatRelative(job.postedAt)}</span>}
         </div>
+
         <div className="flex flex-wrap gap-1.5">
           {job.visaSupport && (
             <Badge variant="success">
@@ -115,44 +132,43 @@ export function JobCard({ job }: { job: Job }) {
           {job.relocation && !job.visaSupport && (
             <Badge variant="info">Relocation</Badge>
           )}
-          {job.seniority !== "unknown" && (
-            <Badge variant="outline">{job.seniority}</Badge>
+          {techs.map((t) => (
+            <Badge key={t} variant="accent">
+              {t}
+            </Badge>
+          ))}
+          {job.technologies.length > techs.length && (
+            <Badge variant="outline">
+              +{job.technologies.length - techs.length}
+            </Badge>
           )}
         </div>
+
         {summary && (
-          <p className="text-sm text-[var(--muted-foreground)] line-clamp-3">
+          <p className="line-clamp-3 text-sm text-[var(--muted-foreground)]">
             {summary}
             {job.description.length > 180 ? "…" : ""}
           </p>
         )}
-        <div className="text-xs text-[var(--muted-foreground)]">
-          via <span className="font-medium text-[var(--foreground)]">{sourceLabel(job.source)}</span>
-        </div>
-        {techs.length > 0 && (
-          <div className="flex flex-wrap gap-1.5 mt-auto pt-2">
-            {techs.map((t) => (
-              <Badge key={t} variant="accent">
-                {t}
-              </Badge>
-            ))}
-            {job.technologies.length > techs.length && (
-              <Badge variant="outline">
-                +{job.technologies.length - techs.length}
-              </Badge>
-            )}
-          </div>
-        )}
       </CardContent>
-      <CardFooter className="justify-between">
-        <Button asChild variant="ghost" size="sm">
-          <Link href={`/jobs/${job.id}`}>View details</Link>
-        </Button>
-        <div className="flex items-center gap-1.5">
+
+      <CardFooter className="mt-auto justify-between">
+        <div className="text-xs text-[var(--muted-foreground)]">
+          via{" "}
+          <span className="font-medium text-[var(--foreground)]">
+            {sourceLabel(job.source)}
+          </span>
+        </div>
+        <div className="flex items-center gap-1">
           <BookmarkButton id={job.id} iconOnly />
           <MarkAppliedButton id={job.id} title={job.title} />
-          <Button asChild size="sm">
+          <Button
+            asChild
+            size="sm"
+            className="bg-emerald-600 text-white hover:bg-emerald-700 dark:bg-emerald-600 dark:hover:bg-emerald-500"
+          >
             <a href={job.applyUrl} target="_blank" rel="noreferrer noopener">
-              Apply <ExternalLink className="h-3.5 w-3.5" />
+              Apply
             </a>
           </Button>
         </div>

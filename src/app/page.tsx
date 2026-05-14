@@ -8,6 +8,7 @@ import { FiltersPanel } from "@/components/filters-panel";
 import { JobCard } from "@/components/job-card";
 import { EmptyState } from "@/components/empty-state";
 import { SortSelect } from "@/components/sort-select";
+import { StatsStrip } from "@/components/stats-strip";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -44,7 +45,7 @@ export default async function Home({
 
     return (
         <div className="mx-auto w-full max-w-7xl px-4 py-6">
-            <header className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between mb-6">
+            <header className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
                 <div>
                     <h1 className="text-2xl font-semibold tracking-tight">
                         International tech jobs
@@ -71,16 +72,24 @@ export default async function Home({
                 </div>
             </header>
 
-            <div className="flex flex-col lg:flex-row gap-6">
-                <Suspense fallback={<Skeleton className="h-96 w-full lg:w-64 shrink-0" />}>
+            <StatsStrip
+                total={stats.total}
+                withVisa={stats.withVisa}
+                remote={stats.remote}
+                sources={stats.bySource.length}
+                lastRunAt={stats.lastRunAt}
+            />
+
+            <div className="flex flex-col gap-6 lg:flex-row">
+                <Suspense fallback={<Skeleton className="h-96 w-full shrink-0 lg:w-64" />}>
                     <FiltersPanel facets={facets} />
                 </Suspense>
 
-                <section className="flex-1 min-w-0">
+                <section className="min-w-0 flex-1">
                     {jobs.length === 0 ? (
                         <EmptyState />
                     ) : (
-                        <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 xl:grid-cols-3">
+                        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
                             {jobs.map((j) => (
                                 <JobCard key={j.id} job={j} />
                             ))}
