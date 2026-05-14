@@ -9,6 +9,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { BookmarkButton } from "./bookmark-button";
+import { MarkAppliedButton } from "./mark-applied-button";
 import type { Job } from "@/types/job";
 import { formatRelative } from "@/lib/utils";
 
@@ -148,6 +149,7 @@ export function JobCard({ job }: { job: Job }) {
         </Button>
         <div className="flex items-center gap-1.5">
           <BookmarkButton id={job.id} iconOnly />
+          <MarkAppliedButton id={job.id} title={job.title} />
           <Button asChild size="sm">
             <a href={job.applyUrl} target="_blank" rel="noreferrer noopener">
               Apply <ExternalLink className="h-3.5 w-3.5" />

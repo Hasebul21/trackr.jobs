@@ -15,29 +15,29 @@ datasource db {
 }
 
 model Job {
-  id            String   @id // hash(source + sourceJobId)
-  source        String
-  sourceJobId   String
-  title         String
-  company       String
-  companyLogo   String?
-  location      String
-  salary        String?
-  description   String
-  requirements  String   // JSON array as string (SQLite has no native arrays)
-  tags          String   // JSON array
-  technologies  String   // JSON array
-  visaSupport   Boolean  @default(false)
-  remote        Boolean  @default(false)
-  relocation    Boolean  @default(false)
-  seniority     String   @default("mid") // junior | mid | senior | unknown
-  applyUrl      String
-  sourceUrl     String
-  postedAt      DateTime?
-  matchedScore  Int      @default(0)
-  fingerprint   String   // for dedup: normalized(company)+normalized(title)
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  id           String    @id // hash(source + sourceJobId)
+  source       String
+  sourceJobId  String
+  title        String
+  company      String
+  companyLogo  String?
+  location     String
+  salary       String?
+  description  String
+  requirements String // JSON array as string (SQLite has no native arrays)
+  tags         String // JSON array
+  technologies String // JSON array
+  visaSupport  Boolean   @default(false)
+  remote       Boolean   @default(false)
+  relocation   Boolean   @default(false)
+  seniority    String    @default("mid") // junior | mid | senior | unknown
+  applyUrl     String
+  sourceUrl    String
+  postedAt     DateTime?
+  matchedScore Int       @default(0)
+  fingerprint  String // for dedup: normalized(company)+normalized(title)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
 
   @@unique([source, sourceJobId])
   @@index([fingerprint])
@@ -46,15 +46,31 @@ model Job {
   @@index([source])
 }
 
+/// Tombstones for jobs the user marked as applied. The Job row is
+/// deleted (per the user's "remove from DB" request), but we keep the
+/// id here so the next cron tick doesn't re-import the same posting.
+/// Storing title/company/applyUrl lets us surface an "Applied" page
+/// without joining back to the now-gone Job row.
+model AppliedJob {
+  id        String   @id // same hash(source, sourceJobId) as the Job row
+  source    String
+  title     String
+  company   String
+  applyUrl  String
+  appliedAt DateTime @default(now())
+
+  @@index([appliedAt])
+}
+
 model FetchRun {
-  id         String   @id @default(cuid())
+  id         String    @id @default(cuid())
   source     String
-  startedAt  DateTime @default(now())
+  startedAt  DateTime  @default(now())
   finishedAt DateTime?
-  ok         Boolean  @default(false)
-  fetched    Int      @default(0)
-  inserted   Int      @default(0)
-  updated    Int      @default(0)
+  ok         Boolean   @default(false)
+  fetched    Int       @default(0)
+  inserted   Int       @default(0)
+  updated    Int       @default(0)
   error      String?
 
   @@index([source, startedAt])

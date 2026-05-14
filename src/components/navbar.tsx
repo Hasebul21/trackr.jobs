@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Suspense } from "react";
-import { Bookmark, Settings, LayoutDashboard } from "lucide-react";
+import { Bookmark, Settings, LayoutDashboard, Building2 } from "lucide-react";
 import { SearchInput } from "./search-input";
 import { ThemeToggle } from "./theme-toggle";
 import { RefreshButton } from "./refresh-button";
@@ -28,6 +28,11 @@ export function Navbar() {
           <Button asChild variant="ghost" size="sm">
             <Link href="/">
               <LayoutDashboard /> <span className="hidden sm:inline">Dashboard</span>
+            </Link>
+          </Button>
+          <Button asChild variant="ghost" size="sm">
+            <Link href="/companies">
+              <Building2 /> <span className="hidden sm:inline">Companies</span>
             </Link>
           </Button>
           <Button asChild variant="ghost" size="sm">

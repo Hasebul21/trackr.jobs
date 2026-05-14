@@ -68,7 +68,22 @@ export async function runIngest(opts: {
 
   // Cross-source dedup happens after we have every provider's batch.
   const allJobs = results.flatMap((r) => r.jobs);
-  const deduped = dedupeJobs(allJobs);
+
+  // Drop anything the user has already marked as applied. Their Job row
+  // was deleted at "mark applied" time; the tombstone here is what stops
+  // the same posting from sneaking back in on the next cron tick.
+  const allIds = allJobs.map((j) => j.id);
+  const appliedRows =
+    allIds.length === 0
+      ? []
+      : await prisma.appliedJob.findMany({
+          where: { id: { in: allIds } },
+          select: { id: true },
+        });
+  const appliedIds = new Set(appliedRows.map((a) => a.id));
+  const surviving = allJobs.filter((j) => !appliedIds.has(j.id));
+
+  const deduped = dedupeJobs(surviving);
   const dedupedIds = new Set(deduped.map((j) => j.id));
 
   const stats: IngestStats[] = [];
