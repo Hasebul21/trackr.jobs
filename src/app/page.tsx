@@ -6,10 +6,8 @@ import { Suspense } from "react";
 import { FiltersPanel } from "@/components/filters-panel";
 import { JobCard } from "@/components/job-card";
 import { EmptyState } from "@/components/empty-state";
-import { SortSelect } from "@/components/sort-select";
 import { Pagination } from "@/components/pagination";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Badge } from "@/components/ui/badge";
 import { queryJobs, getFacets } from "@/services/jobs";
 import {
     filtersFromSearchParams,
@@ -44,13 +42,6 @@ export default async function Home({
 
     return (
         <div className="mx-auto w-full max-w-7xl px-4 py-3">
-            <header className="mb-3 flex flex-wrap items-center justify-end gap-3">
-                <Badge variant="outline">
-                    {total.toLocaleString()} match{total === 1 ? "" : "es"}
-                </Badge>
-                <SortSelect />
-            </header>
-
             <div className="flex flex-col gap-4 lg:flex-row">
                 <Suspense fallback={<Skeleton className="h-96 w-full shrink-0 lg:w-60" />}>
                     <FiltersPanel facets={facets} />
