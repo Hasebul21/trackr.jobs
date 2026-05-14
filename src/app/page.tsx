@@ -41,7 +41,7 @@ export default async function Home({
     const rangeEnd = Math.min(total, page * pageSize);
 
     return (
-        <div className="mx-auto w-full max-w-7xl px-4 py-3">
+        <div className="dashboard-page mx-auto w-full max-w-7xl px-4 py-3">
             <div className="flex flex-col gap-4 lg:flex-row">
                 <Suspense fallback={<Skeleton className="h-96 w-full shrink-0 lg:w-60" />}>
                     <FiltersPanel facets={facets} />

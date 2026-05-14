@@ -103,6 +103,15 @@ body {
   background: var(--line);
 }
 
+/* Dashboard hides the page scrollbar (scrolling still works). */
+html:has(.dashboard-page) {
+  scrollbar-width: none;
+}
+html:has(.dashboard-page)::-webkit-scrollbar,
+html:has(.dashboard-page) body::-webkit-scrollbar {
+  display: none;
+}
+
 /* Shimmer used by skeletons. */
 @keyframes shimmer {
   0% {
