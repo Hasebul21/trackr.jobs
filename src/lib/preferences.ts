@@ -1,0 +1,104 @@
+// Single source of truth for what "a job worth seeing" means. Tweak here
+// to retune scoring + filtering without touching providers.
+
+export const INCLUDE_TITLE_KEYWORDS = [
+  "software engineer",
+  "backend engineer",
+  "back-end engineer",
+  "full stack engineer",
+  "fullstack engineer",
+  "full-stack engineer",
+  "platform engineer",
+  "java developer",
+  "kotlin developer",
+  "spring boot",
+  "distributed systems",
+  "jvm",
+  "api engineer",
+  "sre",
+  "site reliability",
+];
+
+export const EXCLUDE_TITLE_KEYWORDS = [
+  "intern",
+  "internship",
+  "junior only",
+  "marketing",
+  "sales",
+  "recruiter",
+  "designer",
+  "ux ",
+  "ui ",
+  "product manager",
+  "data entry",
+];
+
+export const PREFERRED_TECHNOLOGIES = [
+  "java",
+  "kotlin",
+  "spring",
+  "spring boot",
+  "postgresql",
+  "postgres",
+  "docker",
+  "kubernetes",
+  "k8s",
+  "aws",
+  "azure",
+  "gcp",
+  "angular",
+  "react",
+  "typescript",
+  "scala",
+  "graphql",
+  "kafka",
+  "redis",
+];
+
+export const PREFERRED_LOCATIONS = [
+  "japan",
+  "tokyo",
+  "osaka",
+  "kyoto",
+  "yokohama",
+  "singapore",
+  "remote asia",
+  "remote",
+];
+
+export const VISA_PHRASES = [
+  "visa sponsorship",
+  "visa support",
+  "visa sponsor",
+  "sponsor visa",
+  "sponsor a visa",
+  "relocation",
+  "relocate",
+  "apply from abroad",
+  "international candidates",
+  "international applicants",
+  "english ok",
+  "english is enough",
+  "english speaking",
+];
+
+export const SENIORITY_HINTS = {
+  senior: ["senior", "staff", "principal", "lead engineer", "tech lead"],
+  mid: ["mid", "intermediate", "mid-level", "mid level"],
+  junior: ["junior", "entry level", "entry-level", "graduate", "intern"],
+} as const;
+
+export const COUNTRY_HINTS: Record<string, string[]> = {
+  Japan: ["japan", "tokyo", "osaka", "kyoto", "yokohama", "fukuoka"],
+  Singapore: ["singapore"],
+  Malaysia: ["malaysia", "kuala lumpur", "penang"],
+  Remote: ["remote", "anywhere"],
+};
+
+export function detectCountry(location: string): string | null {
+  const l = location.toLowerCase();
+  for (const [country, hints] of Object.entries(COUNTRY_HINTS)) {
+    if (hints.some((h) => l.includes(h))) return country;
+  }
+  return null;
+}

@@ -1,13 +1,17 @@
-// Job aggregator schema. SQLite for v1 — swap `provider = "postgresql"` to
-// move to Supabase without code changes; the model shape is portable.
+// Job aggregator schema. PostgreSQL — runs on Vercel with Neon, Supabase,
+// Vercel Postgres, or any Postgres URL. The schema deliberately stores
+// the array fields (requirements/tags/technologies) as JSON-encoded TEXT
+// so the data layer is identical to the original SQLite shape and
+// services/jobs.ts continues to work unchanged.
 
 generator client {
   provider = "prisma-client-js"
 }
 
+// Prisma 7+: no `url` here. Connection comes from the driver adapter in
+// prisma.config.ts (for migrations) and src/lib/prisma.ts (for the client).
 datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
+  provider = "postgresql"
 }
 
 model Job {
