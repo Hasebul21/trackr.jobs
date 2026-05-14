@@ -19,6 +19,11 @@ const SOURCE_LABELS: Record<string, string> = {
   techinasia: "Tech in Asia",
   jobstreet: "JobStreet",
   linkedin: "LinkedIn",
+  jaabz: "Jaabz",
+  paypay: "PayPay",
+  moneylion: "MoneyLion",
+  agoda: "Agoda",
+  rakuten: "Rakuten",
   mock: "Sample",
 };
 

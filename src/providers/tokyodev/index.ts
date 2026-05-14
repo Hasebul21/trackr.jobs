@@ -7,7 +7,15 @@ import { httpGet } from "@/lib/http";
 import type { RawJob } from "@/types/job";
 import { type JobProvider, plog, pwarn } from "../types";
 
-const LIST_URL = "https://www.tokyodev.com/jobs";
+const LIST_URL =
+  "https://www.tokyodev.com/jobs" +
+  "?japanese_requirement%5B%5D=none" +
+  "&applicant_location%5B%5D=apply_from_abroad" +
+  "&seniority%5B%5D=intermediate" +
+  "&seniority%5B%5D=senior" +
+  "&english_requirement%5B%5D=basic" +
+  "&english_requirement%5B%5D=conversational" +
+  "&english_requirement%5B%5D=business";
 
 export const tokyodev: JobProvider = {
   name: "tokyodev",
