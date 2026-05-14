@@ -13,7 +13,7 @@ export async function queryJobs(filters: JobFilters): Promise<{
   total: number;
 }> {
   const page = Math.max(1, filters.page ?? 1);
-  const pageSize = Math.min(60, Math.max(1, filters.pageSize ?? 30));
+  const pageSize = Math.min(60, Math.max(1, filters.pageSize ?? 12));
 
   const where: Prisma.JobWhereInput = {};
   const and: Prisma.JobWhereInput[] = [];
