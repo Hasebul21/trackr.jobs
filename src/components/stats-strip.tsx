@@ -23,7 +23,7 @@ export function StatsStrip({
 }: StatsStripProps) {
   const since = lastRunAt ? formatRelative(lastRunAt) : "—";
   return (
-    <div className="mb-6 grid grid-cols-2 gap-3 rounded-lg border border-[var(--border)] bg-[var(--card)] p-2 sm:grid-cols-3 lg:grid-cols-5">
+    <div className="mb-4 grid grid-cols-2 gap-2 rounded-lg border border-[var(--border)] bg-[var(--card)] p-1.5 sm:grid-cols-3 lg:grid-cols-5">
       <Stat value={total.toLocaleString()} label="Total jobs" />
       <Stat
         value={withVisa.toLocaleString()}
@@ -47,17 +47,17 @@ function Stat({
   tone?: "success" | "info";
 }) {
   return (
-    <div className="rounded-md px-4 py-3">
+    <div className="rounded-md px-3 py-2">
       <div
         className={cn(
-          "text-2xl font-semibold leading-tight tracking-tight",
+          "text-xl font-semibold leading-tight tracking-tight",
           tone === "success" && "text-[var(--gain-700)]",
           tone === "info" && "text-[var(--accent-700)]",
         )}
       >
         {value}
       </div>
-      <div className="mt-1 text-[10px] font-medium uppercase tracking-wider text-[var(--muted-foreground)]">
+      <div className="mt-0.5 text-[10px] font-medium uppercase tracking-wider text-[var(--muted-foreground)]">
         {label}
       </div>
     </div>

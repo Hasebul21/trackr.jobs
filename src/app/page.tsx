@@ -8,16 +8,14 @@ import { FiltersPanel } from "@/components/filters-panel";
 import { JobCard } from "@/components/job-card";
 import { EmptyState } from "@/components/empty-state";
 import { SortSelect } from "@/components/sort-select";
-import { StatsStrip } from "@/components/stats-strip";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { queryJobs, getFacets, getJobStats } from "@/services/jobs";
+import { queryJobs, getFacets } from "@/services/jobs";
 import {
     filtersFromSearchParams,
     type SP,
 } from "@/lib/search-params";
-import { formatRelative } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
 // Cap server rendering. Two indexed Prisma reads — should land well
@@ -33,60 +31,31 @@ export default async function Home({
     const sp = await searchParams;
     const filters = filtersFromSearchParams(sp);
 
-    const [{ jobs, total }, facets, stats] = await Promise.all([
+    const [{ jobs, total }, facets] = await Promise.all([
         queryJobs(filters),
         getFacets(),
-        getJobStats(),
     ]);
 
     const page = filters.page ?? 1;
-    // 12 lines up with the 3-col grid (4 rows). Smaller than the old 30
-    // so the dataset always paginates, which is what the user wants to
-    // see — "page 1 of N · M results" is meaningful even at low totals.
-    const pageSize = filters.pageSize ?? 12;
+    // 9 = 3 rows × 3 cols on the dashboard grid. Sized so the first
+    // page fits in roughly one viewport, keeping the scroll required to
+    // see "Page 1 of N" short while still making pagination meaningful.
+    const pageSize = filters.pageSize ?? 9;
     const totalPages = Math.max(1, Math.ceil(total / pageSize));
     const rangeStart = total === 0 ? 0 : (page - 1) * pageSize + 1;
     const rangeEnd = Math.min(total, page * pageSize);
 
     return (
-        <div className="mx-auto w-full max-w-7xl px-4 py-6">
-            <header className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
-                <div>
-                    <h1 className="text-2xl font-semibold tracking-tight">
-                        International tech jobs
-                    </h1>
-                    <p className="text-sm text-[var(--muted-foreground)]">
-                        {stats.total.toLocaleString()} listed ·{" "}
-                        {stats.withVisa.toLocaleString()} with visa support ·{" "}
-                        {stats.remote.toLocaleString()} remote
-                        {stats.lastRunAt && (
-                            <>
-                                {" · refreshed "}
-                                <span title={new Date(stats.lastRunAt).toLocaleString()}>
-                                    {formatRelative(stats.lastRunAt)}
-                                </span>
-                            </>
-                        )}
-                    </p>
-                </div>
-                <div className="flex items-center gap-3">
-                    <Badge variant="outline">
-                        {total.toLocaleString()} match{total === 1 ? "" : "es"}
-                    </Badge>
-                    <SortSelect />
-                </div>
+        <div className="mx-auto w-full max-w-7xl px-4 py-3">
+            <header className="mb-3 flex flex-wrap items-center justify-end gap-3">
+                <Badge variant="outline">
+                    {total.toLocaleString()} match{total === 1 ? "" : "es"}
+                </Badge>
+                <SortSelect />
             </header>
 
-            <StatsStrip
-                total={stats.total}
-                withVisa={stats.withVisa}
-                remote={stats.remote}
-                sources={stats.bySource.length}
-                lastRunAt={stats.lastRunAt}
-            />
-
-            <div className="flex flex-col gap-6 lg:flex-row">
-                <Suspense fallback={<Skeleton className="h-96 w-full shrink-0 lg:w-64" />}>
+            <div className="flex flex-col gap-4 lg:flex-row">
+                <Suspense fallback={<Skeleton className="h-96 w-full shrink-0 lg:w-60" />}>
                     <FiltersPanel facets={facets} />
                 </Suspense>
 
@@ -94,7 +63,7 @@ export default async function Home({
                     {jobs.length === 0 ? (
                         <EmptyState />
                     ) : (
-                        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
+                        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
                             {jobs.map((j) => (
                                 <JobCard key={j.id} job={j} />
                             ))}

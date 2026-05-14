@@ -71,26 +71,28 @@ function ScoreChip({ score }: { score: number }) {
 }
 
 export function JobCard({ job }: { job: Job }) {
-  const summary = job.description.slice(0, 180).replace(/\s+/g, " ");
+  // Shorter teaser keeps every card within ~210px so a 3×3 grid stays
+  // close to one viewport on a 13" laptop.
+  const summary = job.description.slice(0, 120).replace(/\s+/g, " ");
   const techs = job.technologies.slice(0, 3);
   const company =
     job.company === "Unknown" ? sourceLabel(job.source) : job.company;
   return (
     <Card className="group flex h-full flex-col transition hover:border-[var(--ring)]/40 hover:shadow-md">
-      <CardHeader className="pb-2">
-        <div className="flex items-start gap-3">
+      <CardHeader className="p-3 pb-1.5">
+        <div className="flex items-start gap-2.5">
           {job.companyLogo ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
               src={job.companyLogo}
               alt=""
-              width={40}
-              height={40}
-              className="h-10 w-10 shrink-0 rounded-md border border-[var(--border)] bg-white object-contain p-0.5"
+              width={32}
+              height={32}
+              className="h-8 w-8 shrink-0 rounded-md border border-[var(--border)] bg-white object-contain p-0.5"
               loading="lazy"
             />
           ) : (
-            <div className="grid h-10 w-10 shrink-0 place-items-center rounded-md bg-[var(--muted)] text-xs font-semibold text-[var(--muted-foreground)]">
+            <div className="grid h-8 w-8 shrink-0 place-items-center rounded-md bg-[var(--muted)] text-[11px] font-semibold text-[var(--muted-foreground)]">
               {initials(company)}
             </div>
           )}
@@ -109,7 +111,7 @@ export function JobCard({ job }: { job: Job }) {
         </div>
       </CardHeader>
 
-      <CardContent className="flex flex-1 flex-col gap-2 pt-0">
+      <CardContent className="flex flex-1 flex-col gap-1.5 px-3 pt-0 pb-2">
         <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-[var(--muted-foreground)]">
           <span className="inline-flex items-center gap-1">
             <MapPin className="h-3.5 w-3.5" /> {job.location || "—"}
@@ -145,14 +147,14 @@ export function JobCard({ job }: { job: Job }) {
         </div>
 
         {summary && (
-          <p className="line-clamp-3 text-sm text-[var(--muted-foreground)]">
+          <p className="line-clamp-2 text-xs leading-snug text-[var(--muted-foreground)]">
             {summary}
-            {job.description.length > 180 ? "…" : ""}
+            {job.description.length > 120 ? "…" : ""}
           </p>
         )}
       </CardContent>
 
-      <CardFooter className="mt-auto justify-between">
+      <CardFooter className="mt-auto justify-between p-3 pt-2">
         <div className="text-xs text-[var(--muted-foreground)]">
           via{" "}
           <span className="font-medium text-[var(--foreground)]">

@@ -4,7 +4,6 @@ import * as React from "react";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Switch } from "@/components/ui/switch";
-import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 
 type Facets = {
@@ -80,14 +79,21 @@ export function FiltersPanel({ facets }: { facets: Facets }) {
   const has = params.toString().length > 0;
 
   return (
-    <aside className="w-full lg:w-64 shrink-0 lg:sticky lg:top-16 self-start">
-      <div className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-4 space-y-5">
-        <div className="flex items-center justify-between">
-          <h2 className="text-sm font-semibold">Filters</h2>
+    // Pane sticks under the navbar (top-14 = 56px) and caps its height
+    // to the remaining viewport. Internal scroll on overflow so the
+    // long Source/Country lists never push the dashboard down on a
+    // 12" laptop (~800px viewport height).
+    <aside className="w-full shrink-0 self-start lg:sticky lg:top-14 lg:w-60">
+      <div className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-3 lg:max-h-[calc(100vh-4.5rem)] lg:overflow-y-auto">
+        <div className="mb-2 flex items-center justify-between">
+          <h2 className="text-xs font-semibold uppercase tracking-wide">
+            Filters
+          </h2>
           {has && (
             <Button
               variant="ghost"
               size="sm"
+              className="h-6 px-2 text-xs"
               onClick={() => router.replace(pathname)}
             >
               Clear
@@ -95,139 +101,136 @@ export function FiltersPanel({ facets }: { facets: Facets }) {
           )}
         </div>
 
-        <Group label="Country">
-          {facets.countries.length === 0 && (
-            <p className="text-xs text-[var(--muted-foreground)]">
-              No data yet.
-            </p>
-          )}
-          {facets.countries.map((c) => (
-            <Row
-              key={c}
-              label={c}
-              control={
-                <Checkbox
-                  checked={isInArr("country", c)}
-                  onCheckedChange={() => toggleArrayParam("country", c)}
-                />
-              }
-            />
-          ))}
-        </Group>
-
-        <Separator />
-
-        <Group label="Visa & remote">
-          <Row
-            label="Visa sponsorship"
-            control={
-              <Switch
-                checked={isOn("visa")}
-                onCheckedChange={(v) => setBoolParam("visa", !!v)}
-              />
-            }
-          />
-          <Row
-            label="Remote only"
-            control={
-              <Switch
-                checked={isOn("remote")}
-                onCheckedChange={(v) => setBoolParam("remote", !!v)}
-              />
-            }
-          />
-          <Row
-            label="Has salary"
-            control={
-              <Switch
-                checked={isOn("salary")}
-                onCheckedChange={(v) => setBoolParam("salary", !!v)}
-              />
-            }
-          />
-        </Group>
-
-        <Separator />
-
-        <Group label="Seniority">
-          {SENIORITY_OPTIONS.map((o) => (
-            <Row
-              key={o.value}
-              label={o.label}
-              control={
-                <Checkbox
-                  checked={isInArr("level", o.value)}
-                  onCheckedChange={() => toggleArrayParam("level", o.value)}
-                />
-              }
-            />
-          ))}
-        </Group>
-
-        <Separator />
-
-        <Group label="Tech stack">
-          <div className="grid grid-cols-2 gap-2">
-            {TECH_OPTIONS.map((t) => (
+        <div className="space-y-3">
+          <Group label="Country">
+            {facets.countries.length === 0 && (
+              <p className="text-[11px] text-[var(--muted-foreground)]">
+                No data yet.
+              </p>
+            )}
+            {facets.countries.map((c) => (
               <Row
-                key={t}
-                label={t}
+                key={c}
+                label={c}
                 control={
                   <Checkbox
-                    checked={isInArr("tech", t)}
-                    onCheckedChange={() => toggleArrayParam("tech", t)}
+                    checked={isInArr("country", c)}
+                    onCheckedChange={() => toggleArrayParam("country", c)}
                   />
                 }
               />
             ))}
-          </div>
-        </Group>
+          </Group>
 
-        <Separator />
-
-        <Group label="Posted">
-          <div className="flex flex-wrap gap-1.5">
-            {POSTED_OPTIONS.map((o) => {
-              const active = params.get("days") === o.value;
-              return (
-                <Button
-                  key={o.value}
-                  size="sm"
-                  variant={active ? "default" : "outline"}
-                  onClick={() =>
-                    setStringParam("days", active ? null : o.value)
-                  }
-                >
-                  {o.label}
-                </Button>
-              );
-            })}
-          </div>
-        </Group>
-
-        <Separator />
-
-        <Group label="Source">
-          {facets.sources.length === 0 && (
-            <p className="text-xs text-[var(--muted-foreground)]">
-              No data yet.
-            </p>
-          )}
-          {facets.sources.map((s) => (
+          <Group label="Visa & remote">
             <Row
-              key={s.source}
-              label={`${s.source} (${s.count})`}
+              label="Visa sponsorship"
               control={
-                <Checkbox
-                  checked={isInArr("source", s.source)}
-                  onCheckedChange={() =>
-                    toggleArrayParam("source", s.source)
-                  }
+                <Switch
+                  checked={isOn("visa")}
+                  onCheckedChange={(v) => setBoolParam("visa", !!v)}
                 />
               }
             />
-          ))}
-        </Group>
+            <Row
+              label="Remote only"
+              control={
+                <Switch
+                  checked={isOn("remote")}
+                  onCheckedChange={(v) => setBoolParam("remote", !!v)}
+                />
+              }
+            />
+            <Row
+              label="Has salary"
+              control={
+                <Switch
+                  checked={isOn("salary")}
+                  onCheckedChange={(v) => setBoolParam("salary", !!v)}
+                />
+              }
+            />
+          </Group>
+
+          <Group label="Seniority">
+            <div className="flex flex-wrap gap-1.5">
+              {SENIORITY_OPTIONS.map((o) => {
+                const active = isInArr("level", o.value);
+                return (
+                  <Button
+                    key={o.value}
+                    size="sm"
+                    variant={active ? "default" : "outline"}
+                    className="h-6 px-2 text-[11px]"
+                    onClick={() => toggleArrayParam("level", o.value)}
+                  >
+                    {o.label}
+                  </Button>
+                );
+              })}
+            </div>
+          </Group>
+
+          <Group label="Tech stack">
+            <div className="grid grid-cols-3 gap-x-2 gap-y-1">
+              {TECH_OPTIONS.map((t) => (
+                <Row
+                  key={t}
+                  label={t}
+                  control={
+                    <Checkbox
+                      checked={isInArr("tech", t)}
+                      onCheckedChange={() => toggleArrayParam("tech", t)}
+                    />
+                  }
+                />
+              ))}
+            </div>
+          </Group>
+
+          <Group label="Posted">
+            <div className="flex flex-wrap gap-1.5">
+              {POSTED_OPTIONS.map((o) => {
+                const active = params.get("days") === o.value;
+                return (
+                  <Button
+                    key={o.value}
+                    size="sm"
+                    variant={active ? "default" : "outline"}
+                    className="h-6 px-2 text-[11px]"
+                    onClick={() =>
+                      setStringParam("days", active ? null : o.value)
+                    }
+                  >
+                    {o.label}
+                  </Button>
+                );
+              })}
+            </div>
+          </Group>
+
+          <Group label="Source">
+            {facets.sources.length === 0 && (
+              <p className="text-[11px] text-[var(--muted-foreground)]">
+                No data yet.
+              </p>
+            )}
+            {facets.sources.map((s) => (
+              <Row
+                key={s.source}
+                label={`${s.source} (${s.count})`}
+                control={
+                  <Checkbox
+                    checked={isInArr("source", s.source)}
+                    onCheckedChange={() =>
+                      toggleArrayParam("source", s.source)
+                    }
+                  />
+                }
+              />
+            ))}
+          </Group>
+        </div>
       </div>
     </aside>
   );
@@ -241,11 +244,11 @@ function Group({
   children: React.ReactNode;
 }) {
   return (
-    <div className="space-y-2">
-      <div className="text-xs font-medium uppercase tracking-wide text-[var(--muted-foreground)]">
+    <div>
+      <div className="mb-1 text-[10px] font-medium uppercase tracking-wider text-[var(--muted-foreground)]">
         {label}
       </div>
-      <div className="space-y-1.5">{children}</div>
+      <div className="space-y-1">{children}</div>
     </div>
   );
 }
@@ -258,7 +261,7 @@ function Row({
   control: React.ReactNode;
 }) {
   return (
-    <label className="flex items-center justify-between gap-2 cursor-pointer text-sm">
+    <label className="flex cursor-pointer items-center justify-between gap-2 text-xs leading-tight">
       <span className="truncate">{label}</span>
       {control}
     </label>
