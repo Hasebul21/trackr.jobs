@@ -48,15 +48,6 @@ export async function queryJobs(filters: JobFilters): Promise<{
       })),
     });
   }
-  if (filters.tech && filters.tech.length > 0) {
-    // technologies is JSON-string-encoded; a LIKE on the raw text is
-    // enough at this dataset size.
-    and.push({
-      AND: filters.tech.map((t) => ({
-        technologies: { contains: t, mode: "insensitive" as const },
-      })),
-    });
-  }
   if (and.length > 0) where.AND = and;
 
   // "country" sort buckets jobs by location alphabetically so the user

@@ -18,8 +18,6 @@ export function filtersFromSearchParams(sp: SP): JobFilters {
   if (sources.length) f.source = sources;
   const countries = arr(sp.country);
   if (countries.length) f.country = countries;
-  const tech = arr(sp.tech);
-  if (tech.length) f.tech = tech;
   const levels = arr(sp.level).filter(isSeniority);
   if (levels.length) f.seniority = levels;
   if (sp.visa === "1") f.visaOnly = true;
