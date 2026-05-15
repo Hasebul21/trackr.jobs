@@ -6,6 +6,7 @@ import { techinasia } from "./techinasia";
 import { jobstreet } from "./jobstreet";
 import { linkedin } from "./linkedin";
 import { linkedinRapidapi } from "./linkedin-rapidapi";
+import { jsearch } from "./jsearch";
 import { jaabz } from "./jaabz";
 import { paypay } from "./paypay";
 import { moneylion } from "./moneylion";
@@ -33,6 +34,7 @@ export function getProviders(): JobProvider[] {
     jobstreet,
     linkedin,
     linkedinRapidapi,
+    jsearch,
     jaabz,
     paypay,
     moneylion,
@@ -59,6 +61,7 @@ export const ALL_PROVIDERS: JobProvider[] = [
   jobstreet,
   linkedin,
   linkedinRapidapi,
+  jsearch,
   jaabz,
   paypay,
   moneylion,
