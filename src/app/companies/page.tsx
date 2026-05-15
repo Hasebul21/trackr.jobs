@@ -1,5 +1,4 @@
-// Curated company directory — the 16 career sites from the user's
-// bookmarks (career sites.md). The "auto-ingest vs link-only" split
+// Curated company directory. The "auto-ingest vs link-only" split
 // lives only in the per-card Auto/Link badge; the grid renders them
 // all together in one paginated list.
 
@@ -32,13 +31,24 @@ const COMPANIES: Company[] = [
   { name: "PayPay", url: "https://job-boards.greenhouse.io/paypay", country: "Japan", auto: true },
   { name: "Woven by Toyota", url: "https://jobs.lever.co/woven-by-toyota", country: "Japan", auto: true },
 
+  { name: "Algolia", url: "https://www.algolia.com/careers/", country: "France / global", auto: false, note: "Search infra — Greenhouse-backed" },
+  { name: "bKash", url: "https://www.bkash.com/page/career", country: "Bangladesh", auto: false, note: "BD mobile financial services" },
+  { name: "Brain Station 23", url: "https://brainstation-23.com/careers", country: "Bangladesh", auto: false, note: "BD software services" },
+  { name: "Chaldal", url: "https://chaldal.com/jobs", country: "Bangladesh", auto: false, note: "BD grocery / logistics" },
+  { name: "CircleCI", url: "https://circleci.com/about/careers/", country: "US / remote", auto: false, note: "CI/CD — Lever-backed" },
+  { name: "DigitalOcean", url: "https://www.digitalocean.com/careers", country: "US / remote", auto: false, note: "Cloud infra" },
   { name: "Ola", url: "https://olacareers.turbohire.co/dashboardv2?orgId=e0c1eb37-eb7a-4ca4-bcc5-d59ce4ce9212&dep=4d8df20a-b90c-41dd-a502-3d7174f9db13&type=0", country: "India", auto: false, note: "TurboHire SPA — manual search" },
+  { name: "Pathao", url: "https://pathao.com/bd/career/", country: "Bangladesh", auto: false, note: "BD ride-hailing / delivery" },
   { name: "PayPal", url: "https://paypal.eightfold.ai/careers?domain=paypal.com&query=Software&start=0&pid=274918865203&sort_by=relevance", country: "US / SG", auto: false, note: "Eightfold AI requires auth" },
   { name: "PayU", url: "https://corporate.payu.com/job-board/?department%5B%5D=credit-engineering", country: "Netherlands / India", auto: false, note: "Custom platform" },
+  { name: "PostHog", url: "https://posthog.com/careers", country: "UK / remote", auto: false, note: "Product analytics — all remote" },
+  { name: "Sentry", url: "https://sentry.io/careers/", country: "US / remote", auto: false, note: "Observability — Greenhouse-backed" },
+  { name: "ShareTrip", url: "https://sharetrip.net/career", country: "Bangladesh", auto: false, note: "BD travel tech" },
   { name: "Shopee", url: "https://careers.shopee.sg/jobs?name=software&limit=50&offset=0", country: "Singapore", auto: false, note: "SPA — no public JSON API" },
   { name: "Snapdeal", url: "https://blog.snapdeal.com/", country: "India", auto: false, note: "WordPress blog — manual search" },
   { name: "Stripe", url: "https://stripe.com/jobs/search?query=software", country: "US / global", auto: false, note: "No public JSON API" },
   { name: "Wolt", url: "https://careers.wolt.com/en/jobs?search=Software+", country: "Finland / Asia", auto: false, note: "SmartRecruiters slug unknown" },
+  { name: "Zapier", url: "https://zapier.com/jobs", country: "US / remote", auto: false, note: "Automation — all remote" },
   { name: "Zoho", url: "https://www.zoho.com/careers/#jobs", country: "India", auto: false, note: "Custom platform" },
 ];
 
