@@ -34,6 +34,16 @@ type Company = {
   mapTitle?: (title: string) => string;
 };
 
+// See greenhouse-ats for the rationale on this filter — BD-based user,
+// these companies' boards are dominated by US-only roles.
+const REMOTE_OR_ASIA =
+  /remote|singapore|japan|tokyo|osaka|kyoto|malaysia|kuala lumpur|thailand|bangkok|chiang mai|indonesia|jakarta|bali|vietnam|hanoi|ho chi minh|philippines|manila|india|bangalore|mumbai|hyderabad|delhi|chennai|pune|gurugram|bangladesh|dhaka|hong kong|taiwan|taipei|korea|seoul/i;
+
+function isRelevantLoc(s?: string | null): boolean {
+  if (!s) return true;
+  return REMOTE_OR_ASIA.test(s);
+}
+
 const COMPANIES: Company[] = [
   {
     source: "moneylion",
@@ -47,6 +57,29 @@ const COMPANIES: Company[] = [
     filter: (j) =>
       /moneylion/i.test(j.title) || /Kuala Lumpur/i.test(j.location ?? ""),
     mapTitle: (t) => t.replace(/\s*-\s*MoneyLion\s*$/i, "").trim(),
+  },
+  {
+    source: "posthog",
+    label: "PostHog",
+    slug: "posthog",
+    company: "PostHog",
+    defaultLocation: "Remote",
+    filter: (j) => isRelevantLoc(j.location),
+  },
+  {
+    source: "sentry",
+    label: "Sentry",
+    slug: "sentry",
+    company: "Sentry",
+    filter: (j) => isRelevantLoc(j.location),
+  },
+  {
+    source: "zapier",
+    label: "Zapier",
+    slug: "zapier",
+    company: "Zapier",
+    defaultLocation: "Remote",
+    filter: (j) => isRelevantLoc(j.location),
   },
 ];
 

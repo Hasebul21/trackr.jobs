@@ -32,6 +32,19 @@ type Company = {
   filter?: (j: GhJob) => boolean;
 };
 
+// Global devtools companies tend to publish 100+ roles, most US-only.
+// User is BD-based looking for SG/JP/MY/TH relocation or remote — this
+// regex keeps remote roles and Asia offices, drops US-state / EU-only.
+const REMOTE_OR_ASIA =
+  /remote|singapore|japan|tokyo|osaka|kyoto|malaysia|kuala lumpur|thailand|bangkok|chiang mai|indonesia|jakarta|bali|vietnam|hanoi|ho chi minh|philippines|manila|india|bangalore|mumbai|hyderabad|delhi|chennai|pune|gurugram|bangladesh|dhaka|hong kong|taiwan|taipei|korea|seoul/i;
+
+function isRelevantLoc(s?: string | null): boolean {
+  // Blank → assume the role is global; let it through and lean on the
+  // ingest-level title filter to drop irrelevant ones.
+  if (!s) return true;
+  return REMOTE_OR_ASIA.test(s);
+}
+
 const COMPANIES: Company[] = [
   {
     source: "paypay",
@@ -42,6 +55,20 @@ const COMPANIES: Company[] = [
     visaSupport: true,
     relocation: true,
     defaultLocation: "Japan",
+  },
+  {
+    source: "algolia",
+    label: "Algolia",
+    slug: "algolia",
+    company: "Algolia",
+    filter: (j) => isRelevantLoc(j.location?.name),
+  },
+  {
+    source: "circleci",
+    label: "CircleCI",
+    slug: "circleci",
+    company: "CircleCI",
+    filter: (j) => isRelevantLoc(j.location?.name),
   },
 ];
 
