@@ -8,11 +8,11 @@ import { linkedin } from "./linkedin";
 import { linkedinRapidapi } from "./linkedin-rapidapi";
 import { jsearch } from "./jsearch";
 import { jaabz } from "./jaabz";
-import { paypay } from "./paypay";
-import { moneylion } from "./moneylion";
+import { greenhouseProviders } from "./greenhouse-ats";
+import { leverProviders } from "./lever-ats";
+import { ashbyProviders } from "./ashby-ats";
 import { agoda } from "./agoda";
 import { grab } from "./grab";
-import { woven } from "./woven";
 import { booking } from "./booking";
 import { airasia } from "./airasia";
 import { astro } from "./astro";
@@ -21,6 +21,15 @@ import { adzuna } from "./adzuna";
 import { careerjet } from "./careerjet";
 import { theirstack } from "./theirstack";
 import { mock } from "./mock";
+
+// Per-company providers backed by generic ATS scrapers. Each entry inside
+// these arrays preserves its own Job.source key (e.g. "paypay", "woven",
+// "moneylion") so existing DB rows aren't orphaned.
+const ATS_PROVIDERS: JobProvider[] = [
+  ...greenhouseProviders,
+  ...leverProviders,
+  ...ashbyProviders,
+];
 
 /** Live providers run on every cron tick. The mock provider only runs
  * when SEED_MOCK=1 so production cron doesn't pollute the DB with
@@ -36,11 +45,9 @@ export function getProviders(): JobProvider[] {
     linkedinRapidapi,
     jsearch,
     jaabz,
-    paypay,
-    moneylion,
+    ...ATS_PROVIDERS,
     agoda,
     grab,
-    woven,
     booking,
     airasia,
     astro,
@@ -63,11 +70,9 @@ export const ALL_PROVIDERS: JobProvider[] = [
   linkedinRapidapi,
   jsearch,
   jaabz,
-  paypay,
-  moneylion,
+  ...ATS_PROVIDERS,
   agoda,
   grab,
-  woven,
   booking,
   airasia,
   astro,
