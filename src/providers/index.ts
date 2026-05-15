@@ -5,6 +5,7 @@ import { relocate } from "./relocate";
 import { techinasia } from "./techinasia";
 import { jobstreet } from "./jobstreet";
 import { linkedin } from "./linkedin";
+import { linkedinRapidapi } from "./linkedin-rapidapi";
 import { jaabz } from "./jaabz";
 import { paypay } from "./paypay";
 import { moneylion } from "./moneylion";
@@ -31,6 +32,7 @@ export function getProviders(): JobProvider[] {
     techinasia,
     jobstreet,
     linkedin,
+    linkedinRapidapi,
     jaabz,
     paypay,
     moneylion,
@@ -56,6 +58,7 @@ export const ALL_PROVIDERS: JobProvider[] = [
   techinasia,
   jobstreet,
   linkedin,
+  linkedinRapidapi,
   jaabz,
   paypay,
   moneylion,
