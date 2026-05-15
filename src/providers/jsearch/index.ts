@@ -40,7 +40,9 @@ type JsJob = {
   job_salary_period?: string | null;
 };
 
-type JsResp = { status?: string; data?: JsJob[] };
+// search-v2 wraps results in `data.jobs`. (The legacy /search endpoint
+// returns `data` as the array directly — don't confuse the two.)
+type JsResp = { status?: string; data?: { jobs?: JsJob[] } };
 
 function parseList(env: string | undefined, fallback: string[]): string[] {
   if (!env) return fallback;
@@ -89,7 +91,7 @@ export const jsearch: JobProvider = {
               "x-rapidapi-host": HOST,
             },
           });
-          for (const j of data.data ?? []) {
+          for (const j of data.data?.jobs ?? []) {
             const url = j.job_apply_link ?? j.job_google_link;
             if (!url || !j.job_title) continue;
             const sourceJobId = j.job_id ?? url;
