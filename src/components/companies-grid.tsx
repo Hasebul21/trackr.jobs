@@ -23,9 +23,11 @@ const PAGE_SIZE = 12;
 export function CompaniesGrid({
   companies,
   initialPage,
+  basePath = "/companies",
 }: {
   companies: Company[];
   initialPage: number;
+  basePath?: string;
 }) {
   // Defer hide-list reads to post-mount so SSR markup matches first paint —
   // same trick the bookmark button uses.
@@ -86,7 +88,7 @@ export function CompaniesGrid({
         rangeStart={visible.length === 0 ? 0 : start + 1}
         rangeEnd={end}
         total={visible.length}
-        hrefFor={(n) => (n <= 1 ? "/companies" : `/companies?page=${n}`)}
+        hrefFor={(n) => (n <= 1 ? basePath : `${basePath}?page=${n}`)}
       />
     </>
   );
