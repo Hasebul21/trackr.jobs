@@ -76,7 +76,7 @@ To trigger a refresh from the UI use the **Refresh** button in the navbar (calls
 
 ---
 
-## Architecture
+## Project structure
 
 ```
 src/
@@ -109,7 +109,9 @@ src/
 └── types/job.ts                 ← canonical Job shape
 ```
 
-### Data flow
+---
+
+## Data flow
 
 ```
 cron tick / refresh button
@@ -127,7 +129,9 @@ dashboard server component
   └─ render FiltersPanel + JobCard grid
 ```
 
-### Scoring
+---
+
+## Scoring
 
 `src/lib/preferences.ts` is the single source of truth for "what makes a job interesting" (preferred technologies, locations, visa phrases, title include/exclude). Edit it and trigger a refresh to retune — no DB migration required.
 
