@@ -2,6 +2,10 @@
 // each page (which has its own query-param shape) can build URLs without
 // the component knowing about its other filters. Used by the dashboard
 // and the companies directory.
+//
+// When pagination is driven by client-side state (e.g. a country filter
+// that resets the page locally), pass `onNavigate` instead — the buttons
+// then fire a callback rather than navigating to an href.
 
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -13,6 +17,7 @@ export function Pagination({
   rangeEnd,
   total,
   hrefFor,
+  onNavigate,
 }: {
   page: number;
   totalPages: number;
@@ -20,10 +25,30 @@ export function Pagination({
   rangeEnd: number;
   total: number;
   hrefFor: (n: number) => string;
+  onNavigate?: (n: number) => void;
 }) {
   const prevDisabled = page <= 1;
   const nextDisabled = page >= totalPages;
   const pageNumbers = compactPageRange(page, totalPages);
+
+  // Render a single page-link either as a router Link (href mode) or as a
+  // plain button that calls onNavigate (client-state mode).
+  const link = (n: number, label: React.ReactNode, key: React.Key) =>
+    onNavigate ? (
+      <Button
+        key={key}
+        variant="outline"
+        size="sm"
+        onClick={() => onNavigate(n)}
+      >
+        {label}
+      </Button>
+    ) : (
+      <Button key={key} asChild variant="outline" size="sm">
+        <Link href={hrefFor(n)}>{label}</Link>
+      </Button>
+    );
+
   return (
     <nav className="mt-6 flex flex-wrap items-center justify-between gap-3 text-sm">
       <div className="text-[var(--muted-foreground)]">
@@ -36,9 +61,7 @@ export function Pagination({
             Previous
           </Button>
         ) : (
-          <Button asChild variant="outline" size="sm">
-            <Link href={hrefFor(page - 1)}>Previous</Link>
-          </Button>
+          link(page - 1, "Previous", "prev")
         )}
         {pageNumbers.map((n, i) =>
           n === "…" ? (
@@ -53,9 +76,7 @@ export function Pagination({
               {n}
             </Button>
           ) : (
-            <Button key={n} asChild variant="outline" size="sm">
-              <Link href={hrefFor(n)}>{n}</Link>
-            </Button>
+            link(n, n, n)
           ),
         )}
         {nextDisabled ? (
@@ -63,9 +84,7 @@ export function Pagination({
             Next
           </Button>
         ) : (
-          <Button asChild variant="outline" size="sm">
-            <Link href={hrefFor(page + 1)}>Next</Link>
-          </Button>
+          link(page + 1, "Next", "next")
         )}
       </div>
     </nav>

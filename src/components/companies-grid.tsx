@@ -24,10 +24,15 @@ export function CompaniesGrid({
   companies,
   initialPage,
   basePath = "/companies",
+  enableCountryFilter = false,
 }: {
   companies: Company[];
   initialPage: number;
   basePath?: string;
+  // When true, render a row of country chips that filter the list
+  // client-side. Pagination then becomes client-state driven so changing
+  // the country resets back to page 1.
+  enableCountryFilter?: boolean;
 }) {
   // Defer hide-list reads to post-mount so SSR markup matches first paint —
   // same trick the bookmark button uses.
@@ -40,14 +45,28 @@ export function CompaniesGrid({
   const restore = useHiddenCompanies((s) => s.restore);
 
   const [showHidden, setShowHidden] = React.useState(false);
+  const [country, setCountry] = React.useState<string>("All");
+  // Local page cursor — only used when the country filter is active so that
+  // switching countries can snap back to page 1 without touching the URL.
+  const [localPage, setLocalPage] = React.useState(initialPage);
+
+  // Distinct countries, alphabetical, for the chip row.
+  const countries = React.useMemo(() => {
+    const set = new Set(companies.map((c) => c.country));
+    return ["All", ...Array.from(set).sort()];
+  }, [companies]);
 
   const visible = React.useMemo(() => {
-    if (!mounted) return companies;
-    return showHidden ? companies : companies.filter((c) => !hiddenIds[c.name]);
-  }, [companies, hiddenIds, mounted, showHidden]);
+    let list = companies;
+    if (mounted && !showHidden) list = list.filter((c) => !hiddenIds[c.name]);
+    if (enableCountryFilter && country !== "All")
+      list = list.filter((c) => c.country === country);
+    return list;
+  }, [companies, hiddenIds, mounted, showHidden, enableCountryFilter, country]);
 
   const totalPages = Math.max(1, Math.ceil(visible.length / PAGE_SIZE));
-  const page = Math.min(Math.max(1, initialPage), totalPages);
+  const requestedPage = enableCountryFilter ? localPage : initialPage;
+  const page = Math.min(Math.max(1, requestedPage), totalPages);
   const start = (page - 1) * PAGE_SIZE;
   const end = Math.min(start + PAGE_SIZE, visible.length);
   const slice = visible.slice(start, end);
@@ -56,6 +75,24 @@ export function CompaniesGrid({
 
   return (
     <>
+      {enableCountryFilter && (
+        <div className="mb-4 flex flex-wrap gap-2">
+          {countries.map((ctry) => (
+            <Button
+              key={ctry}
+              variant={ctry === country ? "default" : "outline"}
+              size="sm"
+              onClick={() => {
+                setCountry(ctry);
+                setLocalPage(1);
+              }}
+            >
+              {ctry}
+            </Button>
+          ))}
+        </div>
+      )}
+
       {hiddenCount > 0 && (
         <div className="mb-3 flex items-center justify-end gap-2 text-xs text-[var(--muted-foreground)]">
           <span>{hiddenCount} hidden</span>
@@ -89,6 +126,7 @@ export function CompaniesGrid({
         rangeEnd={end}
         total={visible.length}
         hrefFor={(n) => (n <= 1 ? basePath : `${basePath}?page=${n}`)}
+        onNavigate={enableCountryFilter ? setLocalPage : undefined}
       />
     </>
   );

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Suspense } from "react";
-import { Bookmark, Settings, Briefcase, Building2, Globe } from "lucide-react";
+import { Bookmark, Settings, Briefcase, Building2, Globe, Plane } from "lucide-react";
 import { SearchInput } from "./search-input";
 import { ThemeToggle } from "./theme-toggle";
 import { RefreshButton } from "./refresh-button";
@@ -39,6 +39,12 @@ export function Navbar() {
             <Link href="/job-platforms">
               <Globe />{" "}
               <span className="hidden sm:inline">Platforms</span>
+            </Link>
+          </Button>
+          <Button asChild variant="ghost" size="sm">
+            <Link href="/visa-sponsors">
+              <Plane />{" "}
+              <span className="hidden sm:inline">Visa sponsors</span>
             </Link>
           </Button>
           <Button asChild variant="ghost" size="sm">
