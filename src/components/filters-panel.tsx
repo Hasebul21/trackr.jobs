@@ -13,9 +13,15 @@ type Facets = {
 };
 
 // Fixed target countries — kept here (not derived from facets) so all
-// four are always selectable even when a given country has zero jobs
+// are always selectable even when a given country has zero jobs
 // in the current dataset. Order is the user's preferred priority.
-const COUNTRY_OPTIONS = ["Japan", "Singapore", "Malaysia", "Thailand"];
+const COUNTRY_OPTIONS = [
+  "Bangladesh",
+  "Japan",
+  "Singapore",
+  "Malaysia",
+  "Thailand",
+];
 
 const SENIORITY_OPTIONS: Array<{ value: string; label: string }> = [
   { value: "mid", label: "Mid" },

@@ -75,6 +75,8 @@ export const PREFERRED_TECHNOLOGIES = [
 ];
 
 export const PREFERRED_LOCATIONS = [
+  "bangladesh",
+  "dhaka",
   "japan",
   "tokyo",
   "osaka",
@@ -130,6 +132,7 @@ export const COUNTRY_HINTS: Record<string, string[]> = {
     " my",
   ],
   Thailand: ["thailand", "bangkok", "phuket", "chiang mai", ", th", " th"],
+  Bangladesh: ["bangladesh", "dhaka", ", bd", " bd"],
   Indonesia: ["indonesia", "jakarta", "bali", ", id", " id"],
   Philippines: ["philippines", "manila", "cebu", ", ph", " ph"],
   Vietnam: ["vietnam", "ho chi minh", "hanoi", ", vn", " vn"],

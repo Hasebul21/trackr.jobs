@@ -90,6 +90,27 @@ const SAMPLES: RawJob[] = [
     postedAt: new Date(Date.now() - 1000 * 60 * 60 * 72),
   },
   {
+    sourceJobId: "mock-6",
+    title: "Senior Software Engineer (Java/Spring)",
+    company: "Brain Station 23",
+    companyLogo: "https://logo.clearbit.com/brainstation-23.com",
+    location: "Dhaka, Bangladesh",
+    salary: "BDT 150k–250k/mo",
+    description:
+      "Join our enterprise engineering team building products for global clients. " +
+      "Stack: Java, Spring Boot, PostgreSQL, React, AWS. On-site in Dhaka with " +
+      "hybrid options. 4+ years experience. English working environment.",
+    tags: ["Java", "Spring Boot"],
+    technologies: ["Java", "Spring Boot", "PostgreSQL", "React", "AWS"],
+    visaSupport: false,
+    relocation: false,
+    remote: false,
+    seniority: "senior",
+    applyUrl: "https://brainstation-23.com/careers/senior-software-engineer-mock",
+    sourceUrl: "https://brainstation-23.com/careers/senior-software-engineer-mock",
+    postedAt: new Date(Date.now() - 1000 * 60 * 60 * 10),
+  },
+  {
     sourceJobId: "mock-5",
     title: "Marketing Manager",
     company: "Some Co",
