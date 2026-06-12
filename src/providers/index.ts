@@ -11,6 +11,7 @@ import { jaabz } from "./jaabz";
 import { greenhouseProviders } from "./greenhouse-ats";
 import { leverProviders } from "./lever-ats";
 import { ashbyProviders } from "./ashby-ats";
+import { remotePlatformProviders } from "./remote-platforms";
 import { agoda } from "./agoda";
 import { grab } from "./grab";
 import { booking } from "./booking";
@@ -31,6 +32,10 @@ const ATS_PROVIDERS: JobProvider[] = [
   ...ashbyProviders,
 ];
 
+// Remote-first talent platforms (Turing, Toptal, Arc, Wellfound) that back
+// the /remote page. Best-effort scrapers; see remote-platforms/index.ts.
+const REMOTE_PROVIDERS: JobProvider[] = [...remotePlatformProviders];
+
 /** Live providers run on every cron tick. The mock provider only runs
  * when SEED_MOCK=1 so production cron doesn't pollute the DB with
  * fake jobs. */
@@ -46,6 +51,7 @@ export function getProviders(): JobProvider[] {
     jsearch,
     jaabz,
     ...ATS_PROVIDERS,
+    ...REMOTE_PROVIDERS,
     agoda,
     grab,
     booking,
@@ -71,6 +77,7 @@ export const ALL_PROVIDERS: JobProvider[] = [
   jsearch,
   jaabz,
   ...ATS_PROVIDERS,
+  ...REMOTE_PROVIDERS,
   agoda,
   grab,
   booking,

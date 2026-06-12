@@ -91,7 +91,7 @@ const SAMPLES: RawJob[] = [
   },
   {
     sourceJobId: "mock-6",
-    title: "Senior Software Engineer (Java/Spring)",
+    title: "Senior Backend Engineer (Java/Spring)",
     company: "Brain Station 23",
     companyLogo: "https://logo.clearbit.com/brainstation-23.com",
     location: "Dhaka, Bangladesh",
