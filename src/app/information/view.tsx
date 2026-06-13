@@ -63,874 +63,874 @@ export function InformationView() {
                     <main className="min-w-0 space-y-10">
                         {/* 1. Personal & Contact Details ----------------------------- */}
                         <Section id="contact" title="1. Personal & Contact Details">
-                <KeyValueGrid
-                    rows={[
-                        ["Full Name", "HASEBUL HASSAN CHOWDHURY"],
-                        ["Date of Birth", "13 April 1999"],
-                        ["Gender", "Male"],
-                        ["Nationality", "Bangladeshi"],
-                        ["Blood Group", "B+"],
-                        [
-                            "Father's Name",
-                            "Md. Mojibur Rahman Chowdhury (deceased)",
-                        ],
-                        ["Mother's Name", "Nigar Sultana"],
-                        [
-                            "Permanent Address",
-                            "Chowdhuri Bari/552, Rahimpur, Dakkhin Durgapur Union, Cumilla Adarsha Sadar, Cumilla – 3500, Chattogram Division, Bangladesh",
-                        ],
-                        [
-                            "Current Address",
-                            <>
-                                Dhaka, Bangladesh (work base; exact address{" "}
-                                <VerifyTag />)
-                            </>,
-                        ],
-                        [
-                            "Mobile",
-                            <a
-                                key="m"
-                                href="tel:+8801758144856"
-                                className="hover:underline"
-                            >
-                                +880 1758144856
-                            </a>,
-                        ],
-                        [
-                            "Email (Personal)",
-                            <a
-                                key="ep"
-                                href="mailto:hasebulhassan21@gmail.com"
-                                className="hover:underline"
-                            >
-                                hasebulhassan21@gmail.com
-                            </a>,
-                        ],
-                        [
-                            "Email (Work)",
-                            <a
-                                key="ew"
-                                href="mailto:hasebul.hassan@cefalo.com"
-                                className="hover:underline"
-                            >
-                                hasebul.hassan@cefalo.com
-                            </a>,
-                        ],
-                        [
-                            "LinkedIn",
-                            <ExtLink
-                                key="li"
-                                href="https://linkedin.com/in/hasebul"
-                            >
-                                linkedin.com/in/hasebul
-                            </ExtLink>,
-                        ],
-                        [
-                            "GitHub",
-                            <ExtLink
-                                key="gh"
-                                href="https://github.com/Hasebul21"
-                            >
-                                github.com/Hasebul21
-                            </ExtLink>,
-                        ],
-                        [
-                            "Portfolio",
-                            <ExtLink
-                                key="pf"
-                                href="https://hasebul21.github.io"
-                            >
-                                hasebul21.github.io
-                            </ExtLink>,
-                        ],
-                        ["National ID No.", "7363512059"],
-                        ["Passport Number", "A15376461"],
-                        ["Passport Expiry", "24 August 2034"],
-                        ["Passport Country", "Bangladesh (BGD)"],
-                    ]}
-                />
-            </Section>
+                            <KeyValueGrid
+                                rows={[
+                                    ["Full Name", "HASEBUL HASSAN CHOWDHURY"],
+                                    ["Date of Birth", "13 April 1999"],
+                                    ["Gender", "Male"],
+                                    ["Nationality", "Bangladeshi"],
+                                    ["Blood Group", "B+"],
+                                    [
+                                        "Father's Name",
+                                        "Md. Mojibur Rahman Chowdhury (deceased)",
+                                    ],
+                                    ["Mother's Name", "Nigar Sultana"],
+                                    [
+                                        "Permanent Address",
+                                        "Chowdhuri Bari/552, Rahimpur, Dakkhin Durgapur Union, Cumilla Adarsha Sadar, Cumilla – 3500, Chattogram Division, Bangladesh",
+                                    ],
+                                    [
+                                        "Current Address",
+                                        <>
+                                            Dhaka, Bangladesh (work base; exact address{" "}
+                                            <VerifyTag />)
+                                        </>,
+                                    ],
+                                    [
+                                        "Mobile",
+                                        <a
+                                            key="m"
+                                            href="tel:+8801758144856"
+                                            className="hover:underline"
+                                        >
+                                            +880 1758144856
+                                        </a>,
+                                    ],
+                                    [
+                                        "Email (Personal)",
+                                        <a
+                                            key="ep"
+                                            href="mailto:hasebulhassan21@gmail.com"
+                                            className="hover:underline"
+                                        >
+                                            hasebulhassan21@gmail.com
+                                        </a>,
+                                    ],
+                                    [
+                                        "Email (Work)",
+                                        <a
+                                            key="ew"
+                                            href="mailto:hasebul.hassan@cefalo.com"
+                                            className="hover:underline"
+                                        >
+                                            hasebul.hassan@cefalo.com
+                                        </a>,
+                                    ],
+                                    [
+                                        "LinkedIn",
+                                        <ExtLink
+                                            key="li"
+                                            href="https://linkedin.com/in/hasebul"
+                                        >
+                                            linkedin.com/in/hasebul
+                                        </ExtLink>,
+                                    ],
+                                    [
+                                        "GitHub",
+                                        <ExtLink
+                                            key="gh"
+                                            href="https://github.com/Hasebul21"
+                                        >
+                                            github.com/Hasebul21
+                                        </ExtLink>,
+                                    ],
+                                    [
+                                        "Portfolio",
+                                        <ExtLink
+                                            key="pf"
+                                            href="https://hasebul21.github.io"
+                                        >
+                                            hasebul21.github.io
+                                        </ExtLink>,
+                                    ],
+                                    ["National ID No.", "7363512059"],
+                                    ["Passport Number", "A15376461"],
+                                    ["Passport Expiry", "24 August 2034"],
+                                    ["Passport Country", "Bangladesh (BGD)"],
+                                ]}
+                            />
+                        </Section>
 
-            {/* 2. Academic Profile --------------------------------------- */}
-            <Section id="academic" title="2. Academic Profile">
-                <KeyValueGrid
-                    rows={[
-                        [
-                            "ORCID",
-                            <ExtLink
-                                key="o"
-                                href="https://orcid.org/0009-0000-7889-5412"
-                            >
-                                0009-0000-7889-5412
-                            </ExtLink>,
-                        ],
-                        [
-                            "ResearchGate",
-                            <ExtLink
-                                key="rg"
-                                href="https://www.researchgate.net/profile/Hasebul-Hassan-Chowdhury/research"
-                            >
-                                researchgate.net/profile/Hasebul-Hassan-Chowdhury
-                            </ExtLink>,
-                        ],
-                        [
-                            "Google Scholar",
-                            <MissingTag key="gs" detail="not set up" />,
-                        ],
-                        [
-                            "Competitive Programming",
-                            <span key="cp" className="space-x-2">
-                                <ExtLink href="https://stopstalk.com/user/profile/WA_TLE">
-                                    stopstalk.com/user/profile/WA_TLE
-                                </ExtLink>
-                                <span className="text-[var(--muted-foreground)]">
-                                    |
-                                </span>
-                                <ExtLink href="https://leetcode.com/u/Hasebul">
-                                    leetcode.com/u/Hasebul
-                                </ExtLink>
-                            </span>,
-                        ],
-                        [
-                            "GitHub",
-                            <ExtLink
-                                key="gh2"
-                                href="https://github.com/Hasebul21"
-                            >
-                                github.com/Hasebul21
-                            </ExtLink>,
-                        ],
-                        [
-                            "Portfolio",
-                            <ExtLink
-                                key="pf2"
-                                href="https://hasebul21.github.io"
-                            >
-                                hasebul21.github.io
-                            </ExtLink>,
-                        ],
-                    ]}
-                />
-            </Section>
-
-            {/* 3. Education ---------------------------------------------- */}
-            <Section
-                id="education"
-                title="3. Education"
-                subtitle="(Newest first)"
-            >
-                <SubSection title="3.1 Undergraduate Degree">
-                    <KeyValueGrid
-                        rows={[
-                            [
-                                "Institution",
-                                "American International University–Bangladesh (AIUB)",
-                            ],
-                            ["Location", "Dhaka, Bangladesh"],
-                            [
-                                "Degree",
-                                "Bachelor of Science in Computer Science & Engineering",
-                            ],
-                            ["Faculty", "Faculty of Science & Technology"],
-                            ["Student ID", "18-37271-1"],
-                            [
-                                "Registration No.",
-                                "23-39753-07 (Degree certificate)",
-                            ],
-                            ["Duration", "January 2018 – December 2022"],
-                            ["Degree Conferred", "09 April 2025"],
-                            ["CGPA", "3.58 / 4.00"],
-                            [
-                                "Total Credits",
-                                "148 credits earned; 56 courses passed",
-                            ],
-                            ["Medium", "English"],
-                            [
-                                "Thesis",
-                                <>
-                                    CSC4299 THESIS – Grade: A (exact title{" "}
-                                    <VerifyTag />)
-                                </>,
-                            ],
-                            ["Accreditation", "PAASCU Accredited"],
-                        ]}
-                    />
-                    <div className="mt-4">
-                        <h4 className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
-                            Activities & Extracurriculars (AIUB)
-                        </h4>
-                        <ul className="mt-2 list-disc space-y-1 pl-5 text-sm">
-                            <li>
-                                Member of the AIUB Competitive Programming
-                                Community (ACPC).
-                            </li>
-                            <li>
-                                Participated in the 2019 and 2020 ICPC Asia
-                                Dhaka Regional Contest.
-                            </li>
-                            <li>
-                                Solved ~1,400+ problems across Codeforces,
-                                CodeChef, HackerRank, UVa, LightOJ during
-                                undergraduate studies.
-                            </li>
-                            <li>
-                                10th Place – Intra-AIUB Programming Contest,
-                                Fall 2021–22.
-                            </li>
-                            <li>
-                                6th Place – AIUB CS Fest 2018 Programming
-                                Contest.
-                            </li>
-                        </ul>
-                    </div>
-                </SubSection>
-
-                <SubSection title="3.2 Higher Secondary Certificate (HSC)">
-                    <KeyValueGrid
-                        rows={[
-                            ["Institution", "Comilla Govt. College"],
-                            ["Location", "Cumilla, Bangladesh"],
-                            ["Group", "Science"],
-                            ["Duration", "2015 – 2017"],
-                            ["GPA", "4.00 / 5.00"],
-                            [
-                                "Board",
-                                <>
-                                    <VerifyTag /> likely Cumilla Education Board
-                                </>,
-                            ],
-                        ]}
-                    />
-                </SubSection>
-            </Section>
-
-            {/* 4. Work Experience ---------------------------------------- */}
-            <Section id="experience" title="4. Work Experience">
-                <SubSection title="4.1 Cefalo Bangladesh Ltd.">
-                    <KeyValueGrid
-                        rows={[
-                            ["Employer", "Cefalo Bangladesh Ltd."],
-                            ["Location", "Dhaka, Bangladesh"],
-                            ["Title", "Software Engineer (L1 → L2)"],
-                            ["Dates", "June 2022 – Present"],
-                            [
-                                "Clients",
-                                "DN Media Group, Zaui Stay, Stiftelsen Asta",
-                            ],
-                        ]}
-                    />
-                    <div className="mt-4">
-                        <h4 className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
-                            Key Responsibilities & Achievements
-                        </h4>
-                        <ul className="mt-2 list-disc space-y-2 pl-5 text-sm leading-relaxed">
-                            <li>
-                                <span className="font-medium">
-                                    ATS Platform Development:
-                                </span>{" "}
-                                Led a team of 4 engineers to build a scalable
-                                Applicant Tracking System using TypeScript,
-                                NestJS, and React. Implemented role-based
-                                access control and integrated HackerRank,
-                                improving interview workflow efficiency and
-                                candidate management.
-                            </li>
-                            <li>
-                                <span className="font-medium">
-                                    Performance Optimization:
-                                </span>{" "}
-                                Reduced large-scale archive import time from
-                                3–4 minutes to under 1 minute by designing
-                                advanced PostgreSQL indexing strategies and
-                                implementing in-memory caching with Ehcache.
-                            </li>
-                            <li>
-                                <span className="font-medium">
-                                    Scalable Backend Systems:
-                                </span>{" "}
-                                Designed and implemented background processing
-                                pipelines and scheduler-based architectures
-                                using Spring Boot, significantly improving
-                                system throughput and handling high-volume
-                                data operations.
-                            </li>
-                            <li>
-                                <span className="font-medium">
-                                    Observability & Monitoring:
-                                </span>{" "}
-                                Implemented centralized logging and monitoring
-                                using the ELK stack (Elasticsearch, Logstash,
-                                Kibana), enabling faster issue detection and
-                                improving system reliability.
-                            </li>
-                            <li>
-                                <span className="font-medium">
-                                    CI/CD & DevOps:
-                                </span>{" "}
-                                Designed release pipelines using GitHub
-                                Actions, Docker, and AWS EC2, reducing
-                                deployment time by 30%. Integrated Slack
-                                notifications with Jenkins to improve CI/CD
-                                visibility.
-                            </li>
-                            <li>
-                                <span className="font-medium">
-                                    Globalization & Platform Features:
-                                </span>{" "}
-                                Implemented Angular i18n for multi-language
-                                support across 20+ markets; developed booking
-                                automation features (quotation, workflow,
-                                discount modules).
-                            </li>
-                            <li>
-                                <span className="font-medium">
-                                    Caching & System Efficiency:
-                                </span>{" "}
-                                Introduced Redis caching and optimized
-                                scheduler-based processing to reduce latency
-                                in high-traffic scenarios.
-                            </li>
-                            <li>
-                                <span className="font-medium">
-                                    Collaboration & Documentation:
-                                </span>{" "}
-                                Contributed to Agile development processes
-                                including sprint planning, code reviews, and
-                                production support. Authored technical
-                                documentation.
-                            </li>
-                        </ul>
-                    </div>
-                </SubSection>
-
-                <SubSection title="4.2 American International University-Bangladesh (AIUB)">
-                    <KeyValueGrid
-                        rows={[
-                            [
-                                "Employer",
-                                "American International University-Bangladesh (AIUB)",
-                            ],
-                            ["Location", "Dhaka, Bangladesh (onsite)"],
-                            ["Title", "Web Developer"],
-                            ["Dates", "June 2021 – May 2022"],
-                        ]}
-                    />
-                    <div className="mt-4">
-                        <h4 className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
-                            Key Responsibilities
-                        </h4>
-                        <ul className="mt-2 list-disc space-y-2 pl-5 text-sm leading-relaxed">
-                            <li>
-                                Developed and maintained web-based features
-                                for students, faculty, and administrative
-                                users, improving accessibility of academic and
-                                university services.
-                            </li>
-                            <li>
-                                Implemented backend functionalities using Java
-                                for internal portal modules and dynamic
-                                data-driven pages.
-                            </li>
-                            <li>
-                                Designed and optimized MySQL queries for
-                                efficient storage and retrieval of academic
-                                and service-related data.
-                            </li>
-                            <li>
-                                Built dynamic modules including notices,
-                                announcements, department pages, and student
-                                services.
-                            </li>
-                        </ul>
-                    </div>
-                </SubSection>
-            </Section>
-
-            {/* 5. Technical Skills --------------------------------------- */}
-            <Section id="skills" title="5. Technical Skills">
-                <div className="overflow-hidden rounded-md border border-[var(--border)]">
-                    <table className="w-full text-sm">
-                        <thead className="bg-[var(--muted)]/40 text-left text-xs uppercase tracking-wide text-[var(--muted-foreground)]">
-                            <tr>
-                                <th className="px-3 py-2 font-semibold">
-                                    Category
-                                </th>
-                                <th className="px-3 py-2 font-semibold">
-                                    Technologies / Tools
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody className="divide-y divide-[var(--border)]">
-                            {SKILLS.map(([cat, techs]) => (
-                                <tr key={cat} className="align-top">
-                                    <td className="px-3 py-2 font-medium whitespace-nowrap">
-                                        {cat}
-                                    </td>
-                                    <td className="px-3 py-2">
-                                        <div className="flex flex-wrap gap-1.5">
-                                            {techs.map((t) => (
-                                                <Badge
-                                                    key={t}
-                                                    variant="outline"
-                                                >
-                                                    {t}
-                                                </Badge>
-                                            ))}
-                                        </div>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
-            </Section>
-
-            {/* 6. Publications & Research -------------------------------- */}
-            <Section id="publications" title="6. Publications & Research">
-                <p className="text-sm">
-                    ResearchGate:{" "}
-                    <ExtLink href="https://www.researchgate.net/profile/Hasebul-Hassan-Chowdhury/research">
-                        researchgate.net/profile/Hasebul-Hassan-Chowdhury
-                    </ExtLink>
-                </p>
-
-                <SubSection title="6.1 Chronic Kidney Disease (CKD) Paper">
-                    <KeyValueGrid
-                        rows={[
-                            [
-                                "Title",
-                                "Machine Learning-Based Early Risk Stratification Framework for Chronic Kidney Disease Progression Using Comprehensive Multi-Domain Clinical and Biochemical Data",
-                            ],
-                            [
-                                "Published In",
-                                "2026 International Conference on Smart Futuristic Technology (IEEE ICSFT 2026)",
-                            ],
-                            ["Conference Dates", "02–03 January 2026"],
-                            ["Added to IEEE", "12 May 2026"],
-                            [
-                                "DOI",
-                                <ExtLink
-                                    key="doi"
-                                    href="https://doi.org/10.1109/ICSFT66733.2026.11507621"
-                                >
-                                    10.1109/ICSFT66733.2026.11507621
-                                </ExtLink>,
-                            ],
-                            [
-                                "IEEE URL",
-                                <ExtLink
-                                    key="ieee"
-                                    href="https://ieeexplore.ieee.org/document/11507621"
-                                >
-                                    ieeexplore.ieee.org/document/11507621
-                                </ExtLink>,
-                            ],
-                            ["Publisher", "IEEE"],
-                            ["Conference Loc.", "Bengaluru, India"],
-                            ["ISBN (Electronic)", "979-8-3503-5707-3"],
-                            ["ISBN (DVD)", "979-8-3503-5704-2"],
-                            ["ISBN (USB)", "979-8-3503-5706-6"],
-                            ["ISBN (PoD)", "979-8-3503-5708-0"],
-                            ["Presentation", "Oral Presentation"],
-                            ["Status", "Published (IEEE Xplore)"],
-                        ]}
-                    />
-                    <AuthorList
-                        authors={[
-                            "Md. Maniruzzaman — Dept. of Electrical and Computer Engineering, San Francisco Bay University, Fremont, CA, USA",
-                            "Naima Najam Nejum — Dept. of Computer Science & Engineering, AIUB, Dhaka, Bangladesh",
-                            "Musfika Jannat Mamata — Dept. of Management Information Systems, University of Dhaka, Dhaka, Bangladesh",
-                            "Hasebul Hassan Chowdhury — Dept. of Computer Science & Engineering, AIUB, Dhaka, Bangladesh",
-                            "Fahim Ahamed Romit — Dept. of Computer Science & Engineering, BRAC University, Dhaka, Bangladesh",
-                            "Sudoy Kumer Ghosh — Dept. of EEE, Dhaanish Ahmed College of Engineering (Affiliated to Anna University), Chennai, India",
-                        ]}
-                    />
-                </SubSection>
-
-                <SubSection title="6.2 Biomass / Bioenergy Paper">
-                    <KeyValueGrid
-                        rows={[
-                            [
-                                "Title",
-                                "AI-Enhanced Prediction of Respiratory Irritation From Biomass Combustion Byproducts: An Integrative Machine Learning Framework for Sustainable Bioenergy Systems",
-                            ],
-                            [
-                                "Published In",
-                                "2026 5th International Conference on Communication, Computing and Electronics Systems (ICCCES)",
-                            ],
-                            ["Conference Dates", "21–23 January 2026"],
-                            ["Added to IEEE", "25 March 2026"],
-                            [
-                                "DOI",
-                                <ExtLink
-                                    key="doi2"
-                                    href="https://doi.org/10.1109/ICCCES62661.2026.11437157"
-                                >
-                                    10.1109/ICCCES62661.2026.11437157
-                                </ExtLink>,
-                            ],
-                            [
-                                "IEEE URL",
-                                <ExtLink
-                                    key="ieee2"
-                                    href="https://ieeexplore.ieee.org/document/11437157"
-                                >
-                                    ieeexplore.ieee.org/document/11437157
-                                </ExtLink>,
-                            ],
-                            ["Publisher", "IEEE"],
-                            ["Conference Loc.", "Coimbatore, India"],
-                            ["ISBN (Electronic)", "979-8-3315-5621-1"],
-                            ["ISBN (DVD)", "979-8-3315-5620-4"],
-                            ["ISBN (PoD)", "979-8-3315-5622-8"],
-                            ["Status", "Published (IEEE Xplore)"],
-                        ]}
-                    />
-                    <AuthorList
-                        authors={[
-                            "Shehabul Alam — College of Graduate and Professional Studies, Trine University, California, USA",
-                            "Ayush Biswas — Dept. of Computer Science, BRAC University, Dhaka, Bangladesh",
-                            "Rehnuma Islam — Dept. of Computer Science, BRAC University, Dhaka, Bangladesh",
-                            "Shah Samadur Rahman — Dept. of Global Business and Enterprise, Ulster University, London, UK",
-                            "Hasebul Hassan Chowdhury — Dept. of Computer Science & Engineering, AIUB, Dhaka, Bangladesh",
-                            "Sudoy Kumer Ghosh — Dept. of EEE, Dhaanish Ahmed College of Engineering (Affiliated to Anna University), Chennai, India",
-                        ]}
-                    />
-                </SubSection>
-            </Section>
-
-            {/* 7. Projects ----------------------------------------------- */}
-            <Section id="projects" title="7. Projects">
-                <div className="grid gap-4 sm:grid-cols-2">
-                    <ProjectCard
-                        name="Trading Portfolio Platform"
-                        stack={[
-                            "Next.js",
-                            "TypeScript",
-                            "Supabase",
-                            "PostgreSQL",
-                        ]}
-                        description="Full-stack stock portfolio platform supporting transactions, live holdings, and P&L analytics. Integrated market-data APIs for real-time pricing and reporting. Used Cursor AI (structured prompts, agent loops) to accelerate development."
-                        links={[
-                            {
-                                label: "Live: hasebul21.github.io",
-                                href: "https://hasebul21.github.io",
-                            },
-                            {
-                                label: "GitHub: github.com/Hasebul21",
-                                href: "https://github.com/Hasebul21",
-                            },
-                        ]}
-                    />
-                    <ProjectCard
-                        name="QuickChat"
-                        stack={["WebSocket", "Redis", "Elasticsearch"]}
-                        description="Real-time chat application with authentication and Redis caching for low-latency messaging. Integrated Elasticsearch for efficient message indexing and search."
-                        links={[
-                            {
-                                label: "GitHub: github.com/Hasebul21",
-                                href: "https://github.com/Hasebul21",
-                            },
-                        ]}
-                        note="VERIFY direct project URL"
-                    />
-                </div>
-            </Section>
-
-            {/* 8. Certifications ----------------------------------------- */}
-            <Section id="certifications" title="8. Certifications & Courses">
-                <div className="overflow-x-auto rounded-md border border-[var(--border)]">
-                    <table className="w-full text-sm">
-                        <thead className="bg-[var(--muted)]/40 text-left text-xs uppercase tracking-wide text-[var(--muted-foreground)]">
-                            <tr>
-                                <th className="px-3 py-2 font-semibold">#</th>
-                                <th className="px-3 py-2 font-semibold">
-                                    Certification / Course
-                                </th>
-                                <th className="px-3 py-2 font-semibold">
-                                    Issuer / Platform
-                                </th>
-                                <th className="px-3 py-2 font-semibold">
-                                    Topics / Notes
-                                </th>
-                                <th className="px-3 py-2 font-semibold">
-                                    Credential URL
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody className="divide-y divide-[var(--border)] align-top">
-                            {CERTIFICATIONS.map((c, i) => (
-                                <tr key={i}>
-                                    <td className="px-3 py-2 text-[var(--muted-foreground)]">
-                                        {i + 1}
-                                    </td>
-                                    <td className="px-3 py-2 font-medium">
-                                        {c.title}
-                                    </td>
-                                    <td className="px-3 py-2 whitespace-nowrap">
-                                        {c.issuer}
-                                    </td>
-                                    <td className="px-3 py-2 text-[var(--muted-foreground)]">
-                                        {c.topics}
-                                    </td>
-                                    <td className="px-3 py-2">
-                                        {c.url ? (
-                                            <ExtLink href={c.url}>
-                                                <span className="break-all">
-                                                    {c.url.replace(
-                                                        /^https?:\/\//,
-                                                        "",
-                                                    )}
-                                                </span>
+                        {/* 2. Academic Profile --------------------------------------- */}
+                        <Section id="academic" title="2. Academic Profile">
+                            <KeyValueGrid
+                                rows={[
+                                    [
+                                        "ORCID",
+                                        <ExtLink
+                                            key="o"
+                                            href="https://orcid.org/0009-0000-7889-5412"
+                                        >
+                                            0009-0000-7889-5412
+                                        </ExtLink>,
+                                    ],
+                                    [
+                                        "ResearchGate",
+                                        <ExtLink
+                                            key="rg"
+                                            href="https://www.researchgate.net/profile/Hasebul-Hassan-Chowdhury/research"
+                                        >
+                                            researchgate.net/profile/Hasebul-Hassan-Chowdhury
+                                        </ExtLink>,
+                                    ],
+                                    [
+                                        "Google Scholar",
+                                        <MissingTag key="gs" detail="not set up" />,
+                                    ],
+                                    [
+                                        "Competitive Programming",
+                                        <span key="cp" className="space-x-2">
+                                            <ExtLink href="https://stopstalk.com/user/profile/WA_TLE">
+                                                stopstalk.com/user/profile/WA_TLE
                                             </ExtLink>
-                                        ) : (
-                                            <VerifyTag />
-                                        )}
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
-            </Section>
+                                            <span className="text-[var(--muted-foreground)]">
+                                                |
+                                            </span>
+                                            <ExtLink href="https://leetcode.com/u/Hasebul">
+                                                leetcode.com/u/Hasebul
+                                            </ExtLink>
+                                        </span>,
+                                    ],
+                                    [
+                                        "GitHub",
+                                        <ExtLink
+                                            key="gh2"
+                                            href="https://github.com/Hasebul21"
+                                        >
+                                            github.com/Hasebul21
+                                        </ExtLink>,
+                                    ],
+                                    [
+                                        "Portfolio",
+                                        <ExtLink
+                                            key="pf2"
+                                            href="https://hasebul21.github.io"
+                                        >
+                                            hasebul21.github.io
+                                        </ExtLink>,
+                                    ],
+                                ]}
+                            />
+                        </Section>
 
-            {/* 9. Awards & Honors ---------------------------------------- */}
-            <Section id="awards" title="9. Awards & Honors">
-                <div className="overflow-x-auto rounded-md border border-[var(--border)]">
-                    <table className="w-full text-sm">
-                        <thead className="bg-[var(--muted)]/40 text-left text-xs uppercase tracking-wide text-[var(--muted-foreground)]">
-                            <tr>
-                                <th className="px-3 py-2 font-semibold">
-                                    Award / Achievement
-                                </th>
-                                <th className="px-3 py-2 font-semibold">
-                                    Organizer
-                                </th>
-                                <th className="px-3 py-2 font-semibold">
-                                    Year
-                                </th>
-                                <th className="px-3 py-2 font-semibold">
-                                    Details / Link
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody className="divide-y divide-[var(--border)] align-top">
-                            {AWARDS.map((a, i) => (
-                                <tr key={i}>
-                                    <td className="px-3 py-2 font-medium">
-                                        {a.title}
-                                    </td>
-                                    <td className="px-3 py-2 text-[var(--muted-foreground)]">
-                                        {a.organizer}
-                                    </td>
-                                    <td className="px-3 py-2 whitespace-nowrap text-[var(--muted-foreground)]">
-                                        {a.year}
-                                    </td>
-                                    <td className="px-3 py-2">
-                                        {a.detail}
-                                        {a.href && (
-                                            <>
-                                                {" — "}
-                                                <ExtLink href={a.href}>
-                                                    {a.href.replace(
-                                                        /^https?:\/\//,
-                                                        "",
-                                                    )}
-                                                </ExtLink>
-                                            </>
-                                        )}
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
-            </Section>
-
-            {/* 10. Test Scores ------------------------------------------- */}
-            <Section id="test-scores" title="10. Test Scores">
-                <div className="overflow-x-auto rounded-md border border-[var(--border)]">
-                    <table className="w-full text-sm">
-                        <thead className="bg-[var(--muted)]/40 text-left text-xs uppercase tracking-wide text-[var(--muted-foreground)]">
-                            <tr>
-                                <th className="px-3 py-2 font-semibold">
-                                    Test
-                                </th>
-                                <th className="px-3 py-2 font-semibold">
-                                    Body
-                                </th>
-                                <th className="px-3 py-2 font-semibold">
-                                    Test Date
-                                </th>
-                                <th className="px-3 py-2 font-semibold">
-                                    Centre
-                                </th>
-                                <th className="px-3 py-2 font-semibold">
-                                    Candidate No.
-                                </th>
-                                <th className="px-3 py-2 font-semibold">L</th>
-                                <th className="px-3 py-2 font-semibold">R</th>
-                                <th className="px-3 py-2 font-semibold">W</th>
-                                <th className="px-3 py-2 font-semibold">S</th>
-                                <th className="px-3 py-2 font-semibold">
-                                    Overall
-                                </th>
-                                <th className="px-3 py-2 font-semibold">
-                                    CEFR
-                                </th>
-                                <th className="px-3 py-2 font-semibold">
-                                    TRF Number
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody className="divide-y divide-[var(--border)] align-top">
-                            <tr>
-                                <td className="px-3 py-2 font-medium">
-                                    IELTS Academic
-                                </td>
-                                <td className="px-3 py-2">IDP IELTS</td>
-                                <td className="px-3 py-2 whitespace-nowrap">
-                                    19 Sep 2025
-                                </td>
-                                <td className="px-3 py-2">BD050</td>
-                                <td className="px-3 py-2">503399</td>
-                                <td className="px-3 py-2">8.0</td>
-                                <td className="px-3 py-2">6.5</td>
-                                <td className="px-3 py-2">7.5</td>
-                                <td className="px-3 py-2">6.0</td>
-                                <td className="px-3 py-2 font-semibold">
-                                    7.0
-                                </td>
-                                <td className="px-3 py-2">C1</td>
-                                <td className="px-3 py-2 whitespace-nowrap font-mono text-xs">
-                                    25BD503399CHOH050A
-                                </td>
-                            </tr>
-                            <tr>
-                                <td className="px-3 py-2 font-medium">
-                                    IELTS Academic
-                                </td>
-                                <td className="px-3 py-2">British Council</td>
-                                <td className="px-3 py-2 whitespace-nowrap">
-                                    18 Sep 2025
-                                </td>
-                                <td className="px-3 py-2">BD001</td>
-                                <td className="px-3 py-2">024431</td>
-                                <td className="px-3 py-2">
-                                    <VerifyTag />
-                                </td>
-                                <td className="px-3 py-2">
-                                    <VerifyTag />
-                                </td>
-                                <td className="px-3 py-2">
-                                    <VerifyTag />
-                                </td>
-                                <td className="px-3 py-2">
-                                    <VerifyTag />
-                                </td>
-                                <td className="px-3 py-2">
-                                    <VerifyTag />
-                                </td>
-                                <td className="px-3 py-2">
-                                    <VerifyTag />
-                                </td>
-                                <td className="px-3 py-2">
-                                    <VerifyTag />
-                                </td>
-                            </tr>
-                            <tr className="text-[var(--muted-foreground)]">
-                                <td className="px-3 py-2 font-medium">GRE</td>
-                                <td className="px-3 py-2">ETS</td>
-                                <td className="px-3 py-2">
-                                    <MissingTag />
-                                </td>
-                                <td className="px-3 py-2">—</td>
-                                <td className="px-3 py-2">—</td>
-                                <td className="px-3 py-2">—</td>
-                                <td className="px-3 py-2">—</td>
-                                <td className="px-3 py-2">—</td>
-                                <td className="px-3 py-2">—</td>
-                                <td className="px-3 py-2">
-                                    <MissingTag />
-                                </td>
-                                <td className="px-3 py-2">—</td>
-                                <td className="px-3 py-2">
-                                    <MissingTag />
-                                </td>
-                            </tr>
-                            <tr className="text-[var(--muted-foreground)]">
-                                <td className="px-3 py-2 font-medium">
-                                    TOEFL
-                                </td>
-                                <td className="px-3 py-2">ETS</td>
-                                <td className="px-3 py-2">
-                                    <MissingTag />
-                                </td>
-                                <td className="px-3 py-2">—</td>
-                                <td className="px-3 py-2">—</td>
-                                <td className="px-3 py-2">—</td>
-                                <td className="px-3 py-2">—</td>
-                                <td className="px-3 py-2">—</td>
-                                <td className="px-3 py-2">—</td>
-                                <td className="px-3 py-2">
-                                    <MissingTag />
-                                </td>
-                                <td className="px-3 py-2">—</td>
-                                <td className="px-3 py-2">
-                                    <MissingTag />
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div className="rounded-md border border-[var(--border)] bg-[var(--muted)]/30 p-3 text-xs text-[var(--muted-foreground)]">
-                    <span className="font-semibold text-[var(--foreground)]">
-                        NOTE:
-                    </span>{" "}
-                    IELTS validity is 2 years from test date (~Sep 2027).
-                    British Council scores are marked <VerifyTag /> — band
-                    scores could not be read from the source PDF; confirm from
-                    the physical or online certificate.
-                </div>
-            </Section>
-
-            {/* 11. References -------------------------------------------- */}
-            <Section id="references" title="11. References">
-                <p className="text-sm">
-                    Five formal Letters of Recommendation (LORs) on file.
-                    Details below.
-                </p>
-                <div className="grid gap-3 sm:grid-cols-2">
-                    {REFERENCES.map((r) => (
-                        <ReferenceCard key={r.name} {...r} />
-                    ))}
-                </div>
-            </Section>
-
-            {/* 12. Statements & Essays ----------------------------------- */}
-            <Section id="statements" title="12. Statements & Essays">
-                <div className="rounded-md border border-amber-500/40 bg-amber-500/10 p-3 text-sm">
-                    <span className="font-semibold">[MISSING]</span> No
-                    Statement of Purpose, Personal Statement, Motivation
-                    Letter, Research Proposal, or Writing Sample was found in
-                    the source documents. Draft and insert each below before
-                    submitting.
-                </div>
-                <div className="mt-4 space-y-3">
-                    {STATEMENT_PLACEHOLDERS.map((s) => (
-                        <div
-                            key={s}
-                            className="rounded-md border border-dashed border-[var(--border)] p-3"
+                        {/* 3. Education ---------------------------------------------- */}
+                        <Section
+                            id="education"
+                            title="3. Education"
+                            subtitle="(Newest first)"
                         >
-                            <div className="text-sm font-medium">[ {s} ]</div>
-                            <div className="mt-1 text-xs text-[var(--muted-foreground)]">
-                                PLACEHOLDER: Write and insert this document
-                                here before submitting applications.
+                            <SubSection title="3.1 Undergraduate Degree">
+                                <KeyValueGrid
+                                    rows={[
+                                        [
+                                            "Institution",
+                                            "American International University–Bangladesh (AIUB)",
+                                        ],
+                                        ["Location", "Dhaka, Bangladesh"],
+                                        [
+                                            "Degree",
+                                            "Bachelor of Science in Computer Science & Engineering",
+                                        ],
+                                        ["Faculty", "Faculty of Science & Technology"],
+                                        ["Student ID", "18-37271-1"],
+                                        [
+                                            "Registration No.",
+                                            "23-39753-07 (Degree certificate)",
+                                        ],
+                                        ["Duration", "January 2018 – December 2022"],
+                                        ["Degree Conferred", "09 April 2025"],
+                                        ["CGPA", "3.58 / 4.00"],
+                                        [
+                                            "Total Credits",
+                                            "148 credits earned; 56 courses passed",
+                                        ],
+                                        ["Medium", "English"],
+                                        [
+                                            "Thesis",
+                                            <>
+                                                CSC4299 THESIS – Grade: A (exact title{" "}
+                                                <VerifyTag />)
+                                            </>,
+                                        ],
+                                        ["Accreditation", "PAASCU Accredited"],
+                                    ]}
+                                />
+                                <div className="mt-4">
+                                    <h4 className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
+                                        Activities & Extracurriculars (AIUB)
+                                    </h4>
+                                    <ul className="mt-2 list-disc space-y-1 pl-5 text-sm">
+                                        <li>
+                                            Member of the AIUB Competitive Programming
+                                            Community (ACPC).
+                                        </li>
+                                        <li>
+                                            Participated in the 2019 and 2020 ICPC Asia
+                                            Dhaka Regional Contest.
+                                        </li>
+                                        <li>
+                                            Solved ~1,400+ problems across Codeforces,
+                                            CodeChef, HackerRank, UVa, LightOJ during
+                                            undergraduate studies.
+                                        </li>
+                                        <li>
+                                            10th Place – Intra-AIUB Programming Contest,
+                                            Fall 2021–22.
+                                        </li>
+                                        <li>
+                                            6th Place – AIUB CS Fest 2018 Programming
+                                            Contest.
+                                        </li>
+                                    </ul>
+                                </div>
+                            </SubSection>
+
+                            <SubSection title="3.2 Higher Secondary Certificate (HSC)">
+                                <KeyValueGrid
+                                    rows={[
+                                        ["Institution", "Comilla Govt. College"],
+                                        ["Location", "Cumilla, Bangladesh"],
+                                        ["Group", "Science"],
+                                        ["Duration", "2015 – 2017"],
+                                        ["GPA", "4.00 / 5.00"],
+                                        [
+                                            "Board",
+                                            <>
+                                                <VerifyTag /> likely Cumilla Education Board
+                                            </>,
+                                        ],
+                                    ]}
+                                />
+                            </SubSection>
+                        </Section>
+
+                        {/* 4. Work Experience ---------------------------------------- */}
+                        <Section id="experience" title="4. Work Experience">
+                            <SubSection title="4.1 Cefalo Bangladesh Ltd.">
+                                <KeyValueGrid
+                                    rows={[
+                                        ["Employer", "Cefalo Bangladesh Ltd."],
+                                        ["Location", "Dhaka, Bangladesh"],
+                                        ["Title", "Software Engineer (L1 → L2)"],
+                                        ["Dates", "June 2022 – Present"],
+                                        [
+                                            "Clients",
+                                            "DN Media Group, Zaui Stay, Stiftelsen Asta",
+                                        ],
+                                    ]}
+                                />
+                                <div className="mt-4">
+                                    <h4 className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
+                                        Key Responsibilities & Achievements
+                                    </h4>
+                                    <ul className="mt-2 list-disc space-y-2 pl-5 text-sm leading-relaxed">
+                                        <li>
+                                            <span className="font-medium">
+                                                ATS Platform Development:
+                                            </span>{" "}
+                                            Led a team of 4 engineers to build a scalable
+                                            Applicant Tracking System using TypeScript,
+                                            NestJS, and React. Implemented role-based
+                                            access control and integrated HackerRank,
+                                            improving interview workflow efficiency and
+                                            candidate management.
+                                        </li>
+                                        <li>
+                                            <span className="font-medium">
+                                                Performance Optimization:
+                                            </span>{" "}
+                                            Reduced large-scale archive import time from
+                                            3–4 minutes to under 1 minute by designing
+                                            advanced PostgreSQL indexing strategies and
+                                            implementing in-memory caching with Ehcache.
+                                        </li>
+                                        <li>
+                                            <span className="font-medium">
+                                                Scalable Backend Systems:
+                                            </span>{" "}
+                                            Designed and implemented background processing
+                                            pipelines and scheduler-based architectures
+                                            using Spring Boot, significantly improving
+                                            system throughput and handling high-volume
+                                            data operations.
+                                        </li>
+                                        <li>
+                                            <span className="font-medium">
+                                                Observability & Monitoring:
+                                            </span>{" "}
+                                            Implemented centralized logging and monitoring
+                                            using the ELK stack (Elasticsearch, Logstash,
+                                            Kibana), enabling faster issue detection and
+                                            improving system reliability.
+                                        </li>
+                                        <li>
+                                            <span className="font-medium">
+                                                CI/CD & DevOps:
+                                            </span>{" "}
+                                            Designed release pipelines using GitHub
+                                            Actions, Docker, and AWS EC2, reducing
+                                            deployment time by 30%. Integrated Slack
+                                            notifications with Jenkins to improve CI/CD
+                                            visibility.
+                                        </li>
+                                        <li>
+                                            <span className="font-medium">
+                                                Globalization & Platform Features:
+                                            </span>{" "}
+                                            Implemented Angular i18n for multi-language
+                                            support across 20+ markets; developed booking
+                                            automation features (quotation, workflow,
+                                            discount modules).
+                                        </li>
+                                        <li>
+                                            <span className="font-medium">
+                                                Caching & System Efficiency:
+                                            </span>{" "}
+                                            Introduced Redis caching and optimized
+                                            scheduler-based processing to reduce latency
+                                            in high-traffic scenarios.
+                                        </li>
+                                        <li>
+                                            <span className="font-medium">
+                                                Collaboration & Documentation:
+                                            </span>{" "}
+                                            Contributed to Agile development processes
+                                            including sprint planning, code reviews, and
+                                            production support. Authored technical
+                                            documentation.
+                                        </li>
+                                    </ul>
+                                </div>
+                            </SubSection>
+
+                            <SubSection title="4.2 American International University-Bangladesh (AIUB)">
+                                <KeyValueGrid
+                                    rows={[
+                                        [
+                                            "Employer",
+                                            "American International University-Bangladesh (AIUB)",
+                                        ],
+                                        ["Location", "Dhaka, Bangladesh (onsite)"],
+                                        ["Title", "Web Developer"],
+                                        ["Dates", "June 2021 – May 2022"],
+                                    ]}
+                                />
+                                <div className="mt-4">
+                                    <h4 className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
+                                        Key Responsibilities
+                                    </h4>
+                                    <ul className="mt-2 list-disc space-y-2 pl-5 text-sm leading-relaxed">
+                                        <li>
+                                            Developed and maintained web-based features
+                                            for students, faculty, and administrative
+                                            users, improving accessibility of academic and
+                                            university services.
+                                        </li>
+                                        <li>
+                                            Implemented backend functionalities using Java
+                                            for internal portal modules and dynamic
+                                            data-driven pages.
+                                        </li>
+                                        <li>
+                                            Designed and optimized MySQL queries for
+                                            efficient storage and retrieval of academic
+                                            and service-related data.
+                                        </li>
+                                        <li>
+                                            Built dynamic modules including notices,
+                                            announcements, department pages, and student
+                                            services.
+                                        </li>
+                                    </ul>
+                                </div>
+                            </SubSection>
+                        </Section>
+
+                        {/* 5. Technical Skills --------------------------------------- */}
+                        <Section id="skills" title="5. Technical Skills">
+                            <div className="overflow-hidden rounded-md border border-[var(--border)]">
+                                <table className="w-full text-sm">
+                                    <thead className="bg-[var(--muted)]/40 text-left text-xs uppercase tracking-wide text-[var(--muted-foreground)]">
+                                        <tr>
+                                            <th className="px-3 py-2 font-semibold">
+                                                Category
+                                            </th>
+                                            <th className="px-3 py-2 font-semibold">
+                                                Technologies / Tools
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="divide-y divide-[var(--border)]">
+                                        {SKILLS.map(([cat, techs]) => (
+                                            <tr key={cat} className="align-top">
+                                                <td className="px-3 py-2 font-medium whitespace-nowrap">
+                                                    {cat}
+                                                </td>
+                                                <td className="px-3 py-2">
+                                                    <div className="flex flex-wrap gap-1.5">
+                                                        {techs.map((t) => (
+                                                            <Badge
+                                                                key={t}
+                                                                variant="outline"
+                                                            >
+                                                                {t}
+                                                            </Badge>
+                                                        ))}
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
                             </div>
-                        </div>
-                    ))}
-                </div>
-            </Section>
+                        </Section>
+
+                        {/* 6. Publications & Research -------------------------------- */}
+                        <Section id="publications" title="6. Publications & Research">
+                            <p className="text-sm">
+                                ResearchGate:{" "}
+                                <ExtLink href="https://www.researchgate.net/profile/Hasebul-Hassan-Chowdhury/research">
+                                    researchgate.net/profile/Hasebul-Hassan-Chowdhury
+                                </ExtLink>
+                            </p>
+
+                            <SubSection title="6.1 Chronic Kidney Disease (CKD) Paper">
+                                <KeyValueGrid
+                                    rows={[
+                                        [
+                                            "Title",
+                                            "Machine Learning-Based Early Risk Stratification Framework for Chronic Kidney Disease Progression Using Comprehensive Multi-Domain Clinical and Biochemical Data",
+                                        ],
+                                        [
+                                            "Published In",
+                                            "2026 International Conference on Smart Futuristic Technology (IEEE ICSFT 2026)",
+                                        ],
+                                        ["Conference Dates", "02–03 January 2026"],
+                                        ["Added to IEEE", "12 May 2026"],
+                                        [
+                                            "DOI",
+                                            <ExtLink
+                                                key="doi"
+                                                href="https://doi.org/10.1109/ICSFT66733.2026.11507621"
+                                            >
+                                                10.1109/ICSFT66733.2026.11507621
+                                            </ExtLink>,
+                                        ],
+                                        [
+                                            "IEEE URL",
+                                            <ExtLink
+                                                key="ieee"
+                                                href="https://ieeexplore.ieee.org/document/11507621"
+                                            >
+                                                ieeexplore.ieee.org/document/11507621
+                                            </ExtLink>,
+                                        ],
+                                        ["Publisher", "IEEE"],
+                                        ["Conference Loc.", "Bengaluru, India"],
+                                        ["ISBN (Electronic)", "979-8-3503-5707-3"],
+                                        ["ISBN (DVD)", "979-8-3503-5704-2"],
+                                        ["ISBN (USB)", "979-8-3503-5706-6"],
+                                        ["ISBN (PoD)", "979-8-3503-5708-0"],
+                                        ["Presentation", "Oral Presentation"],
+                                        ["Status", "Published (IEEE Xplore)"],
+                                    ]}
+                                />
+                                <AuthorList
+                                    authors={[
+                                        "Md. Maniruzzaman — Dept. of Electrical and Computer Engineering, San Francisco Bay University, Fremont, CA, USA",
+                                        "Naima Najam Nejum — Dept. of Computer Science & Engineering, AIUB, Dhaka, Bangladesh",
+                                        "Musfika Jannat Mamata — Dept. of Management Information Systems, University of Dhaka, Dhaka, Bangladesh",
+                                        "Hasebul Hassan Chowdhury — Dept. of Computer Science & Engineering, AIUB, Dhaka, Bangladesh",
+                                        "Fahim Ahamed Romit — Dept. of Computer Science & Engineering, BRAC University, Dhaka, Bangladesh",
+                                        "Sudoy Kumer Ghosh — Dept. of EEE, Dhaanish Ahmed College of Engineering (Affiliated to Anna University), Chennai, India",
+                                    ]}
+                                />
+                            </SubSection>
+
+                            <SubSection title="6.2 Biomass / Bioenergy Paper">
+                                <KeyValueGrid
+                                    rows={[
+                                        [
+                                            "Title",
+                                            "AI-Enhanced Prediction of Respiratory Irritation From Biomass Combustion Byproducts: An Integrative Machine Learning Framework for Sustainable Bioenergy Systems",
+                                        ],
+                                        [
+                                            "Published In",
+                                            "2026 5th International Conference on Communication, Computing and Electronics Systems (ICCCES)",
+                                        ],
+                                        ["Conference Dates", "21–23 January 2026"],
+                                        ["Added to IEEE", "25 March 2026"],
+                                        [
+                                            "DOI",
+                                            <ExtLink
+                                                key="doi2"
+                                                href="https://doi.org/10.1109/ICCCES62661.2026.11437157"
+                                            >
+                                                10.1109/ICCCES62661.2026.11437157
+                                            </ExtLink>,
+                                        ],
+                                        [
+                                            "IEEE URL",
+                                            <ExtLink
+                                                key="ieee2"
+                                                href="https://ieeexplore.ieee.org/document/11437157"
+                                            >
+                                                ieeexplore.ieee.org/document/11437157
+                                            </ExtLink>,
+                                        ],
+                                        ["Publisher", "IEEE"],
+                                        ["Conference Loc.", "Coimbatore, India"],
+                                        ["ISBN (Electronic)", "979-8-3315-5621-1"],
+                                        ["ISBN (DVD)", "979-8-3315-5620-4"],
+                                        ["ISBN (PoD)", "979-8-3315-5622-8"],
+                                        ["Status", "Published (IEEE Xplore)"],
+                                    ]}
+                                />
+                                <AuthorList
+                                    authors={[
+                                        "Shehabul Alam — College of Graduate and Professional Studies, Trine University, California, USA",
+                                        "Ayush Biswas — Dept. of Computer Science, BRAC University, Dhaka, Bangladesh",
+                                        "Rehnuma Islam — Dept. of Computer Science, BRAC University, Dhaka, Bangladesh",
+                                        "Shah Samadur Rahman — Dept. of Global Business and Enterprise, Ulster University, London, UK",
+                                        "Hasebul Hassan Chowdhury — Dept. of Computer Science & Engineering, AIUB, Dhaka, Bangladesh",
+                                        "Sudoy Kumer Ghosh — Dept. of EEE, Dhaanish Ahmed College of Engineering (Affiliated to Anna University), Chennai, India",
+                                    ]}
+                                />
+                            </SubSection>
+                        </Section>
+
+                        {/* 7. Projects ----------------------------------------------- */}
+                        <Section id="projects" title="7. Projects">
+                            <div className="grid gap-4 sm:grid-cols-2">
+                                <ProjectCard
+                                    name="Trading Portfolio Platform"
+                                    stack={[
+                                        "Next.js",
+                                        "TypeScript",
+                                        "Supabase",
+                                        "PostgreSQL",
+                                    ]}
+                                    description="Full-stack stock portfolio platform supporting transactions, live holdings, and P&L analytics. Integrated market-data APIs for real-time pricing and reporting. Used Cursor AI (structured prompts, agent loops) to accelerate development."
+                                    links={[
+                                        {
+                                            label: "Live: hasebul21.github.io",
+                                            href: "https://hasebul21.github.io",
+                                        },
+                                        {
+                                            label: "GitHub: github.com/Hasebul21",
+                                            href: "https://github.com/Hasebul21",
+                                        },
+                                    ]}
+                                />
+                                <ProjectCard
+                                    name="QuickChat"
+                                    stack={["WebSocket", "Redis", "Elasticsearch"]}
+                                    description="Real-time chat application with authentication and Redis caching for low-latency messaging. Integrated Elasticsearch for efficient message indexing and search."
+                                    links={[
+                                        {
+                                            label: "GitHub: github.com/Hasebul21",
+                                            href: "https://github.com/Hasebul21",
+                                        },
+                                    ]}
+                                    note="VERIFY direct project URL"
+                                />
+                            </div>
+                        </Section>
+
+                        {/* 8. Certifications ----------------------------------------- */}
+                        <Section id="certifications" title="8. Certifications & Courses">
+                            <div className="overflow-x-auto rounded-md border border-[var(--border)]">
+                                <table className="w-full text-sm">
+                                    <thead className="bg-[var(--muted)]/40 text-left text-xs uppercase tracking-wide text-[var(--muted-foreground)]">
+                                        <tr>
+                                            <th className="px-3 py-2 font-semibold">#</th>
+                                            <th className="px-3 py-2 font-semibold">
+                                                Certification / Course
+                                            </th>
+                                            <th className="px-3 py-2 font-semibold">
+                                                Issuer / Platform
+                                            </th>
+                                            <th className="px-3 py-2 font-semibold">
+                                                Topics / Notes
+                                            </th>
+                                            <th className="px-3 py-2 font-semibold">
+                                                Credential URL
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="divide-y divide-[var(--border)] align-top">
+                                        {CERTIFICATIONS.map((c, i) => (
+                                            <tr key={i}>
+                                                <td className="px-3 py-2 text-[var(--muted-foreground)]">
+                                                    {i + 1}
+                                                </td>
+                                                <td className="px-3 py-2 font-medium">
+                                                    {c.title}
+                                                </td>
+                                                <td className="px-3 py-2 whitespace-nowrap">
+                                                    {c.issuer}
+                                                </td>
+                                                <td className="px-3 py-2 text-[var(--muted-foreground)]">
+                                                    {c.topics}
+                                                </td>
+                                                <td className="px-3 py-2">
+                                                    {c.url ? (
+                                                        <ExtLink href={c.url}>
+                                                            <span className="break-all">
+                                                                {c.url.replace(
+                                                                    /^https?:\/\//,
+                                                                    "",
+                                                                )}
+                                                            </span>
+                                                        </ExtLink>
+                                                    ) : (
+                                                        <VerifyTag />
+                                                    )}
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </Section>
+
+                        {/* 9. Awards & Honors ---------------------------------------- */}
+                        <Section id="awards" title="9. Awards & Honors">
+                            <div className="overflow-x-auto rounded-md border border-[var(--border)]">
+                                <table className="w-full text-sm">
+                                    <thead className="bg-[var(--muted)]/40 text-left text-xs uppercase tracking-wide text-[var(--muted-foreground)]">
+                                        <tr>
+                                            <th className="px-3 py-2 font-semibold">
+                                                Award / Achievement
+                                            </th>
+                                            <th className="px-3 py-2 font-semibold">
+                                                Organizer
+                                            </th>
+                                            <th className="px-3 py-2 font-semibold">
+                                                Year
+                                            </th>
+                                            <th className="px-3 py-2 font-semibold">
+                                                Details / Link
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="divide-y divide-[var(--border)] align-top">
+                                        {AWARDS.map((a, i) => (
+                                            <tr key={i}>
+                                                <td className="px-3 py-2 font-medium">
+                                                    {a.title}
+                                                </td>
+                                                <td className="px-3 py-2 text-[var(--muted-foreground)]">
+                                                    {a.organizer}
+                                                </td>
+                                                <td className="px-3 py-2 whitespace-nowrap text-[var(--muted-foreground)]">
+                                                    {a.year}
+                                                </td>
+                                                <td className="px-3 py-2">
+                                                    {a.detail}
+                                                    {a.href && (
+                                                        <>
+                                                            {" — "}
+                                                            <ExtLink href={a.href}>
+                                                                {a.href.replace(
+                                                                    /^https?:\/\//,
+                                                                    "",
+                                                                )}
+                                                            </ExtLink>
+                                                        </>
+                                                    )}
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </Section>
+
+                        {/* 10. Test Scores ------------------------------------------- */}
+                        <Section id="test-scores" title="10. Test Scores">
+                            <div className="overflow-x-auto rounded-md border border-[var(--border)]">
+                                <table className="w-full text-sm">
+                                    <thead className="bg-[var(--muted)]/40 text-left text-xs uppercase tracking-wide text-[var(--muted-foreground)]">
+                                        <tr>
+                                            <th className="px-3 py-2 font-semibold">
+                                                Test
+                                            </th>
+                                            <th className="px-3 py-2 font-semibold">
+                                                Body
+                                            </th>
+                                            <th className="px-3 py-2 font-semibold">
+                                                Test Date
+                                            </th>
+                                            <th className="px-3 py-2 font-semibold">
+                                                Centre
+                                            </th>
+                                            <th className="px-3 py-2 font-semibold">
+                                                Candidate No.
+                                            </th>
+                                            <th className="px-3 py-2 font-semibold">L</th>
+                                            <th className="px-3 py-2 font-semibold">R</th>
+                                            <th className="px-3 py-2 font-semibold">W</th>
+                                            <th className="px-3 py-2 font-semibold">S</th>
+                                            <th className="px-3 py-2 font-semibold">
+                                                Overall
+                                            </th>
+                                            <th className="px-3 py-2 font-semibold">
+                                                CEFR
+                                            </th>
+                                            <th className="px-3 py-2 font-semibold">
+                                                TRF Number
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="divide-y divide-[var(--border)] align-top">
+                                        <tr>
+                                            <td className="px-3 py-2 font-medium">
+                                                IELTS Academic
+                                            </td>
+                                            <td className="px-3 py-2">IDP IELTS</td>
+                                            <td className="px-3 py-2 whitespace-nowrap">
+                                                19 Sep 2025
+                                            </td>
+                                            <td className="px-3 py-2">BD050</td>
+                                            <td className="px-3 py-2">503399</td>
+                                            <td className="px-3 py-2">8.0</td>
+                                            <td className="px-3 py-2">6.5</td>
+                                            <td className="px-3 py-2">7.5</td>
+                                            <td className="px-3 py-2">6.0</td>
+                                            <td className="px-3 py-2 font-semibold">
+                                                7.0
+                                            </td>
+                                            <td className="px-3 py-2">C1</td>
+                                            <td className="px-3 py-2 whitespace-nowrap font-mono text-xs">
+                                                25BD503399CHOH050A
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td className="px-3 py-2 font-medium">
+                                                IELTS Academic
+                                            </td>
+                                            <td className="px-3 py-2">British Council</td>
+                                            <td className="px-3 py-2 whitespace-nowrap">
+                                                18 Sep 2025
+                                            </td>
+                                            <td className="px-3 py-2">BD001</td>
+                                            <td className="px-3 py-2">024431</td>
+                                            <td className="px-3 py-2">
+                                                <VerifyTag />
+                                            </td>
+                                            <td className="px-3 py-2">
+                                                <VerifyTag />
+                                            </td>
+                                            <td className="px-3 py-2">
+                                                <VerifyTag />
+                                            </td>
+                                            <td className="px-3 py-2">
+                                                <VerifyTag />
+                                            </td>
+                                            <td className="px-3 py-2">
+                                                <VerifyTag />
+                                            </td>
+                                            <td className="px-3 py-2">
+                                                <VerifyTag />
+                                            </td>
+                                            <td className="px-3 py-2">
+                                                <VerifyTag />
+                                            </td>
+                                        </tr>
+                                        <tr className="text-[var(--muted-foreground)]">
+                                            <td className="px-3 py-2 font-medium">GRE</td>
+                                            <td className="px-3 py-2">ETS</td>
+                                            <td className="px-3 py-2">
+                                                <MissingTag />
+                                            </td>
+                                            <td className="px-3 py-2">—</td>
+                                            <td className="px-3 py-2">—</td>
+                                            <td className="px-3 py-2">—</td>
+                                            <td className="px-3 py-2">—</td>
+                                            <td className="px-3 py-2">—</td>
+                                            <td className="px-3 py-2">—</td>
+                                            <td className="px-3 py-2">
+                                                <MissingTag />
+                                            </td>
+                                            <td className="px-3 py-2">—</td>
+                                            <td className="px-3 py-2">
+                                                <MissingTag />
+                                            </td>
+                                        </tr>
+                                        <tr className="text-[var(--muted-foreground)]">
+                                            <td className="px-3 py-2 font-medium">
+                                                TOEFL
+                                            </td>
+                                            <td className="px-3 py-2">ETS</td>
+                                            <td className="px-3 py-2">
+                                                <MissingTag />
+                                            </td>
+                                            <td className="px-3 py-2">—</td>
+                                            <td className="px-3 py-2">—</td>
+                                            <td className="px-3 py-2">—</td>
+                                            <td className="px-3 py-2">—</td>
+                                            <td className="px-3 py-2">—</td>
+                                            <td className="px-3 py-2">—</td>
+                                            <td className="px-3 py-2">
+                                                <MissingTag />
+                                            </td>
+                                            <td className="px-3 py-2">—</td>
+                                            <td className="px-3 py-2">
+                                                <MissingTag />
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div className="rounded-md border border-[var(--border)] bg-[var(--muted)]/30 p-3 text-xs text-[var(--muted-foreground)]">
+                                <span className="font-semibold text-[var(--foreground)]">
+                                    NOTE:
+                                </span>{" "}
+                                IELTS validity is 2 years from test date (~Sep 2027).
+                                British Council scores are marked <VerifyTag /> — band
+                                scores could not be read from the source PDF; confirm from
+                                the physical or online certificate.
+                            </div>
+                        </Section>
+
+                        {/* 11. References -------------------------------------------- */}
+                        <Section id="references" title="11. References">
+                            <p className="text-sm">
+                                Five formal Letters of Recommendation (LORs) on file.
+                                Details below.
+                            </p>
+                            <div className="grid gap-3 sm:grid-cols-2">
+                                {REFERENCES.map((r) => (
+                                    <ReferenceCard key={r.name} {...r} />
+                                ))}
+                            </div>
+                        </Section>
+
+                        {/* 12. Statements & Essays ----------------------------------- */}
+                        <Section id="statements" title="12. Statements & Essays">
+                            <div className="rounded-md border border-amber-500/40 bg-amber-500/10 p-3 text-sm">
+                                <span className="font-semibold">[MISSING]</span> No
+                                Statement of Purpose, Personal Statement, Motivation
+                                Letter, Research Proposal, or Writing Sample was found in
+                                the source documents. Draft and insert each below before
+                                submitting.
+                            </div>
+                            <div className="mt-4 space-y-3">
+                                {STATEMENT_PLACEHOLDERS.map((s) => (
+                                    <div
+                                        key={s}
+                                        className="rounded-md border border-dashed border-[var(--border)] p-3"
+                                    >
+                                        <div className="text-sm font-medium">[ {s} ]</div>
+                                        <div className="mt-1 text-xs text-[var(--muted-foreground)]">
+                                            PLACEHOLDER: Write and insert this document
+                                            here before submitting applications.
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </Section>
 
                         <footer className="pt-6 text-center text-xs text-[var(--muted-foreground)]">
                             END OF MASTER APPLICATION PROFILE
