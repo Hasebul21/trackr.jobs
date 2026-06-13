@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, SlidersHorizontal } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
@@ -84,6 +84,17 @@ export function FiltersPanel({ facets }: { facets: Facets }) {
   const visaRemoteSelected =
     (isOn("visa") ? 1 : 0) + (isOn("remote") ? 1 : 0);
   const postedSelected = params.get("days") ? 1 : 0;
+  const totalSelected =
+    countrySelected +
+    senioritySelected +
+    sourceSelected +
+    visaRemoteSelected +
+    postedSelected;
+
+  // On mobile the panel would otherwise push the entire job grid below the
+  // fold, so it starts collapsed behind a "Filters" toggle. On lg+ it's the
+  // always-visible sticky sidebar (the toggle is hidden, panel forced open).
+  const [mobileOpen, setMobileOpen] = React.useState(false);
 
   return (
     // Pane sticks under the navbar (top-14 = 56px) and caps its height
@@ -91,7 +102,29 @@ export function FiltersPanel({ facets }: { facets: Facets }) {
     // Source/Country lists never push the dashboard down on a 12"
     // laptop (~800px viewport height).
     <aside className="w-full shrink-0 self-start lg:sticky lg:top-14 lg:w-60">
-      <div className="rounded-lg border border-[var(--border)] bg-[var(--card)] lg:max-h-[calc(100vh-4.5rem)] lg:overflow-y-auto">
+      {/* Mobile-only toggle. Hidden on lg where the panel is always shown. */}
+      <button
+        type="button"
+        onClick={() => setMobileOpen((o) => !o)}
+        aria-expanded={mobileOpen}
+        className="mb-2 flex w-full items-center justify-between rounded-lg border border-[var(--border)] bg-[var(--card)] px-3 py-2.5 text-sm font-semibold lg:hidden"
+      >
+        <span className="flex items-center gap-2">
+          <SlidersHorizontal className="h-4 w-4" /> Filters
+          {totalSelected > 0 && (
+            <span className="rounded-full bg-[var(--gain-50)] px-1.5 py-0.5 text-[10px] font-medium text-[var(--gain-700)]">
+              {totalSelected}
+            </span>
+          )}
+        </span>
+        <ChevronDown
+          className={`h-4 w-4 text-[var(--muted-foreground)] transition-transform ${mobileOpen ? "rotate-180" : ""}`}
+        />
+      </button>
+
+      <div
+        className={`${mobileOpen ? "block" : "hidden"} rounded-lg border border-[var(--border)] bg-[var(--card)] lg:block lg:max-h-[calc(100vh-4.5rem)] lg:overflow-y-auto`}
+      >
         <div className="flex items-center justify-between border-b border-[var(--border)] px-3 py-2">
           <h2 className="text-xs font-semibold uppercase tracking-wider">
             Filters

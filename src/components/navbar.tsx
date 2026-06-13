@@ -4,6 +4,7 @@ import { Bookmark, Settings, Briefcase, Building2, Globe, Plane, Laptop } from "
 import { SearchInput } from "./search-input";
 import { ThemeToggle } from "./theme-toggle";
 import { RefreshButton } from "./refresh-button";
+import { MobileNav } from "./mobile-nav";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 
@@ -13,18 +14,24 @@ export function Navbar() {
       <div className="mx-auto flex h-14 max-w-7xl items-center gap-3 px-4">
         <Link
           href="/"
-          className="font-semibold tracking-tight text-[var(--foreground)] hover:opacity-80"
+          className="shrink-0 whitespace-nowrap font-semibold tracking-tight text-[var(--foreground)] hover:opacity-80"
         >
           Trackr<span className="text-[var(--muted-foreground)]">.jobs</span>
         </Link>
-        <div className="flex-1 px-4">
+        {/* min-w-0 lets this flex item shrink below the input's intrinsic
+            width on narrow screens — without it the long placeholder forces
+            the whole row (and document) wider than the viewport. */}
+        <div className="min-w-0 flex-1 px-2 sm:px-4">
           {/* SearchInput uses useSearchParams() — must be inside a Suspense
               boundary so static pages (like /_not-found) don't bail out. */}
           <Suspense fallback={<Skeleton className="h-9 w-full max-w-md" />}>
             <SearchInput />
           </Suspense>
         </div>
-        <nav className="flex items-center gap-1">
+        {/* Desktop nav — inline links. Hidden on mobile in favour of the
+            hamburger drawer below, which avoids cramming 7 links + search
+            + controls into a single 360px row. */}
+        <nav className="hidden items-center gap-1 sm:flex">
           <Button asChild variant="ghost" size="sm">
             <Link href="/">
               <Briefcase /> <span className="hidden sm:inline">Jobs</span>
@@ -65,6 +72,11 @@ export function Navbar() {
           <RefreshButton />
           <ThemeToggle />
         </nav>
+
+        {/* Mobile nav — hamburger drawer. */}
+        <div className="flex items-center sm:hidden">
+          <MobileNav />
+        </div>
       </div>
     </header>
   );

@@ -63,22 +63,26 @@ export function Pagination({
         ) : (
           link(page - 1, "Previous", "prev")
         )}
-        {pageNumbers.map((n, i) =>
-          n === "…" ? (
-            <span
-              key={`gap-${i}`}
-              className="px-1 text-[var(--muted-foreground)]"
-            >
-              …
-            </span>
-          ) : n === page ? (
-            <Button key={n} variant="default" size="sm" disabled>
-              {n}
-            </Button>
-          ) : (
-            link(n, n, n)
-          ),
-        )}
+        {/* Numbered pages add up fast and overflow a phone row, so they're
+            hidden on mobile — Prev/Next + the "page N of M" summary suffice. */}
+        <div className="hidden items-center gap-1.5 sm:flex">
+          {pageNumbers.map((n, i) =>
+            n === "…" ? (
+              <span
+                key={`gap-${i}`}
+                className="px-1 text-[var(--muted-foreground)]"
+              >
+                …
+              </span>
+            ) : n === page ? (
+              <Button key={n} variant="default" size="sm" disabled>
+                {n}
+              </Button>
+            ) : (
+              link(n, n, n)
+            ),
+          )}
+        </div>
         {nextDisabled ? (
           <Button variant="outline" size="sm" disabled>
             Next

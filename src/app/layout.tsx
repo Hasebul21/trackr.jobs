@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { JetBrains_Mono, Lato } from "next/font/google";
 import { Toaster } from "sonner";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -26,6 +26,18 @@ export const metadata: Metadata = {
   title: "Trackr.jobs — international tech jobs",
   description:
     "Aggregated software-engineering jobs with visa sponsorship and relocation support from TokyoDev, Japan Dev, Relocate.me, and more.",
+};
+
+// Explicit viewport so mobile scales correctly. themeColor tints the
+// browser chrome to match --bg-canvas in each scheme. We allow zoom
+// (no maximumScale) for accessibility.
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#efece5" },
+    { media: "(prefers-color-scheme: dark)", color: "#1f1e1a" },
+  ],
 };
 
 export default function RootLayout({
