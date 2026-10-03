@@ -1,0 +1,167 @@
+// Orchestrates one ingest cycle:
+//   getProviders → fetch each (parallel) → normalize → score → dedupe → upsert
+// Returns per-source stats so the controller can report what happened.
+
+import { Injectable } from '@nestjs/common';
+import { PrismaService } from '../prisma/prisma.service';
+import { getProviders } from '../providers';
+import type { JobProvider } from '../providers';
+import type { Job, RawJob } from '../jobs/job.types';
+import { matchesAllowedTitle } from '../config/preferences';
+import { normalizeJob } from './normalize';
+import { scoreJob } from './scoring';
+import { dedupeJobs } from './dedup';
+
+export type IngestStats = {
+  source: string;
+  fetched: number;
+  inserted: number;
+  updated: number;
+  ok: boolean;
+  error?: string;
+};
+
+export type IngestReport = {
+  startedAt: Date;
+  finishedAt: Date;
+  totalFetched: number;
+  totalUpserted: number;
+  bySource: IngestStats[];
+};
+
+@Injectable()
+export class IngestService {
+  constructor(private readonly prisma: PrismaService) {}
+
+  async runIngest(
+    opts: { providers?: JobProvider[] } = {},
+  ): Promise<IngestReport> {
+    const startedAt = new Date();
+    const providers = opts.providers ?? getProviders();
+
+    const results = await Promise.all(
+      providers.map(async (p) => {
+        const run = await this.prisma.fetchRun.create({
+          data: { source: p.name },
+        });
+        try {
+          const raws = await p.fetchJobs();
+          const filteredRaws = raws.filter((r) => matchesAllowedTitle(r.title));
+          const normalized: Job[] = filteredRaws.map((r) => fullJob(r, p.name));
+          await this.prisma.fetchRun.update({
+            where: { id: run.id },
+            data: {
+              finishedAt: new Date(),
+              ok: true,
+              fetched: normalized.length,
+            },
+          });
+          return { provider: p.name, jobs: normalized };
+        } catch (err) {
+          await this.prisma.fetchRun.update({
+            where: { id: run.id },
+            data: {
+              finishedAt: new Date(),
+              ok: false,
+              error: (err as Error).message,
+            },
+          });
+          return {
+            provider: p.name,
+            jobs: [] as Job[],
+            error: (err as Error).message,
+          };
+        }
+      }),
+    );
+
+    // Cross-source dedup happens after we have every provider's batch.
+    const allJobs = results.flatMap((r) => r.jobs);
+
+    // Drop anything the user has already marked as applied. Their Job row
+    // was deleted at "mark applied" time; the tombstone here is what stops
+    // the same posting from sneaking back in on the next cron tick.
+    const allIds = allJobs.map((j) => j.id);
+    const appliedRows =
+      allIds.length === 0
+        ? []
+        : await this.prisma.appliedJob.findMany({
+            where: { id: { in: allIds } },
+            select: { id: true },
+          });
+    const appliedIds = new Set(appliedRows.map((a) => a.id));
+    const surviving = allJobs.filter((j) => !appliedIds.has(j.id));
+
+    const deduped = dedupeJobs(surviving);
+    const dedupedIds = new Set(deduped.map((j) => j.id));
+
+    const stats: IngestStats[] = [];
+    let totalUpserted = 0;
+    for (const r of results) {
+      const mine = r.jobs.filter((j) => dedupedIds.has(j.id));
+      let inserted = 0;
+      let updated = 0;
+      for (const j of mine) {
+        const res = await this.upsertJob(j);
+        if (res === 'inserted') inserted++;
+        else if (res === 'updated') updated++;
+      }
+      totalUpserted += inserted + updated;
+      stats.push({
+        source: r.provider,
+        fetched: r.jobs.length,
+        inserted,
+        updated,
+        ok: !r.error,
+        error: r.error,
+      });
+    }
+
+    return {
+      startedAt,
+      finishedAt: new Date(),
+      totalFetched: allJobs.length,
+      totalUpserted,
+      bySource: stats,
+    };
+  }
+
+  private async upsertJob(j: Job): Promise<'inserted' | 'updated' | 'skipped'> {
+    const existing = await this.prisma.job.findUnique({ where: { id: j.id } });
+    const data = {
+      source: j.source,
+      sourceJobId: j.sourceJobId,
+      title: j.title,
+      company: j.company,
+      companyLogo: j.companyLogo ?? null,
+      location: j.location,
+      salary: j.salary ?? null,
+      description: j.description,
+      requirements: JSON.stringify(j.requirements),
+      tags: JSON.stringify(j.tags),
+      technologies: JSON.stringify(j.technologies),
+      visaSupport: j.visaSupport,
+      remote: j.remote,
+      relocation: j.relocation,
+      seniority: j.seniority,
+      applyUrl: j.applyUrl,
+      sourceUrl: j.sourceUrl,
+      postedAt: j.postedAt ?? null,
+      matchedScore: j.matchedScore,
+      fingerprint: j.fingerprint,
+    };
+    if (existing) {
+      await this.prisma.job.update({ where: { id: j.id }, data });
+      return 'updated';
+    }
+    await this.prisma.job.create({ data: { id: j.id, ...data } });
+    return 'inserted';
+  }
+}
+
+function fullJob(raw: RawJob, source: string): Job {
+  const base = normalizeJob(raw, source);
+  const matchedScore = scoreJob(base);
+  const now = new Date();
+  return { ...base, matchedScore, createdAt: now, updatedAt: now };
+}
