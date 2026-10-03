@@ -43,7 +43,7 @@ const BADGE_VARIANTS: Record<BadgeVariant, string> = {
   outline: 'border-[var(--border)] bg-transparent text-[var(--foreground)]',
   accent: 'bg-[var(--accent)] text-[var(--accent-foreground)] border-transparent',
   success: 'bg-[var(--gain-50)] text-[var(--gain-700)] border-[var(--gain-200)]',
-  info: 'bg-[var(--accent-50)] text-[var(--accent-700)] border-[var(--accent-200)]',
+  info: 'bg-[var(--accent-50)] text-[var(--accent-700)] border-[var(--accent-200)] dark:text-[var(--accent-200)]',
   warn: 'bg-[var(--warn-50)] text-[var(--warn-700)] border-[var(--warn-200)]',
 };
 
