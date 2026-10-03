@@ -9,6 +9,7 @@ const STORAGE_KEY = 'job-stes:hidden-companies:v1';
 export class HiddenCompaniesService {
   readonly ids = signal<IdSet>(loadIds(STORAGE_KEY));
   readonly list = computed(() => Object.keys(this.ids()));
+  readonly count = computed(() => this.list().length);
 
   has(id: string): boolean {
     return !!this.ids()[id];
