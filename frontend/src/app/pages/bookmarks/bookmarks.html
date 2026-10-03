@@ -1,1 +1,39 @@
-<p>bookmarks works!</p>
+<div class="mx-auto w-full max-w-7xl px-4 py-6">
+  <div class="mb-6 flex items-center justify-between">
+    <div>
+      <h1 class="text-2xl font-semibold tracking-tight">Bookmarks</h1>
+      <p class="text-sm text-[var(--muted-foreground)]">
+        {{ bookmarks.list().length }} saved · stored locally in your browser
+      </p>
+    </div>
+    @if (bookmarks.list().length > 0) {
+      <button nz-button type="button" [class]="clearClass" (click)="bookmarks.clear()">
+        Clear all
+      </button>
+    }
+  </div>
+
+  @if (jobs.error()) {
+    <app-error-state [message]="errorText()" (retry)="jobs.reload()" />
+  } @else if (jobs.hasValue()) {
+    @if (jobs.value().jobs.length === 0) {
+      <app-empty-state heading="No bookmarks yet">
+        Save jobs from the <a routerLink="/" class="underline">dashboard</a> to see them here.
+      </app-empty-state>
+    } @else {
+      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+        @for (job of jobs.value().jobs; track job.id) {
+          <app-job-card [job]="job" />
+        }
+      </div>
+    }
+  } @else {
+    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+      @for (i of skeletons; track i) {
+        <div class="h-64 rounded-lg border border-[var(--border)] bg-[var(--card)] p-3">
+          <nz-skeleton [nzActive]="true" [nzAvatar]="{ shape: 'square' }" />
+        </div>
+      }
+    </div>
+  }
+</div>
