@@ -4,6 +4,7 @@ export type Theme = 'light' | 'dark' | 'system';
 
 // Same localStorage key next-themes used, so a saved choice carries over.
 const STORAGE_KEY = 'theme';
+const ANT_DARK_LINK_ID = 'ant-dark-theme';
 
 @Injectable({ providedIn: 'root' })
 export class ThemeService {
@@ -27,7 +28,23 @@ export class ThemeService {
       const dark = this.resolvedTheme() === 'dark';
       root.classList.toggle('dark', dark);
       root.style.colorScheme = dark ? 'dark' : 'light';
+      this.toggleAntDarkTheme(dark);
     });
+  }
+
+  // Ant Design's dark styles ship as a separate bundle (ant-dark.css) that
+  // is only on the page while dark mode is active.
+  private toggleAntDarkTheme(dark: boolean) {
+    const existing = this.document.getElementById(ANT_DARK_LINK_ID);
+    if (dark && !existing) {
+      const link = this.document.createElement('link');
+      link.id = ANT_DARK_LINK_ID;
+      link.rel = 'stylesheet';
+      link.href = 'ant-dark.css';
+      this.document.head.appendChild(link);
+    } else if (!dark && existing) {
+      existing.remove();
+    }
   }
 
   setTheme(theme: Theme) {
