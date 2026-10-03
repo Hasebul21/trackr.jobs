@@ -22,7 +22,7 @@
               : 'text-[var(--muted-foreground)] hover:bg-[var(--muted)]/50 hover:text-[var(--foreground)]'
           "
         >
-          <nz-icon [nzType]="link.icon" class="shrink-0" />
+          <nz-icon aria-hidden="true" [nzType]="link.icon" class="shrink-0" />
           {{ link.label }}
         </a>
       }

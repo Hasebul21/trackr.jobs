@@ -19,7 +19,7 @@
     <nav class="hidden items-center gap-1 sm:flex">
       @for (link of links; track link.path) {
         <a nz-button nzType="text" [routerLink]="link.path" [class]="linkClass">
-          <nz-icon [nzType]="link.icon" />
+          <nz-icon aria-hidden="true" [nzType]="link.icon" />
           <span class="hidden sm:inline">{{ link.label }}</span>
         </a>
       }
@@ -37,7 +37,7 @@
         [attr.aria-expanded]="menuOpen()"
         (click)="menuOpen.set(true)"
       >
-        <nz-icon nzType="menu" />
+        <nz-icon aria-hidden="true" nzType="menu" />
       </button>
     </div>
   </div>

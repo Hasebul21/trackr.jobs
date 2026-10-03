@@ -6,5 +6,5 @@
   aria-label="Toggle theme"
   (click)="theme.setTheme(isDark() ? 'light' : 'dark')"
 >
-  <nz-icon [nzType]="isDark() ? 'sun' : 'moon'" />
+  <nz-icon aria-hidden="true" [nzType]="isDark() ? 'sun' : 'moon'" />
 </button>
