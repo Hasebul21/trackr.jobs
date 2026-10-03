@@ -40,7 +40,7 @@ export class JobCard {
   });
 
   protected badge = badgeClasses;
-  protected applyClass = `${buttonClasses('default', 'sm')} bg-[var(--gain-700)] text-[var(--bg-canvas)] hover:bg-[var(--gain-600)]`;
+  protected applyClass = buttonClasses('apply', 'sm');
 }
 
 // Two-letter initials for the logo placeholder: first letters of the first

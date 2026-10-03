@@ -64,7 +64,7 @@ export class FiltersPanel {
       this.postedCount(),
   );
 
-  protected clearClass = `${buttonClasses('ghost', 'sm')} h-6 px-2 text-xs`;
+  protected clearClass = `${buttonClasses('ghost', 'xs')} text-xs`;
 
   isOn(key: string): boolean {
     return this.params().get(key) === '1';
@@ -75,7 +75,7 @@ export class FiltersPanel {
   }
 
   chipClass(active: boolean): string {
-    return `${buttonClasses(active ? 'default' : 'outline', 'sm')} h-6 px-2 text-[11px]`;
+    return `${buttonClasses(active ? 'default' : 'outline', 'xs')} text-[11px]`;
   }
 
   toggleValue(key: string, value: string) {
