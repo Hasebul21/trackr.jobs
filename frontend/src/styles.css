@@ -1,0 +1,133 @@
+@import "tailwindcss";
+@import "./tokens.css";
+
+/* Tailwind v4: tell it to use class-based dark mode toggled by ThemeService. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+ * Bridge layer. Every component in this codebase reads tokens with the
+ * shadcn-style names (--background, --foreground, --card, --muted, …).
+ * We re-bind those names to the trading "Coffee" palette tokens from
+ * tokens.css so the whole UI inherits the new look without touching
+ * any component code. The dark-mode flip happens automatically: the
+ * .dark scope in tokens.css updates --bg-canvas, --ink-strong, etc., and
+ * because the bindings below reference those via var(), they pick up
+ * the new values dynamically.
+ */
+:root {
+  --background: var(--bg-canvas);
+  --foreground: var(--ink-strong);
+  --card: var(--bg-surface);
+  --card-foreground: var(--ink-strong);
+  --muted: var(--bg-inset);
+  --muted-foreground: var(--ink-muted);
+  --border: var(--line);
+  --input: var(--line);
+  --ring: var(--accent-500);
+  --primary: var(--ink-strong);
+  --primary-foreground: var(--bg-canvas);
+  --accent: var(--bg-inset);
+  --accent-foreground: var(--ink-strong);
+  --destructive: var(--loss-600);
+  --destructive-foreground: var(--bg-canvas);
+  --radius: var(--radius-lg);
+  --score-good: var(--gain-600);
+  --score-mid: var(--warn-600);
+  --score-low: var(--ink-muted);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --font-sans: var(--font-lato);
+  --font-mono: var(--font-jetbrains);
+}
+
+* {
+  border-color: var(--border);
+}
+
+html,
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+}
+
+body {
+  font-size: var(--fs-body);
+  line-height: var(--lh-normal);
+  font-weight: var(--fw-regular);
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "rlig" 1, "calt" 1;
+}
+
+/* Mono utility — symbols, tabular numbers. */
+.font-mono {
+  font-family: var(--font-mono);
+  font-feature-settings: "tnum";
+}
+
+.tabular,
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Subtle scrollbar that matches the new palette. */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--bg-inset);
+  border-radius: 6px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--line);
+}
+
+/* Dashboard hides the page scrollbar (scrolling still works). */
+html:has(.dashboard-page) {
+  scrollbar-width: none;
+}
+html:has(.dashboard-page)::-webkit-scrollbar,
+html:has(.dashboard-page) body::-webkit-scrollbar {
+  display: none;
+}
+
+/* Shimmer used by skeletons. */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--muted) 0%,
+    var(--accent) 50%,
+    var(--muted) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.6s ease-in-out infinite;
+}
