@@ -1,0 +1,217 @@
+@if (enableCountryFilter()) {
+  <div class="mb-4 flex flex-wrap gap-2">
+    @for (ctry of countries(); track ctry) {
+      <button
+        type="button"
+        [class]="ctry === country() ? btnDefaultSm : btnOutlineSm"
+        (click)="selectCountry(ctry)"
+      >
+        {{ ctry }}
+      </button>
+    }
+  </div>
+}
+
+@if (hiddenCount() > 0) {
+  <div class="mb-3 flex items-center justify-end gap-2 text-xs text-[var(--muted-foreground)]">
+    <span>{{ hiddenCount() }} hidden</span>
+    <button type="button" [class]="btnGhostSm" (click)="toggleShowHidden()">
+      @if (showHidden()) {
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path
+            d="M10.733 5.076a10.744 10.744 0 0 1 11.205 6.575 1 1 0 0 1 0 .696 10.747 10.747 0 0 1-1.444 2.49"
+          />
+          <path d="M14.084 14.158a3 3 0 0 1-4.242-4.242" />
+          <path
+            d="M17.479 17.499a10.75 10.75 0 0 1-15.417-5.151 1 1 0 0 1 0-.696 10.75 10.75 0 0 1 4.446-5.143"
+          />
+          <path d="m2 2 20 20" />
+        </svg>
+        Hide hidden
+      } @else {
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path
+            d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"
+          />
+          <circle cx="12" cy="12" r="3" />
+        </svg>
+        Show hidden
+      }
+    </button>
+  </div>
+}
+
+<div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+  @for (c of slice(); track c.name) {
+    @let hidden = !!hiddenIds()[c.name];
+    <div
+      class="flex h-full flex-col rounded-lg border border-[var(--border)] bg-[var(--card)] text-[var(--card-foreground)] shadow-sm transition-colors"
+      [class.opacity-60]="hidden"
+    >
+      <div class="flex flex-col gap-1 p-4 pb-2">
+        <div class="flex items-start justify-between gap-2">
+          <div class="min-w-0">
+            <div class="truncate font-semibold text-[var(--foreground)]">{{ c.name }}</div>
+            <div class="text-xs text-[var(--muted-foreground)]">{{ c.country }}</div>
+          </div>
+          <div class="flex items-center gap-1">
+            @if (c.auto) {
+              <span
+                class="inline-flex items-center gap-1 rounded-md border border-[var(--gain-200)] bg-[var(--gain-50)] px-2 py-0.5 text-xs font-medium text-[var(--gain-700)] transition-colors"
+                title="Pulled into the dashboard automatically"
+              >
+                <svg
+                  class="h-3 w-3"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="m9 12 2 2 4-4" />
+                </svg>
+                Auto
+              </span>
+            } @else {
+              <span
+                class="inline-flex items-center gap-1 rounded-md border border-[var(--border)] px-2 py-0.5 text-xs font-medium text-[var(--foreground)] transition-colors"
+                title="Visit manually"
+              >
+                Link
+              </span>
+            }
+            @if (hidden) {
+              <button
+                type="button"
+                [class]="btnGhostIcon"
+                title="Restore"
+                [attr.aria-label]="'Restore ' + c.name"
+                (click)="restore(c.name)"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+                  <path d="M3 3v5h5" />
+                </svg>
+              </button>
+            } @else {
+              <button
+                type="button"
+                [class]="btnGhostIcon"
+                title="Hide"
+                [attr.aria-label]="'Hide ' + c.name"
+                (click)="hide(c.name)"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M18 6 6 18" />
+                  <path d="m6 6 12 12" />
+                </svg>
+              </button>
+            }
+          </div>
+        </div>
+      </div>
+      <div class="mt-auto flex items-center justify-between gap-2 p-4 pt-0">
+        <span class="truncate text-xs text-[var(--muted-foreground)]">
+          {{ c.note ?? hostname(c.url) }}
+        </span>
+        <a [class]="btnDefaultSm" [href]="c.url" target="_blank" rel="noopener noreferrer">
+          Visit
+          <svg
+            class="h-3.5 w-3.5"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M15 3h6v6" />
+            <path d="M10 14 21 3" />
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  }
+</div>
+
+<!-- Prev/Next are links that set ?page= on the page's own route, unless the
+     country filter is on, in which case they only change local state. -->
+<ng-template #pageLink let-n let-label="label">
+  @if (enableCountryFilter()) {
+    <button type="button" [class]="btnOutlineSm" (click)="goTo(n)">{{ label }}</button>
+  } @else {
+    <a [class]="btnOutlineSm" [routerLink]="basePath()" [queryParams]="queryFor(n)">{{ label }}</a>
+  }
+</ng-template>
+
+<nav class="mt-6 flex flex-wrap items-center justify-between gap-3 text-sm">
+  <div class="text-[var(--muted-foreground)]">
+    Showing {{ visible().length === 0 ? 0 : start() + 1 }}–{{ end() }} of {{ visible().length }} ·
+    page {{ page() }} of {{ totalPages() }}
+  </div>
+  <div class="flex items-center gap-1.5">
+    @if (page() <= 1) {
+      <button type="button" [class]="btnOutlineSm" disabled>Previous</button>
+    } @else {
+      <ng-container
+        *ngTemplateOutlet="pageLink; context: { $implicit: page() - 1, label: 'Previous' }"
+      />
+    }
+    <!-- Numbered pages would overflow a phone row, so they are desktop only. -->
+    <div class="hidden items-center gap-1.5 sm:flex">
+      @for (n of pageNumbers(); track $index) {
+        @if (n === '…') {
+          <span class="px-1 text-[var(--muted-foreground)]">…</span>
+        } @else if (n === page()) {
+          <button type="button" [class]="btnDefaultSm" disabled>{{ n }}</button>
+        } @else {
+          <ng-container *ngTemplateOutlet="pageLink; context: { $implicit: n, label: n }" />
+        }
+      }
+    </div>
+    @if (page() >= totalPages()) {
+      <button type="button" [class]="btnOutlineSm" disabled>Next</button>
+    } @else {
+      <ng-container
+        *ngTemplateOutlet="pageLink; context: { $implicit: page() + 1, label: 'Next' }"
+      />
+    }
+  </div>
+</nav>
