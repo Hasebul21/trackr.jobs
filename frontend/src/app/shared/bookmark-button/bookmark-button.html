@@ -1,0 +1,12 @@
+<button
+  type="button"
+  [class]="buttonClass()"
+  [attr.aria-pressed]="active()"
+  [attr.aria-label]="iconOnly() ? (active() ? 'Remove bookmark' : 'Bookmark') : null"
+  (click)="toggle($event)"
+>
+  <app-icon name="bookmark" [iconClass]="active() ? 'fill-current' : ''" />
+  @if (!iconOnly()) {
+    <span>{{ active() ? 'Saved' : 'Save' }}</span>
+  }
+</button>

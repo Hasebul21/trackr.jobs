@@ -1,0 +1,10 @@
+<button
+  type="button"
+  [class]="buttonClass"
+  [disabled]="pending()"
+  title="Mark as applied (removes this job)"
+  aria-label="Mark as applied"
+  (click)="markApplied($event)"
+>
+  <app-icon name="check-circle" [iconClass]="pending() ? 'animate-pulse' : ''" />
+</button>
