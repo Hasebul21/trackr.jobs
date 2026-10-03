@@ -2,10 +2,9 @@ import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ThemeService } from './core/theme.service';
 import { Navbar } from './layout/navbar/navbar';
-import { Toaster } from './layout/toaster/toaster';
 
 @Component({
-  imports: [RouterOutlet, Navbar, Toaster],
+  imports: [RouterOutlet, Navbar],
   selector: 'app-root',
   styleUrl: './app.css',
   templateUrl: './app.html',

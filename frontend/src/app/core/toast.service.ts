@@ -1,37 +1,17 @@
-import { Injectable, signal } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
 
-export type ToastType = 'success' | 'error';
-
-export interface Toast {
-  id: number;
-  type: ToastType;
-  title: string;
-  description?: string;
-}
-
-// How long a toast stays on screen, same as sonner's default.
-const DURATION_MS = 4000;
-
+// Small wrapper so callers don't repeat the placement options. Matches the
+// old sonner setup: bottom-right, closable, success/error.
 @Injectable({ providedIn: 'root' })
 export class ToastService {
-  readonly toasts = signal<Toast[]>([]);
-  private nextId = 1;
+  private notification = inject(NzNotificationService);
 
-  success(title: string, description?: string) {
-    this.show('success', title, description);
+  success(title: string, description = '') {
+    this.notification.success(title, description, { nzPlacement: 'bottomRight' });
   }
 
-  error(title: string, description?: string) {
-    this.show('error', title, description);
-  }
-
-  dismiss(id: number) {
-    this.toasts.update((list) => list.filter((t) => t.id !== id));
-  }
-
-  private show(type: ToastType, title: string, description?: string) {
-    const id = this.nextId++;
-    this.toasts.update((list) => [...list, { id, type, title, description }]);
-    setTimeout(() => this.dismiss(id), DURATION_MS);
+  error(title: string, description = '') {
+    this.notification.error(title, description, { nzPlacement: 'bottomRight' });
   }
 }
