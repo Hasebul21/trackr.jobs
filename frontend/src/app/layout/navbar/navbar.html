@@ -16,7 +16,7 @@
     </div>
 
     <!-- Desktop nav. Mobile uses the drawer instead. -->
-    <nav class="hidden items-center gap-1 sm:flex">
+    <nav class="hidden items-center gap-1 lg:flex">
       @for (link of links; track link.path) {
         <a nz-button nzType="text" [routerLink]="link.path" [class]="linkClass">
           <nz-icon aria-hidden="true" [nzType]="link.icon" />
@@ -27,7 +27,7 @@
       <app-theme-toggle />
     </nav>
 
-    <div class="flex items-center sm:hidden">
+    <div class="flex items-center lg:hidden">
       <button
         nz-button
         nzType="text"
