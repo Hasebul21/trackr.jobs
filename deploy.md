@@ -47,8 +47,13 @@ Leave `SEED_MOCK` unset in production. `NEXT_PUBLIC_APP_URL` is no longer used.
 
 Push to `main` (Git integration) or run `vercel --prod` from the repo root.
 Vercel reads `vercel.json`, builds `frontend/` with the Angular preset and
-`backend/` with the NestJS preset. `prisma generate` runs in the backend's
-`postinstall` and `build` scripts.
+`backend/` with the NestJS preset.
+
+The backend service's build command is only `npx prisma generate`. Vercel
+compiles `src/main.ts` itself. Don't change it to `npm run build`: when
+`nest build` produces `dist/` inside a service root, the function ships
+`main.js` at the bundle root, but `node_modules` stays under `backend/`, and
+the API crashes with `Cannot find module '@nestjs/core'`.
 
 ## 4. First data load
 
