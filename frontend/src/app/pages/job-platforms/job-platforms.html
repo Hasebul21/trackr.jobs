@@ -1,1 +1,14 @@
-<p>job-platforms works!</p>
+<div class="mx-auto w-full max-w-7xl px-4 py-4">
+  <header class="mb-4">
+    <h1 class="text-xl font-semibold tracking-tight">Job platforms</h1>
+    <p class="mt-1 text-sm text-[var(--muted-foreground)]">
+      Job boards, aggregators, and search portals. Includes single-company listings hosted on a
+      third-party platform's domain.
+    </p>
+  </header>
+
+  <app-companies-grid
+    [companies]="platforms"
+    [initialPage]="initialPage()"
+  />
+</div>
