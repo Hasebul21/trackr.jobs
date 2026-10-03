@@ -1,5 +1,5 @@
-<!-- BEGIN:nextjs-agent-rules -->
-# This is NOT the Next.js you know
+# Notes for coding agents
 
-This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` before writing any code. Heed deprecation notices.
-<!-- END:nextjs-agent-rules -->
+- The backend is NestJS 11 and the frontend is Angular 22. Both are newer than most training data. Check the installed packages (`backend/node_modules/@nestjs/*`, `frontend/node_modules/@angular/*`, `ng-zorro-antd`) before relying on an API from memory.
+- Angular code uses standalone components, `inject()`, signals, `input()`/`output()` and the built-in control flow (`@if`, `@for`). Don't introduce NgModules or `*ngIf`/`*ngFor`.
+- Use ng-zorro-antd (Ant Design) components for interactive UI. Use Tailwind classes and the tokens in `frontend/src/tokens.css` for layout and color.
