@@ -27,13 +27,6 @@
         }
         document.documentElement.classList.toggle('dark', t === 'dark');
         document.documentElement.style.colorScheme = t;
-        if (t === 'dark') {
-          var link = document.createElement('link');
-          link.id = 'ant-dark-theme';
-          link.rel = 'stylesheet';
-          link.href = 'ant-dark.css';
-          document.head.appendChild(link);
-        }
       } catch (e) {}
     </script>
   </head>

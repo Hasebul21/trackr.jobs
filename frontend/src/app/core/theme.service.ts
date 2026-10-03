@@ -33,7 +33,8 @@ export class ThemeService {
   }
 
   // Ant Design's dark styles ship as a separate bundle (ant-dark.css) that
-  // is only on the page while dark mode is active.
+  // is only on the page while dark mode is active. It has to come after the
+  // main stylesheet so its rules win inside the shared "antd" layer.
   private toggleAntDarkTheme(dark: boolean) {
     const existing = this.document.getElementById(ANT_DARK_LINK_ID);
     if (dark && !existing) {
