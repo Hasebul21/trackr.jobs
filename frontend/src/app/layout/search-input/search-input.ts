@@ -1,8 +1,9 @@
 import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Router } from '@angular/router';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzInputModule } from 'ng-zorro-antd/input';
 import { filter } from 'rxjs';
-import { Icon } from '../../shared/icon/icon';
 
 const DEBOUNCE_MS = 300;
 
@@ -10,7 +11,7 @@ const DEBOUNCE_MS = 300;
 // keystroke, dropping ?page so results start from the first page.
 @Component({
   selector: 'app-search-input',
-  imports: [Icon],
+  imports: [NzIconModule, NzInputModule],
   templateUrl: './search-input.html',
 })
 export class SearchInput {

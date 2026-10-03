@@ -1,4 +1,4 @@
-<button type="button" [class]="buttonClass" [disabled]="pending()" (click)="refresh()">
-  <app-icon name="refresh" [iconClass]="pending() ? 'animate-spin' : ''" />
+<button nz-button type="button" [class]="buttonClass" [disabled]="pending()" (click)="refresh()">
+  <nz-icon nzType="reload" [nzSpin]="pending()" />
   {{ pending() ? 'Refreshing…' : 'Refresh' }}
 </button>

@@ -1,15 +1,16 @@
 import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 import { ApiService } from '../../core/api.service';
 import { DataRefreshService } from '../../core/data-refresh.service';
 import { ToastService } from '../../core/toast.service';
 import { errorMessage } from '../../shared/error-message';
-import { Icon } from '../../shared/icon/icon';
 import { buttonClasses } from '../../shared/ui';
 
 @Component({
   selector: 'app-refresh-button',
-  imports: [Icon],
+  imports: [NzButtonModule, NzIconModule],
   templateUrl: './refresh-button.html',
 })
 export class RefreshButton {

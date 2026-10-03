@@ -15,11 +15,11 @@
       <app-search-input />
     </div>
 
-    <!-- Desktop nav. Mobile uses the drawer below instead. -->
+    <!-- Desktop nav. Mobile uses the drawer instead. -->
     <nav class="hidden items-center gap-1 sm:flex">
       @for (link of links; track link.path) {
-        <a [routerLink]="link.path" [class]="linkClass">
-          <app-icon [name]="link.icon" />
+        <a nz-button nzType="text" [routerLink]="link.path" [class]="linkClass">
+          <nz-icon [nzType]="link.icon" />
           <span class="hidden sm:inline">{{ link.label }}</span>
         </a>
       }
@@ -29,18 +29,18 @@
 
     <div class="flex items-center sm:hidden">
       <button
+        nz-button
+        nzType="text"
         type="button"
         [class]="iconButtonClass"
         aria-label="Open menu"
         [attr.aria-expanded]="menuOpen()"
         (click)="menuOpen.set(true)"
       >
-        <app-icon name="menu" />
+        <nz-icon nzType="menu" />
       </button>
     </div>
   </div>
 </header>
 
-<!-- Rendered outside <header>: its backdrop-filter would otherwise become
-     the containing block for the fixed drawer and trap it inside the bar. -->
 <app-mobile-nav [open]="menuOpen()" (closed)="menuOpen.set(false)" />

@@ -1,6 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { Icon } from '../../shared/icon/icon';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 import { buttonClasses } from '../../shared/ui';
 import { MobileNav } from '../mobile-nav/mobile-nav';
 import { NAV_LINKS } from '../nav-links';
@@ -10,9 +11,17 @@ import { ThemeToggle } from '../theme-toggle/theme-toggle';
 
 @Component({
   selector: 'app-navbar',
-  imports: [RouterLink, Icon, MobileNav, RefreshButton, SearchInput, ThemeToggle],
+  imports: [
+    RouterLink,
+    NzButtonModule,
+    NzIconModule,
+    MobileNav,
+    RefreshButton,
+    SearchInput,
+    ThemeToggle,
+  ],
   templateUrl: './navbar.html',
-  // display: contents so the sticky header is positioned against <body>,
+  // display: contents so the sticky header is positioned against the page,
   // not this host element.
   host: { class: 'contents' },
 })
