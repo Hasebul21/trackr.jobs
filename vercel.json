@@ -1,14 +1,41 @@
 {
-    "$schema": "https://openapi.vercel.sh/vercel.json",
-    "crons": [
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "services": {
+    "frontend": {
+      "root": "frontend",
+      "framework": "angular",
+      "outputDirectory": "dist/frontend/browser",
+      "rewrites": [
         {
-            "path": "/api/cron/refresh",
-            "schedule": "0 3 * * *"
+          "source": "/(.*)",
+          "destination": "/index.html"
         }
-    ],
-    "functions": {
-        "src/app/api/cron/refresh/route.ts": {
-            "maxDuration": 60
-        }
+      ]
+    },
+    "backend": {
+      "root": "backend",
+      "framework": "nestjs",
+      "buildCommand": "npx prisma generate"
     }
+  },
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": {
+        "service": "backend"
+      }
+    },
+    {
+      "source": "/(.*)",
+      "destination": {
+        "service": "frontend"
+      }
+    }
+  ],
+  "crons": [
+    {
+      "path": "/api/cron/refresh",
+      "schedule": "0 3 * * *"
+    }
+  ]
 }
