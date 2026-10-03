@@ -1,1 +1,18 @@
-<p>visa-sponsors works!</p>
+<div class="mx-auto w-full max-w-7xl px-4 py-4">
+  <header class="mb-4">
+    <h1 class="text-xl font-semibold tracking-tight">Visa sponsors</h1>
+    <p class="mt-1 text-sm text-[var(--muted-foreground)]">
+      Companies that sponsor work visas / relocation for international software engineers in Japan,
+      Singapore, Thailand, and Malaysia. Pick a country below. The
+      <span class="font-medium text-[var(--foreground)]">Auto</span> badge marks the strongest, most
+      foreigner-friendly sponsors. Always confirm sponsorship on the actual posting.
+    </p>
+  </header>
+
+  <app-companies-grid
+    [companies]="sponsors"
+    [initialPage]="initialPage()"
+    basePath="/visa-sponsors"
+    [enableCountryFilter]="true"
+  />
+</div>
