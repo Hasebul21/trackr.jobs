@@ -6,13 +6,20 @@ import type { JobFilters, Seniority } from './job.types';
 
 export type JobsQuery = Record<string, unknown>;
 
+// Limits so a hand-crafted URL can't make us build a huge query.
+const MAX_QUERY_LENGTH = 200;
+const MAX_LIST_VALUES = 50;
+const MAX_DAYS = 365;
+const MAX_PAGE = 10_000;
+
 function arr(v: unknown): string[] {
   const values = Array.isArray(v) ? v : [v];
   return values
     .filter((x): x is string => typeof x === 'string')
     .flatMap((x) => x.split(','))
-    .map((x) => x.trim())
-    .filter(Boolean);
+    .map((x) => x.trim().slice(0, MAX_QUERY_LENGTH))
+    .filter(Boolean)
+    .slice(0, MAX_LIST_VALUES);
 }
 
 function positiveNumber(v: unknown): number | undefined {
@@ -23,7 +30,9 @@ function positiveNumber(v: unknown): number | undefined {
 
 export function parseJobFilters(query: JobsQuery): JobFilters {
   const f: JobFilters = {};
-  if (typeof query.q === 'string' && query.q) f.q = query.q;
+  if (typeof query.q === 'string' && query.q.trim()) {
+    f.q = query.q.trim().slice(0, MAX_QUERY_LENGTH);
+  }
   const sources = arr(query.source);
   if (sources.length) f.source = sources;
   const countries = arr(query.country);
@@ -33,13 +42,13 @@ export function parseJobFilters(query: JobsQuery): JobFilters {
   if (query.visa === '1') f.visaOnly = true;
   if (query.remote === '1') f.remoteOnly = true;
   const days = positiveNumber(query.days);
-  if (days) f.postedWithinDays = days;
+  if (days) f.postedWithinDays = Math.min(days, MAX_DAYS);
   if (query.sort === 'recent') f.sort = 'recent';
   else if (query.sort === 'country') f.sort = 'country';
   const page = positiveNumber(query.page);
-  if (page && page >= 1) f.page = page;
+  if (page && page >= 1) f.page = Math.min(Math.floor(page), MAX_PAGE);
   const pageSize = positiveNumber(query.pageSize);
-  if (pageSize) f.pageSize = pageSize;
+  if (pageSize) f.pageSize = Math.floor(pageSize);
   return f;
 }
 
