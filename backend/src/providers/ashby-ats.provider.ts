@@ -1,0 +1,122 @@
+// Generic Ashby job-board provider. Ashby's public posting API is keyless:
+//   https://api.ashbyhq.com/posting-api/job-board/{slug}
+// Some boards (e.g. gen-digital) host multiple brands — use `filter` to
+// scope to the one you actually want.
+
+import { httpJson } from '../common/http';
+import type { RawJob } from '../jobs/job.types';
+import { type JobProvider, plog, pwarn } from './provider.types';
+
+type AshbyJob = {
+  id: string;
+  title: string;
+  location: string;
+  jobUrl: string;
+  applyUrl?: string;
+  publishedAt?: string;
+  isRemote?: boolean;
+  workplaceType?: string;
+  employmentType?: string;
+};
+
+type AshbyResponse = { jobs: AshbyJob[] };
+
+type Company = {
+  source: string;
+  label: string;
+  slug: string;
+  company: string;
+  visaSupport?: boolean;
+  relocation?: boolean;
+  defaultLocation?: string;
+  includeCompensation?: boolean;
+  filter?: (j: AshbyJob) => boolean;
+  mapTitle?: (title: string) => string;
+};
+
+// See greenhouse-ats for the rationale on this filter — BD-based user,
+// these companies' boards are dominated by US-only roles.
+const REMOTE_OR_ASIA =
+  /remote|singapore|japan|tokyo|osaka|kyoto|malaysia|kuala lumpur|thailand|bangkok|chiang mai|indonesia|jakarta|bali|vietnam|hanoi|ho chi minh|philippines|manila|india|bangalore|mumbai|hyderabad|delhi|chennai|pune|gurugram|bangladesh|dhaka|hong kong|taiwan|taipei|korea|seoul/i;
+
+function isRelevantLoc(s?: string | null): boolean {
+  if (!s) return true;
+  return REMOTE_OR_ASIA.test(s);
+}
+
+const COMPANIES: Company[] = [
+  {
+    source: 'moneylion',
+    label: 'MoneyLion',
+    slug: 'gen-digital',
+    company: 'MoneyLion',
+    includeCompensation: true,
+    defaultLocation: 'Remote',
+    // gen-digital hosts Norton/Avast/LifeLock/MoneyLion. MoneyLion roles
+    // are tagged by name in the title or by the KL engineering office.
+    filter: (j) =>
+      /moneylion/i.test(j.title) || /Kuala Lumpur/i.test(j.location ?? ''),
+    mapTitle: (t) => t.replace(/\s*-\s*MoneyLion\s*$/i, '').trim(),
+  },
+  {
+    source: 'posthog',
+    label: 'PostHog',
+    slug: 'posthog',
+    company: 'PostHog',
+    defaultLocation: 'Remote',
+    filter: (j) => isRelevantLoc(j.location),
+  },
+  {
+    source: 'sentry',
+    label: 'Sentry',
+    slug: 'sentry',
+    company: 'Sentry',
+    filter: (j) => isRelevantLoc(j.location),
+  },
+  {
+    source: 'zapier',
+    label: 'Zapier',
+    slug: 'zapier',
+    company: 'Zapier',
+    defaultLocation: 'Remote',
+    filter: (j) => isRelevantLoc(j.location),
+  },
+];
+
+function makeProvider(c: Company): JobProvider {
+  return {
+    name: c.source,
+    label: c.label,
+    reliable: true,
+    async fetchJobs() {
+      try {
+        const qs = c.includeCompensation ? '?includeCompensation=true' : '';
+        const data = await httpJson<AshbyResponse>(
+          `https://api.ashbyhq.com/posting-api/job-board/${c.slug}${qs}`,
+          { timeoutMs: 20_000 },
+        );
+        const filter = c.filter ?? (() => true);
+        const out: RawJob[] = data.jobs.filter(filter).map((j) => ({
+          sourceJobId: j.id,
+          title: c.mapTitle ? c.mapTitle(j.title) : j.title,
+          company: c.company,
+          location: j.location || c.defaultLocation || 'Remote',
+          tags: [],
+          applyUrl: j.applyUrl ?? j.jobUrl,
+          sourceUrl: j.jobUrl,
+          postedAt: j.publishedAt ? new Date(j.publishedAt) : null,
+          remote: j.isRemote || j.workplaceType === 'Remote',
+          visaSupport: c.visaSupport,
+          relocation: c.relocation,
+        }));
+        plog(c.source, `parsed ${out.length} jobs (ashby)`);
+        return out;
+      } catch (err) {
+        pwarn(c.source, 'fetch failed:', (err as Error).message);
+        return [];
+      }
+    },
+  };
+}
+
+export const ashbyProviders: JobProvider[] = COMPANIES.map(makeProvider);
