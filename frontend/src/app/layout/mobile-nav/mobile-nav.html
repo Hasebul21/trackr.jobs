@@ -1,0 +1,63 @@
+<!-- overflow-hidden clips the off-canvas panel so it can't widen the page. -->
+<div
+  class="fixed inset-0 z-50 overflow-hidden sm:hidden"
+  [class.pointer-events-none]="!open()"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Menu"
+  [attr.aria-hidden]="!open()"
+  [attr.inert]="open() ? null : ''"
+>
+  <div
+    class="absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity duration-200"
+    [class]="open() ? 'opacity-100' : 'opacity-0'"
+    (click)="closed.emit()"
+  ></div>
+
+  <div
+    class="absolute top-0 right-0 flex h-full w-72 max-w-[85%] flex-col border-l border-[var(--border)] bg-[var(--background)] shadow-xl transition-transform duration-200 ease-out"
+    [class]="open() ? 'translate-x-0' : 'translate-x-full'"
+  >
+    <div
+      class="flex h-14 shrink-0 items-center justify-between border-b border-[var(--border)] px-4"
+    >
+      <span class="font-semibold tracking-tight">
+        Trackr<span class="text-[var(--muted-foreground)]">.jobs</span>
+      </span>
+      <button
+        type="button"
+        [class]="iconButtonClass"
+        aria-label="Close menu"
+        (click)="closed.emit()"
+      >
+        <app-icon name="x" />
+      </button>
+    </div>
+
+    <nav class="flex-1 overflow-y-auto p-2">
+      @for (link of links; track link.path) {
+        <a
+          [routerLink]="link.path"
+          (click)="closed.emit()"
+          [attr.aria-current]="isActive(link.path) ? 'page' : null"
+          class="flex items-center gap-3 rounded-md px-3 py-3 text-sm font-medium transition-colors"
+          [class]="
+            isActive(link.path)
+              ? 'bg-[var(--muted)] text-[var(--foreground)]'
+              : 'text-[var(--muted-foreground)] hover:bg-[var(--muted)]/50 hover:text-[var(--foreground)]'
+          "
+        >
+          <app-icon [name]="link.icon" iconClass="h-4 w-4 shrink-0" />
+          {{ link.label }}
+        </a>
+      }
+    </nav>
+
+    <div
+      class="flex shrink-0 items-center justify-between gap-2 border-t border-[var(--border)] p-3"
+    >
+      <app-refresh-button />
+      <app-theme-toggle />
+    </div>
+  </div>
+</div>

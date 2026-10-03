@@ -1,0 +1,15 @@
+<div class="relative w-full max-w-md">
+  <app-icon
+    name="search"
+    iconClass="absolute top-1/2 left-2.5 h-4 w-4 -translate-y-1/2 text-[var(--muted-foreground)]"
+  />
+  <input
+    #box
+    type="text"
+    [value]="value()"
+    (input)="onInput(box.value)"
+    placeholder="Search title, company, description…"
+    aria-label="Search jobs"
+    class="flex h-9 w-full rounded-md border border-[var(--input)] bg-transparent px-3 py-1 pl-8 text-sm shadow-sm transition-colors placeholder:text-[var(--muted-foreground)] focus-visible:ring-2 focus-visible:ring-[var(--ring)] focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+  />
+</div>

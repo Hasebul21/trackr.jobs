@@ -1,0 +1,8 @@
+<button
+  type="button"
+  [class]="buttonClass"
+  aria-label="Toggle theme"
+  (click)="theme.setTheme(isDark() ? 'light' : 'dark')"
+>
+  <app-icon [name]="isDark() ? 'sun' : 'moon'" />
+</button>
