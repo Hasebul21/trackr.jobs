@@ -1,0 +1,23 @@
+<details open class="group/section" [class]="last() ? '' : 'border-b border-[var(--border)]'">
+  <summary
+    class="flex cursor-pointer list-none items-center justify-between px-3 py-2 hover:bg-[var(--muted)]/40 [&::-webkit-details-marker]:hidden"
+  >
+    <span class="flex items-center gap-1.5 text-xs font-semibold tracking-wider uppercase">
+      {{ label() }}
+      @if (count() > 0) {
+        <span
+          class="rounded-full bg-[var(--gain-50)] px-1.5 py-0.5 text-[10px] font-medium text-[var(--gain-700)]"
+        >
+          {{ count() }}
+        </span>
+      }
+    </span>
+    <app-icon
+      name="chevron-down"
+      iconClass="h-3.5 w-3.5 shrink-0 text-[var(--muted-foreground)] transition-transform group-open/section:rotate-180"
+    />
+  </summary>
+  <div class="space-y-0.5 px-3 pb-3">
+    <ng-content />
+  </div>
+</details>

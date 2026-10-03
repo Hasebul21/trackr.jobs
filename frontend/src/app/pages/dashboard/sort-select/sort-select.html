@@ -1,0 +1,16 @@
+<div
+  class="inline-flex h-8 items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--card)] px-3 text-sm"
+>
+  <span class="text-[var(--muted-foreground)]">Sort:</span>
+  <select
+    #select
+    [value]="value()"
+    (change)="onChange(select.value)"
+    aria-label="Sort jobs"
+    class="bg-transparent pr-1 text-[var(--foreground)] focus-visible:outline-none"
+  >
+    <option value="score">Relevance</option>
+    <option value="recent">Most recent</option>
+    <option value="country">By country</option>
+  </select>
+</div>
