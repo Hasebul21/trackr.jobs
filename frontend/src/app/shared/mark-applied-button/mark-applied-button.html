@@ -1,4 +1,6 @@
 <button
+  nz-button
+  nzType="text"
   type="button"
   [class]="buttonClass"
   [disabled]="pending()"
@@ -6,5 +8,5 @@
   aria-label="Mark as applied"
   (click)="markApplied($event)"
 >
-  <app-icon name="check-circle" [iconClass]="pending() ? 'animate-pulse' : ''" />
+  <nz-icon nzType="check-circle" [class.animate-pulse]="pending()" />
 </button>

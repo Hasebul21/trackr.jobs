@@ -1,11 +1,12 @@
 import { Component, computed, inject, input } from '@angular/core';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 import { BookmarksService } from '../../core/bookmarks.service';
-import { Icon } from '../icon/icon';
 import { buttonClasses } from '../ui';
 
 @Component({
   selector: 'app-bookmark-button',
-  imports: [Icon],
+  imports: [NzButtonModule, NzIconModule],
   templateUrl: './bookmark-button.html',
 })
 export class BookmarkButton {

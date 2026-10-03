@@ -1,10 +1,10 @@
 import { Component, input } from '@angular/core';
-import { Icon } from '../icon/icon';
+import { NzEmptyModule } from 'ng-zorro-antd/empty';
 
 // Projected content replaces the hint text, for hints that need a link.
 @Component({
   selector: 'app-empty-state',
-  imports: [Icon],
+  imports: [NzEmptyModule],
   templateUrl: './empty-state.html',
 })
 export class EmptyState {

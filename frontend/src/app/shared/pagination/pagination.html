@@ -3,48 +3,23 @@
     Showing {{ rangeStart().toLocaleString() }}–{{ rangeEnd().toLocaleString() }} of
     {{ total().toLocaleString() }} · page {{ page() }} of {{ totalPages() }}
   </div>
-  <div class="flex items-center gap-1.5">
-    @if (page() <= 1) {
-      <button type="button" [class]="outlineClass" disabled>Previous</button>
-    } @else {
-      <a
-        [routerLink]="[]"
-        [queryParams]="pageParams(page() - 1)"
-        queryParamsHandling="merge"
-        [class]="outlineClass"
-        >Previous</a
-      >
-    }
 
-    <!-- Page numbers would overflow a phone row, so they're desktop only. -->
-    <div class="hidden items-center gap-1.5 sm:flex">
-      @for (n of pageNumbers(); track $index) {
-        @if (n === '…') {
-          <span class="px-1 text-[var(--muted-foreground)]">…</span>
-        } @else if (n === page()) {
-          <button type="button" [class]="currentClass" disabled>{{ n }}</button>
-        } @else {
-          <a
-            [routerLink]="[]"
-            [queryParams]="pageParams(n)"
-            queryParamsHandling="merge"
-            [class]="outlineClass"
-            >{{ n }}</a
-          >
-        }
-      }
-    </div>
-
-    @if (page() >= totalPages()) {
-      <button type="button" [class]="outlineClass" disabled>Next</button>
-    } @else {
-      <a
-        [routerLink]="[]"
-        [queryParams]="pageParams(page() + 1)"
-        queryParamsHandling="merge"
-        [class]="outlineClass"
-        >Next</a
-      >
-    }
-  </div>
+  <!-- Full page list on desktop, compact prev / page / next on phones. -->
+  <nz-pagination
+    class="hidden sm:block [&_.ant-pagination-item-active]:border-[var(--foreground)] [&_.ant-pagination-item-active_a]:text-[var(--foreground)]"
+    [nzPageIndex]="page()"
+    [nzPageSize]="pageSize()"
+    [nzTotal]="total()"
+    nzSize="small"
+    (nzPageIndexChange)="goTo($event)"
+  />
+  <nz-pagination
+    class="sm:hidden"
+    nzSimple
+    [nzPageIndex]="page()"
+    [nzPageSize]="pageSize()"
+    [nzTotal]="total()"
+    nzSize="small"
+    (nzPageIndexChange)="goTo($event)"
+  />
 </nav>

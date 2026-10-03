@@ -1,17 +1,18 @@
 import { Component, DestroyRef, inject, input, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 import { ApiService } from '../../core/api.service';
 import { DataRefreshService } from '../../core/data-refresh.service';
 import { ToastService } from '../../core/toast.service';
 import { errorMessage } from '../error-message';
-import { Icon } from '../icon/icon';
 import { buttonClasses } from '../ui';
 
 // Marks a job as applied. The backend deletes the job, so on success we
 // reload the current page's data and the card drops out of the list.
 @Component({
   selector: 'app-mark-applied-button',
-  imports: [Icon],
+  imports: [NzButtonModule, NzIconModule],
   templateUrl: './mark-applied-button.html',
 })
 export class MarkAppliedButton {

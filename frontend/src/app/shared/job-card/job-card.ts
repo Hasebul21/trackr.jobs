@@ -1,8 +1,10 @@
 import { Component, computed, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzTagModule } from 'ng-zorro-antd/tag';
 import { Job } from '../../core/models';
 import { BookmarkButton } from '../bookmark-button/bookmark-button';
-import { Icon } from '../icon/icon';
 import { MarkAppliedButton } from '../mark-applied-button/mark-applied-button';
 import { RelativeTimePipe } from '../relative-time-pipe';
 import { sourceLabel } from '../sources';
@@ -13,7 +15,15 @@ const MAX_TECHS = 3;
 
 @Component({
   selector: 'app-job-card',
-  imports: [RouterLink, Icon, BookmarkButton, MarkAppliedButton, RelativeTimePipe],
+  imports: [
+    RouterLink,
+    NzButtonModule,
+    NzIconModule,
+    NzTagModule,
+    BookmarkButton,
+    MarkAppliedButton,
+    RelativeTimePipe,
+  ],
   templateUrl: './job-card.html',
   host: { class: 'block h-full' },
 })

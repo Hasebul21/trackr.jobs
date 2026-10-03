@@ -1,5 +1,10 @@
-<div class="mx-auto max-w-md space-y-4 py-20 text-center">
-  <h1 class="text-xl font-semibold">Something went wrong</h1>
-  <p class="font-mono text-sm break-all text-[var(--muted-foreground)]">{{ message() }}</p>
-  <button type="button" [class]="buttonClass" (click)="retry.emit()">Try again</button>
-</div>
+<nz-result nzStatus="error" nzTitle="Something went wrong" class="mx-auto max-w-md py-20">
+  <div nz-result-subtitle class="font-mono text-sm break-all text-[var(--muted-foreground)]">
+    {{ message() }}
+  </div>
+  <div nz-result-extra>
+    <button nz-button nzType="primary" type="button" [class]="buttonClass" (click)="retry.emit()">
+      Try again
+    </button>
+  </div>
+</nz-result>
