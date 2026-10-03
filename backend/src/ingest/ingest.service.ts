@@ -29,13 +29,36 @@ export type IngestReport = {
   bySource: IngestStats[];
 };
 
+// How long the public refresh button has to wait between runs.
+const REFRESH_COOLDOWN_MS = 2 * 60 * 1000;
+
 @Injectable()
 export class IngestService {
+  private running: Promise<IngestReport> | null = null;
+  private lastFinishedAt = 0;
+
   constructor(private readonly prisma: PrismaService) {}
 
-  async runIngest(
-    opts: { providers?: JobProvider[] } = {},
-  ): Promise<IngestReport> {
+  /** True when a run finished recently enough that another one is pointless. */
+  isOnCooldown(): boolean {
+    return Date.now() - this.lastFinishedAt < REFRESH_COOLDOWN_MS;
+  }
+
+  // If a run is already in progress (button + cron at the same time),
+  // callers share it instead of scraping every source twice.
+  runIngest(opts: { providers?: JobProvider[] } = {}): Promise<IngestReport> {
+    if (!this.running) {
+      this.running = this.doIngest(opts).finally(() => {
+        this.running = null;
+        this.lastFinishedAt = Date.now();
+      });
+    }
+    return this.running;
+  }
+
+  private async doIngest(opts: {
+    providers?: JobProvider[];
+  }): Promise<IngestReport> {
     const startedAt = new Date();
     const providers = opts.providers ?? getProviders();
 

@@ -1,4 +1,12 @@
-import { Controller, Get, HttpCode, Post, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  HttpCode,
+  HttpException,
+  HttpStatus,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { IngestService } from './ingest.service';
 import { CronSecretGuard } from './cron-secret.guard';
 
@@ -6,12 +14,18 @@ import { CronSecretGuard } from './cron-secret.guard';
 export class IngestController {
   constructor(private readonly ingest: IngestService) {}
 
-  // Triggered by the navbar Refresh button. In a production deployment
-  // you'd protect this with auth or rate limiting; for a personal tool on
-  // a private URL it's fine to leave open.
+  // Triggered by the navbar Refresh button. It's open (there are no
+  // accounts), so we refuse back-to-back runs to keep it from being used
+  // to hammer the job boards or the database.
   @Post('refresh')
   @HttpCode(200)
   async refresh() {
+    if (this.ingest.isOnCooldown()) {
+      throw new HttpException(
+        'Jobs were refreshed a moment ago. Try again in a couple of minutes.',
+        HttpStatus.TOO_MANY_REQUESTS,
+      );
+    }
     const report = await this.ingest.runIngest();
     return {
       ok: true,
