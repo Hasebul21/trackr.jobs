@@ -1,1 +1,51 @@
-<p>dashboard works!</p>
+<div class="dashboard-page mx-auto w-full max-w-7xl px-4 py-3">
+  @if (jobs.error()) {
+    <app-error-state [message]="errorText()" (retry)="jobs.reload(); facets.reload()" />
+  } @else {
+    <div class="flex flex-col gap-4 lg:flex-row">
+      @if (facetsOrEmpty(); as facets) {
+        <app-filters-panel [facets]="facets" />
+      } @else {
+        <div
+          class="h-96 w-full shrink-0 rounded-lg border border-[var(--border)] bg-[var(--card)] p-3 lg:w-60"
+        >
+          <nz-skeleton [nzActive]="true" [nzParagraph]="{ rows: 8 }" />
+        </div>
+      }
+
+      <section class="min-w-0 flex-1">
+        @if (jobs.hasValue()) {
+          @let result = jobs.value();
+          @if (result.jobs.length === 0) {
+            <app-empty-state />
+          } @else {
+            <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
+              @for (job of result.jobs; track job.id) {
+                <app-job-card [job]="job" />
+              }
+            </div>
+          }
+
+          @if (result.total > 0) {
+            <app-pagination
+              [page]="page()"
+              [pageSize]="pageSize"
+              [totalPages]="totalPages()"
+              [rangeStart]="rangeStart()"
+              [rangeEnd]="rangeEnd()"
+              [total]="result.total"
+            />
+          }
+        } @else {
+          <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
+            @for (i of skeletons; track i) {
+              <div class="h-64 rounded-lg border border-[var(--border)] bg-[var(--card)] p-3">
+                <nz-skeleton [nzActive]="true" [nzAvatar]="{ shape: 'square' }" />
+              </div>
+            }
+          </div>
+        }
+      </section>
+    </div>
+  }
+</div>

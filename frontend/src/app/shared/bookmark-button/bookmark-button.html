@@ -1,0 +1,14 @@
+<button
+  nz-button
+  [nzType]="active() ? 'default' : 'text'"
+  type="button"
+  [class]="buttonClass()"
+  [attr.aria-pressed]="active()"
+  [attr.aria-label]="iconOnly() ? (active() ? 'Remove bookmark' : 'Bookmark') : null"
+  (click)="toggle($event)"
+>
+  <nz-icon aria-hidden="true" nzType="book" [nzTheme]="active() ? 'fill' : 'outline'" />
+  @if (!iconOnly()) {
+    <span>{{ active() ? 'Saved' : 'Save' }}</span>
+  }
+</button>

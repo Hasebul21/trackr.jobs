@@ -1,0 +1,12 @@
+<button
+  nz-button
+  nzType="text"
+  type="button"
+  [class]="buttonClass"
+  [disabled]="pending()"
+  title="Mark as applied (removes this job)"
+  aria-label="Mark as applied"
+  (click)="markApplied($event)"
+>
+  <nz-icon aria-hidden="true" nzType="check-circle" [class.animate-pulse]="pending()" />
+</button>

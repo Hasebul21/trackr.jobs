@@ -1,0 +1,44 @@
+<nz-drawer
+  [nzVisible]="open()"
+  nzPlacement="right"
+  [nzWidth]="288"
+  [nzTitle]="title"
+  [nzFooter]="footer"
+  [nzBodyStyle]="{ padding: '8px' }"
+  [nzWrapClassName]="wrapClass"
+  (nzOnClose)="closed.emit()"
+>
+  <ng-container *nzDrawerContent>
+    <nav>
+      @for (link of links; track link.path) {
+        <a
+          [routerLink]="link.path"
+          (click)="closed.emit()"
+          [attr.aria-current]="isActive(link.path) ? 'page' : null"
+          class="flex items-center gap-3 rounded-md px-3 py-3 text-sm font-medium transition-colors"
+          [class]="
+            isActive(link.path)
+              ? 'bg-[var(--muted)] text-[var(--foreground)]'
+              : 'text-[var(--muted-foreground)] hover:bg-[var(--muted)]/50 hover:text-[var(--foreground)]'
+          "
+        >
+          <nz-icon aria-hidden="true" [nzType]="link.icon" class="shrink-0" />
+          {{ link.label }}
+        </a>
+      }
+    </nav>
+  </ng-container>
+</nz-drawer>
+
+<ng-template #title>
+  <span class="font-semibold tracking-tight">
+    Trackr<span class="text-[var(--muted-foreground)]">.jobs</span>
+  </span>
+</ng-template>
+
+<ng-template #footer>
+  <div class="flex items-center justify-between gap-2">
+    <app-refresh-button />
+    <app-theme-toggle />
+  </div>
+</ng-template>

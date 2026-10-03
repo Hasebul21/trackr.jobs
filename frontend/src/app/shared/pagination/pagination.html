@@ -1,0 +1,25 @@
+<nav class="mt-6 flex flex-wrap items-center justify-between gap-3 text-sm">
+  <div class="text-[var(--muted-foreground)]">
+    Showing {{ rangeStart().toLocaleString() }}–{{ rangeEnd().toLocaleString() }} of
+    {{ total().toLocaleString() }} · page {{ page() }} of {{ totalPages() }}
+  </div>
+
+  <!-- Full page list on desktop, compact prev / page / next on phones. -->
+  <nz-pagination
+    class="hidden sm:block [&_.ant-pagination-item-active]:border-[var(--foreground)] [&_.ant-pagination-item-active_a]:text-[var(--foreground)]"
+    [nzPageIndex]="page()"
+    [nzPageSize]="pageSize()"
+    [nzTotal]="total()"
+    nzSize="small"
+    (nzPageIndexChange)="goTo($event)"
+  />
+  <nz-pagination
+    class="sm:hidden"
+    nzSimple
+    [nzPageIndex]="page()"
+    [nzPageSize]="pageSize()"
+    [nzTotal]="total()"
+    nzSize="small"
+    (nzPageIndexChange)="goTo($event)"
+  />
+</nav>
