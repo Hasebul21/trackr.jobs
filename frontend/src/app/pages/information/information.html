@@ -1,1 +1,521 @@
-<p>information works!</p>
+<div class="mx-auto w-full max-w-6xl px-4 py-6">
+  <header class="mb-6 space-y-2">
+    <p class="text-xs uppercase tracking-wide text-[var(--muted-foreground)]">
+      Master Application Profile
+    </p>
+    <h1 class="text-2xl font-semibold tracking-tight">{{ profile.name }}</h1>
+    <p class="text-sm text-[var(--muted-foreground)]">{{ profile.generated }}</p>
+  </header>
+
+  <div
+    class="space-y-4 md:grid md:gap-6 md:space-y-0 md:grid-cols-[14rem_minmax(0,1fr)] lg:grid-cols-[16rem_minmax(0,1fr)]"
+  >
+    <!-- self-start stops the grid stretching this cell, which sticky needs. -->
+    <div class="md:sticky md:top-[4.5rem] md:self-start">
+      <label for="section-select" class="sr-only">Profile section</label>
+      <select
+        id="section-select"
+        class="block w-full rounded-md border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-sm md:hidden"
+        #sectionSelect
+        (change)="select(sectionSelect.value)"
+      >
+        @for (s of sections; track s.id; let i = $index) {
+          <option [value]="s.id" [selected]="s.id === activeSection()">
+            {{ number(i) }}. {{ s.label }}
+          </option>
+        }
+      </select>
+
+      <nav class="hidden md:block" aria-label="Profile sections">
+        <ol class="flex flex-col gap-0.5">
+          @for (s of sections; track s.id; let i = $index) {
+            @let isActive = s.id === activeSection();
+            <li>
+              <a
+                [routerLink]="[]"
+                [fragment]="s.id"
+                [replaceUrl]="true"
+                (click)="scrollToTop()"
+                [attr.aria-current]="isActive ? 'page' : null"
+                class="flex items-baseline gap-2 rounded-md px-3 py-2 text-sm transition-colors"
+                [class]="
+                  isActive
+                    ? 'bg-[var(--muted)] font-medium text-[var(--foreground)]'
+                    : 'text-[var(--muted-foreground)] hover:bg-[var(--muted)]/60 hover:text-[var(--foreground)]'
+                "
+              >
+                <span
+                  class="shrink-0 font-mono text-[10px] tabular-nums text-[var(--muted-foreground)]"
+                  >{{ number(i) }}.</span
+                >
+                <span class="truncate">{{ s.label }}</span>
+              </a>
+            </li>
+          }
+        </ol>
+      </nav>
+    </div>
+
+    <div class="min-w-0 space-y-10">
+      @let section = sections[activeIndex()];
+      <section [id]="section.id" class="space-y-3">
+        <div>
+          <h2 class="text-lg font-semibold tracking-tight">
+            {{ activeIndex() + 1 }}. {{ section.label }}
+          </h2>
+          @if (section.subtitle) {
+            <p class="text-xs text-[var(--muted-foreground)]">{{ section.subtitle }}</p>
+          }
+        </div>
+
+        <div class="space-y-4">
+          @switch (section.id) {
+            @case ('contact') {
+              <ng-container *ngTemplateOutlet="keyValues; context: { $implicit: contact }" />
+            }
+
+            @case ('academic') {
+              <ng-container *ngTemplateOutlet="keyValues; context: { $implicit: academic }" />
+            }
+
+            @case ('education') {
+              @for (item of education; track item.title) {
+                <div class="rounded-md border border-[var(--border)] p-4">
+                  <h3 class="mb-3 text-sm font-semibold">{{ item.title }}</h3>
+                  <ng-container *ngTemplateOutlet="keyValues; context: { $implicit: item.rows }" />
+                  @if (item.activities) {
+                    <div class="mt-4">
+                      <h4
+                        class="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]"
+                      >
+                        Activities &amp; Extracurriculars (AIUB)
+                      </h4>
+                      <ul class="mt-2 list-disc space-y-1 pl-5 text-sm">
+                        @for (activity of item.activities; track $index) {
+                          <li>{{ activity }}</li>
+                        }
+                      </ul>
+                    </div>
+                  }
+                </div>
+              }
+            }
+
+            @case ('experience') {
+              @for (job of experience; track job.title) {
+                <div class="rounded-md border border-[var(--border)] p-4">
+                  <h3 class="mb-3 text-sm font-semibold">{{ job.title }}</h3>
+                  <ng-container *ngTemplateOutlet="keyValues; context: { $implicit: job.rows }" />
+                  <div class="mt-4">
+                    <h4
+                      class="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]"
+                    >
+                      {{ job.heading }}
+                    </h4>
+                    <ul class="mt-2 list-disc space-y-2 pl-5 text-sm leading-relaxed">
+                      @for (bullet of job.bullets; track $index) {
+                        <li>
+                          @if (bullet.lead) {
+                            <span class="font-medium">{{ bullet.lead }}</span>
+                          }
+                          {{ bullet.text }}
+                        </li>
+                      }
+                    </ul>
+                  </div>
+                </div>
+              }
+            }
+
+            @case ('skills') {
+              <div class="overflow-hidden rounded-md border border-[var(--border)]">
+                <table class="w-full text-sm">
+                  <thead
+                    class="bg-[var(--muted)]/40 text-left text-xs uppercase tracking-wide text-[var(--muted-foreground)]"
+                  >
+                    <tr>
+                      <th class="px-3 py-2 font-semibold">Category</th>
+                      <th class="px-3 py-2 font-semibold">Technologies / Tools</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-[var(--border)]">
+                    @for (group of skills; track group.category) {
+                      <tr class="align-top">
+                        <td class="px-3 py-2 font-medium whitespace-nowrap">
+                          {{ group.category }}
+                        </td>
+                        <td class="px-3 py-2">
+                          <div class="flex flex-wrap gap-1.5">
+                            @for (item of group.items; track item) {
+                              <span [class]="badgeOutline">{{ item }}</span>
+                            }
+                          </div>
+                        </td>
+                      </tr>
+                    }
+                  </tbody>
+                </table>
+              </div>
+            }
+
+            @case ('publications') {
+              <p class="text-sm">
+                ResearchGate:
+                <a
+                  [href]="researchGate.href"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  [class]="extLink"
+                  >{{ researchGate.text }}</a
+                >
+              </p>
+              @for (paper of publications; track paper.title) {
+                <div class="rounded-md border border-[var(--border)] p-4">
+                  <h3 class="mb-3 text-sm font-semibold">{{ paper.title }}</h3>
+                  <ng-container *ngTemplateOutlet="keyValues; context: { $implicit: paper.rows }" />
+                  <div class="mt-4">
+                    <h4
+                      class="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]"
+                    >
+                      Authors (in order)
+                    </h4>
+                    <ol class="mt-2 list-decimal space-y-1 pl-5 text-sm">
+                      @for (author of paper.authors; track $index) {
+                        <li [class.font-medium]="isMe(author)">{{ author }}</li>
+                      }
+                    </ol>
+                  </div>
+                </div>
+              }
+            }
+
+            @case ('projects') {
+              <div class="grid gap-4 sm:grid-cols-2">
+                @for (project of projects; track project.name) {
+                  <div class="flex flex-col rounded-md border border-[var(--border)] p-4">
+                    <h3 class="text-sm font-semibold">{{ project.name }}</h3>
+                    <div class="mt-2 flex flex-wrap gap-1.5">
+                      @for (tech of project.stack; track tech) {
+                        <span [class]="badgeOutline">{{ tech }}</span>
+                      }
+                    </div>
+                    <p class="mt-3 text-sm text-[var(--foreground)] leading-relaxed">
+                      {{ project.description }}
+                    </p>
+                    <div class="mt-3 flex flex-col gap-1 text-xs">
+                      @for (l of project.links; track l.href) {
+                        <a
+                          [href]="l.href"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          [class]="extLink"
+                        >
+                          {{ l.label }}
+                        </a>
+                      }
+                      @if (project.note) {
+                        <span class="text-[var(--muted-foreground)]">[{{ project.note }}]</span>
+                      }
+                    </div>
+                  </div>
+                }
+              </div>
+            }
+
+            @case ('certifications') {
+              <div class="overflow-x-auto rounded-md border border-[var(--border)]">
+                <table class="w-full text-sm">
+                  <thead
+                    class="bg-[var(--muted)]/40 text-left text-xs uppercase tracking-wide text-[var(--muted-foreground)]"
+                  >
+                    <tr>
+                      <th class="px-3 py-2 font-semibold">#</th>
+                      <th class="px-3 py-2 font-semibold">Certification / Course</th>
+                      <th class="px-3 py-2 font-semibold">Issuer / Platform</th>
+                      <th class="px-3 py-2 font-semibold">Topics / Notes</th>
+                      <th class="px-3 py-2 font-semibold">Credential URL</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-[var(--border)] align-top">
+                    @for (c of certifications; track $index; let i = $index) {
+                      <tr>
+                        <td class="px-3 py-2 text-[var(--muted-foreground)]">{{ i + 1 }}</td>
+                        <td class="px-3 py-2 font-medium">{{ c.title }}</td>
+                        <td class="px-3 py-2 whitespace-nowrap">{{ c.issuer }}</td>
+                        <td class="px-3 py-2 text-[var(--muted-foreground)]">{{ c.topics }}</td>
+                        <td class="px-3 py-2">
+                          @if (c.url) {
+                            <a
+                              [href]="c.url"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              [class]="extLink"
+                            >
+                              <span class="break-all">{{ stripProtocol(c.url) }}</span>
+                            </a>
+                          } @else {
+                            <span [class]="badgeVerify">VERIFY</span>
+                          }
+                        </td>
+                      </tr>
+                    }
+                  </tbody>
+                </table>
+              </div>
+            }
+
+            @case ('awards') {
+              <div class="overflow-x-auto rounded-md border border-[var(--border)]">
+                <table class="w-full text-sm">
+                  <thead
+                    class="bg-[var(--muted)]/40 text-left text-xs uppercase tracking-wide text-[var(--muted-foreground)]"
+                  >
+                    <tr>
+                      <th class="px-3 py-2 font-semibold">Award / Achievement</th>
+                      <th class="px-3 py-2 font-semibold">Organizer</th>
+                      <th class="px-3 py-2 font-semibold">Year</th>
+                      <th class="px-3 py-2 font-semibold">Details / Link</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-[var(--border)] align-top">
+                    @for (a of awards; track $index) {
+                      <tr>
+                        <td class="px-3 py-2 font-medium">{{ a.title }}</td>
+                        <td class="px-3 py-2 text-[var(--muted-foreground)]">{{ a.organizer }}</td>
+                        <td class="px-3 py-2 whitespace-nowrap text-[var(--muted-foreground)]">
+                          {{ a.year }}
+                        </td>
+                        <td class="px-3 py-2">
+                          {{ a.detail }}
+                          @if (a.href) {
+                            <span>{{ ' — ' }}</span>
+                            <a
+                              [href]="a.href"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              [class]="extLink"
+                            >
+                              {{ stripProtocol(a.href) }}
+                            </a>
+                          }
+                        </td>
+                      </tr>
+                    }
+                  </tbody>
+                </table>
+              </div>
+            }
+
+            @case ('test-scores') {
+              <div class="overflow-x-auto rounded-md border border-[var(--border)]">
+                <table class="w-full text-sm">
+                  <thead
+                    class="bg-[var(--muted)]/40 text-left text-xs uppercase tracking-wide text-[var(--muted-foreground)]"
+                  >
+                    <tr>
+                      <th class="px-3 py-2 font-semibold">Test</th>
+                      <th class="px-3 py-2 font-semibold">Body</th>
+                      <th class="px-3 py-2 font-semibold">Test Date</th>
+                      <th class="px-3 py-2 font-semibold">Centre</th>
+                      <th class="px-3 py-2 font-semibold">Candidate No.</th>
+                      <th class="px-3 py-2 font-semibold">L</th>
+                      <th class="px-3 py-2 font-semibold">R</th>
+                      <th class="px-3 py-2 font-semibold">W</th>
+                      <th class="px-3 py-2 font-semibold">S</th>
+                      <th class="px-3 py-2 font-semibold">Overall</th>
+                      <th class="px-3 py-2 font-semibold">CEFR</th>
+                      <th class="px-3 py-2 font-semibold">TRF Number</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-[var(--border)] align-top">
+                    @for (t of testScores; track $index) {
+                      <tr [class]="t.muted ? 'text-[var(--muted-foreground)]' : ''">
+                        <td class="px-3 py-2 font-medium">{{ t.test }}</td>
+                        <td class="px-3 py-2">{{ t.body }}</td>
+                        <td class="px-3 py-2 whitespace-nowrap">
+                          <ng-container *ngTemplateOutlet="value; context: { $implicit: t.date }" />
+                        </td>
+                        <td class="px-3 py-2">{{ t.centre }}</td>
+                        <td class="px-3 py-2">{{ t.candidateNo }}</td>
+                        <td class="px-3 py-2">
+                          <ng-container
+                            *ngTemplateOutlet="value; context: { $implicit: t.listening }"
+                          />
+                        </td>
+                        <td class="px-3 py-2">
+                          <ng-container
+                            *ngTemplateOutlet="value; context: { $implicit: t.reading }"
+                          />
+                        </td>
+                        <td class="px-3 py-2">
+                          <ng-container
+                            *ngTemplateOutlet="value; context: { $implicit: t.writing }"
+                          />
+                        </td>
+                        <td class="px-3 py-2">
+                          <ng-container
+                            *ngTemplateOutlet="value; context: { $implicit: t.speaking }"
+                          />
+                        </td>
+                        <td class="px-3 py-2" [class.font-semibold]="typeof t.overall === 'string'">
+                          <ng-container
+                            *ngTemplateOutlet="value; context: { $implicit: t.overall }"
+                          />
+                        </td>
+                        <td class="px-3 py-2">
+                          <ng-container *ngTemplateOutlet="value; context: { $implicit: t.cefr }" />
+                        </td>
+                        @if (typeof t.trf === 'string') {
+                          <td class="px-3 py-2 whitespace-nowrap font-mono text-xs">{{ t.trf }}</td>
+                        } @else {
+                          <td class="px-3 py-2">
+                            <ng-container
+                              *ngTemplateOutlet="value; context: { $implicit: t.trf }"
+                            />
+                          </td>
+                        }
+                      </tr>
+                    }
+                  </tbody>
+                </table>
+              </div>
+              <div
+                class="rounded-md border border-[var(--border)] bg-[var(--muted)]/30 p-3 text-xs text-[var(--muted-foreground)]"
+              >
+                <span class="font-semibold text-[var(--foreground)]">NOTE:</span>
+                IELTS validity is 2 years from test date (~Sep 2027). British Council scores are
+                marked <span [class]="badgeVerify">VERIFY</span> — band scores could not be read
+                from the source PDF; confirm from the physical or online certificate.
+              </div>
+            }
+
+            @case ('references') {
+              <p class="text-sm">
+                Five formal Letters of Recommendation (LORs) on file. Details below.
+              </p>
+              <div class="grid gap-3 sm:grid-cols-2">
+                @for (r of references; track r.name) {
+                  <div class="flex flex-col rounded-md border border-[var(--border)] p-4 text-sm">
+                    <div class="flex items-start justify-between gap-2">
+                      <div>
+                        <h3 class="font-semibold">{{ r.name }}</h3>
+                        <p class="text-xs text-[var(--muted-foreground)]">{{ r.title }}</p>
+                      </div>
+                      <span [class]="badgeOutline + ' shrink-0 whitespace-nowrap'">
+                        LOR {{ r.lorDate }}
+                      </span>
+                    </div>
+                    <p class="mt-2 text-xs text-[var(--muted-foreground)]">{{ r.institution }}</p>
+                    <dl class="mt-3 space-y-1 text-xs">
+                      <div class="flex gap-2">
+                        <dt class="w-20 shrink-0 text-[var(--muted-foreground)]">Email</dt>
+                        <dd class="break-all">
+                          <a [href]="'mailto:' + r.email" class="hover:underline">{{ r.email }}</a>
+                        </dd>
+                      </div>
+                      <div class="flex gap-2">
+                        <dt class="w-20 shrink-0 text-[var(--muted-foreground)]">Phone</dt>
+                        <dd>
+                          <a [href]="telHref(r.phone)" class="hover:underline">{{ r.phone }}</a>
+                        </dd>
+                      </div>
+                      <div class="flex gap-2">
+                        <dt class="w-20 shrink-0 text-[var(--muted-foreground)]">LinkedIn</dt>
+                        <dd class="break-all">
+                          @if (r.linkedin) {
+                            <a
+                              [href]="r.linkedin"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              [class]="extLink"
+                              >{{ stripProtocol(r.linkedin) }}</a
+                            >
+                          } @else {
+                            <span class="text-[var(--muted-foreground)]">—</span>
+                          }
+                        </dd>
+                      </div>
+                      <div class="flex gap-2">
+                        <dt class="w-20 shrink-0 text-[var(--muted-foreground)]">Relationship</dt>
+                        <dd>{{ r.relationship }}</dd>
+                      </div>
+                    </dl>
+                  </div>
+                }
+              </div>
+            }
+
+            @case ('statements') {
+              <div class="rounded-md border border-amber-500/40 bg-amber-500/10 p-3 text-sm">
+                <span class="font-semibold">[MISSING]</span> No Statement of Purpose, Personal
+                Statement, Motivation Letter, Research Proposal, or Writing Sample was found in the
+                source documents. Draft and insert each below before submitting.
+              </div>
+              <div class="mt-4 space-y-3">
+                @for (s of statements; track s) {
+                  <div class="rounded-md border border-dashed border-[var(--border)] p-3">
+                    <div class="text-sm font-medium">[ {{ s }} ]</div>
+                    <div class="mt-1 text-xs text-[var(--muted-foreground)]">
+                      PLACEHOLDER: Write and insert this document here before submitting
+                      applications.
+                    </div>
+                  </div>
+                }
+              </div>
+            }
+          }
+        </div>
+      </section>
+
+      <footer class="pt-6 text-center text-xs text-[var(--muted-foreground)]">
+        END OF MASTER APPLICATION PROFILE
+      </footer>
+    </div>
+  </div>
+</div>
+
+<ng-template #keyValues let-rows>
+  <dl class="grid grid-cols-1 gap-x-6 gap-y-2 text-sm sm:grid-cols-[max-content_1fr]">
+    @for (row of rows; track $index) {
+      <div class="contents">
+        <dt class="font-medium text-[var(--muted-foreground)] sm:text-right">{{ row.label }}</dt>
+        <dd class="text-[var(--foreground)] break-words">
+          <ng-container *ngTemplateOutlet="value; context: { $implicit: row.value }" />
+        </dd>
+      </div>
+    }
+  </dl>
+</ng-template>
+
+<!-- Renders a Value: either plain text or a list of inline pieces. -->
+<ng-template #value let-v>
+  @if (typeof v === 'string') {
+    {{ v }}
+  } @else {
+    @for (part of v; track $index) {
+      @switch (part.type) {
+        @case ('text') {
+          <span>{{ part.text }}</span>
+        }
+        @case ('link') {
+          @if (part.external) {
+            <a [href]="part.href" target="_blank" rel="noopener noreferrer" [class]="extLink">{{
+              part.text
+            }}</a>
+          } @else {
+            <a [href]="part.href" class="hover:underline">{{ part.text }}</a>
+          }
+        }
+        @case ('separator') {
+          <span class="mx-2 text-[var(--muted-foreground)]">|</span>
+        }
+        @case ('verify') {
+          <span [class]="badgeVerify">VERIFY</span>
+        }
+        @case ('missing') {
+          <span [class]="badgeMissing">MISSING{{ part.detail ? ' — ' + part.detail : '' }}</span>
+        }
+      }
+    }
+  }
+</ng-template>
