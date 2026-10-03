@@ -1,6 +1,6 @@
 <!-- Sticks under the navbar on desktop and scrolls internally when the
      source list is long. -->
-<aside class="w-full shrink-0 self-start lg:sticky lg:top-14 lg:w-60">
+<aside class="w-full shrink-0 self-start lg:sticky lg:top-14 lg:w-60" [class]="antTheme">
   <button
     type="button"
     (click)="mobileOpen.set(!mobileOpen())"
@@ -8,7 +8,7 @@
     class="mb-2 flex w-full items-center justify-between rounded-lg border border-[var(--border)] bg-[var(--card)] px-3 py-2.5 text-sm font-semibold lg:hidden"
   >
     <span class="flex items-center gap-2">
-      <app-icon name="sliders" iconClass="h-4 w-4" /> Filters
+      <nz-icon nzType="filter" /> Filters
       @if (totalCount() > 0) {
         <span
           class="rounded-full bg-[var(--gain-50)] px-1.5 py-0.5 text-[10px] font-medium text-[var(--gain-700)]"
@@ -17,12 +17,10 @@
         </span>
       }
     </span>
-    <app-icon
-      name="chevron-down"
-      [iconClass]="
-        'h-4 w-4 text-[var(--muted-foreground)] transition-transform' +
-        (mobileOpen() ? ' rotate-180' : '')
-      "
+    <nz-icon
+      nzType="down"
+      class="text-[var(--muted-foreground)]"
+      [nzRotate]="mobileOpen() ? 180 : 0"
     />
   </button>
 
@@ -33,42 +31,53 @@
     <div class="flex items-center justify-between border-b border-[var(--border)] px-3 py-2">
       <h2 class="text-xs font-semibold tracking-wider uppercase">Filters</h2>
       @if (hasAny()) {
-        <button type="button" [class]="clearClass" (click)="clearAll()">Clear all</button>
+        <button nz-button nzType="text" type="button" [class]="clearClass" (click)="clearAll()">
+          Clear all
+        </button>
       }
     </div>
 
     <app-filter-group label="Country" [count]="countryCount()">
       @for (c of countries; track c) {
-        <ng-container
-          *ngTemplateOutlet="
-            checkRow;
-            context: { label: c, checked: isSelected('country', c), key: 'country', value: c }
-          "
-        />
+        <label
+          nz-checkbox
+          [class]="rowClass"
+          [nzChecked]="isSelected('country', c)"
+          (nzCheckedChange)="toggleValue('country', c)"
+        >
+          {{ c }}
+        </label>
       }
     </app-filter-group>
 
     <app-filter-group label="Visa & remote" [count]="visaRemoteCount()">
-      <ng-container
-        *ngTemplateOutlet="
-          switchRow;
-          context: { label: 'Visa sponsorship', key: 'visa', checked: isOn('visa') }
-        "
-      />
-      <ng-container
-        *ngTemplateOutlet="
-          switchRow;
-          context: { label: 'Remote only', key: 'remote', checked: isOn('remote') }
-        "
-      />
+      <label [class]="switchRowClass">
+        <span class="truncate">Visa sponsorship</span>
+        <nz-switch
+          nzSize="small"
+          [ngModel]="isOn('visa')"
+          (ngModelChange)="setFlag('visa', $event)"
+        />
+      </label>
+      <label [class]="switchRowClass">
+        <span class="truncate">Remote only</span>
+        <nz-switch
+          nzSize="small"
+          [ngModel]="isOn('remote')"
+          (ngModelChange)="setFlag('remote', $event)"
+        />
+      </label>
     </app-filter-group>
 
     <app-filter-group label="Seniority" [count]="levelCount()">
       <div class="flex flex-wrap gap-1.5">
         @for (o of seniorities; track o.value) {
+          @let active = isSelected('level', o.value);
           <button
+            nz-button
+            [nzType]="active ? 'primary' : 'default'"
             type="button"
-            [class]="chipClass(isSelected('level', o.value))"
+            [class]="chipClass(active)"
             (click)="toggleValue('level', o.value)"
           >
             {{ o.label }}
@@ -80,9 +89,12 @@
     <app-filter-group label="Posted" [count]="postedCount()">
       <div class="flex flex-wrap gap-1.5">
         @for (o of postedOptions; track o.value) {
+          @let active = days() === o.value;
           <button
+            nz-button
+            [nzType]="active ? 'primary' : 'default'"
             type="button"
-            [class]="chipClass(days() === o.value)"
+            [class]="chipClass(active)"
             (click)="toggleDays(o.value)"
           >
             {{ o.label }}
@@ -93,78 +105,22 @@
 
     <app-filter-group label="Source" [count]="sourceCount()" [last]="true">
       @for (s of facets().sources; track s.source) {
-        <ng-container
-          *ngTemplateOutlet="
-            checkRow;
-            context: {
-              label: s.source,
-              count: s.count,
-              checked: isSelected('source', s.source),
-              key: 'source',
-              value: s.source,
-            }
-          "
-        />
+        <div class="flex items-center justify-between gap-2">
+          <label
+            nz-checkbox
+            [class]="rowClass"
+            [nzChecked]="isSelected('source', s.source)"
+            (nzCheckedChange)="toggleValue('source', s.source)"
+          >
+            <span class="truncate">{{ s.source }}</span>
+          </label>
+          <span class="pr-1.5 text-[11px] text-[var(--muted-foreground)] tabular-nums">{{
+            s.count
+          }}</span>
+        </div>
       } @empty {
         <p class="text-[11px] text-[var(--muted-foreground)]">No data yet.</p>
       }
     </app-filter-group>
   </div>
 </aside>
-
-<!-- Whole row is the click target: label left, optional count right. -->
-<ng-template
-  #checkRow
-  let-label="label"
-  let-count="count"
-  let-checked="checked"
-  let-key="key"
-  let-value="value"
->
-  <label
-    class="-mx-1.5 flex cursor-pointer items-center justify-between gap-2 rounded px-1.5 py-1 text-xs hover:bg-[var(--muted)]/40"
-  >
-    <span class="flex min-w-0 items-center gap-2">
-      <span class="relative inline-flex h-4 w-4 shrink-0">
-        <input
-          type="checkbox"
-          [checked]="checked"
-          (change)="toggleValue(key, value)"
-          class="peer h-4 w-4 cursor-pointer appearance-none rounded-sm border border-[var(--border)] bg-transparent checked:bg-[var(--primary)] focus-visible:ring-2 focus-visible:ring-[var(--ring)] focus-visible:outline-none"
-        />
-        <app-icon
-          name="check"
-          iconClass="pointer-events-none absolute inset-0 m-auto hidden h-3.5 w-3.5 text-[var(--primary-foreground)] peer-checked:block"
-        />
-      </span>
-      <span class="truncate">{{ label }}</span>
-    </span>
-    @if (count !== undefined) {
-      <span class="text-[11px] text-[var(--muted-foreground)] tabular-nums">{{ count }}</span>
-    }
-  </label>
-</ng-template>
-
-<ng-template #switchRow let-label="label" let-key="key" let-checked="checked">
-  <label
-    class="-mx-1.5 flex cursor-pointer items-center justify-between gap-2 rounded px-1.5 py-1 text-xs hover:bg-[var(--muted)]/40"
-  >
-    <span class="truncate">{{ label }}</span>
-    <input
-      type="checkbox"
-      role="switch"
-      class="peer sr-only"
-      [checked]="checked"
-      (change)="setFlag(key, !checked)"
-    />
-    <span
-      class="inline-flex h-5 w-9 shrink-0 items-center rounded-full border-2 border-transparent transition-colors peer-focus-visible:ring-2 peer-focus-visible:ring-[var(--ring)]"
-      [class]="checked ? 'bg-[var(--primary)]' : 'bg-[var(--muted)]'"
-    >
-      <span
-        class="pointer-events-none block h-4 w-4 rounded-full bg-white shadow ring-0 transition-transform"
-        [class]="checked ? 'translate-x-4' : 'translate-x-0'"
-      ></span>
-    </span>
-  </label>
-</ng-template>

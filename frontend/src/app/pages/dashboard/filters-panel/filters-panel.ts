@@ -1,9 +1,12 @@
-import { NgTemplateOutlet } from '@angular/common';
 import { Component, computed, inject, input, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { Facets } from '../../../core/models';
-import { Icon } from '../../../shared/icon/icon';
 import { buttonClasses } from '../../../shared/ui';
 import { FilterGroup } from '../filter-group/filter-group';
 
@@ -25,7 +28,14 @@ const POSTED_OPTIONS = [
 
 @Component({
   selector: 'app-filters-panel',
-  imports: [NgTemplateOutlet, Icon, FilterGroup],
+  imports: [
+    FormsModule,
+    NzButtonModule,
+    NzCheckboxModule,
+    NzIconModule,
+    NzSwitchModule,
+    FilterGroup,
+  ],
   templateUrl: './filters-panel.html',
   host: { class: 'contents' },
 })
@@ -65,6 +75,14 @@ export class FiltersPanel {
   );
 
   protected clearClass = `${buttonClasses('ghost', 'xs')} text-xs`;
+  // Whole row is the click target, with a hover background.
+  protected rowClass =
+    '-mx-1.5 flex min-w-0 cursor-pointer items-center rounded px-1.5 py-1 text-xs text-inherit hover:bg-[var(--muted)]/40';
+  protected switchRowClass =
+    '-mx-1.5 flex cursor-pointer items-center justify-between gap-2 rounded px-1.5 py-1 text-xs hover:bg-[var(--muted)]/40';
+  // Paint Ant's checked checkbox and switch with the app tokens instead of Ant blue.
+  protected antTheme =
+    '[&_.ant-checkbox-checked_.ant-checkbox-inner]:border-[var(--primary)] [&_.ant-checkbox-checked_.ant-checkbox-inner]:bg-[var(--primary)] [&_.ant-checkbox-checked_.ant-checkbox-inner::after]:border-[var(--primary-foreground)] [&_.ant-switch-checked]:bg-[var(--primary)]';
 
   isOn(key: string): boolean {
     return this.params().get(key) === '1';

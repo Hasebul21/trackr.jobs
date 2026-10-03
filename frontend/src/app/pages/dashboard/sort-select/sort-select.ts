@@ -1,12 +1,15 @@
 import { Component, computed, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NzSelectModule } from 'ng-zorro-antd/select';
 
 // Sort dropdown bound to ?sort. "score" (relevance) is the default and is
 // left out of the URL. Like the original app, the dashboard doesn't render
 // it at the moment; ?sort still works when set in the URL.
 @Component({
   selector: 'app-sort-select',
+  imports: [FormsModule, NzSelectModule],
   templateUrl: './sort-select.html',
 })
 export class SortSelect {

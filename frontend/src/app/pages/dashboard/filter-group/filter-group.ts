@@ -1,10 +1,10 @@
 import { Component, input } from '@angular/core';
-import { Icon } from '../../../shared/icon/icon';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 
 // Collapsible filter section built on <details>. All sections start open.
 @Component({
   selector: 'app-filter-group',
-  imports: [Icon],
+  imports: [NzIconModule],
   templateUrl: './filter-group.html',
 })
 export class FilterGroup {

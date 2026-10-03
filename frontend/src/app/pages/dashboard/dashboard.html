@@ -6,7 +6,11 @@
       @if (facetsOrEmpty(); as facets) {
         <app-filters-panel [facets]="facets" />
       } @else {
-        <div class="shimmer h-96 w-full shrink-0 rounded-md bg-[var(--muted)] lg:w-60"></div>
+        <div
+          class="h-96 w-full shrink-0 rounded-lg border border-[var(--border)] bg-[var(--card)] p-3 lg:w-60"
+        >
+          <nz-skeleton [nzActive]="true" [nzParagraph]="{ rows: 8 }" />
+        </div>
       }
 
       <section class="min-w-0 flex-1">
@@ -25,6 +29,7 @@
           @if (result.total > 0) {
             <app-pagination
               [page]="page()"
+              [pageSize]="pageSize"
               [totalPages]="totalPages()"
               [rangeStart]="rangeStart()"
               [rangeEnd]="rangeEnd()"
@@ -34,7 +39,9 @@
         } @else {
           <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
             @for (i of skeletons; track i) {
-              <div class="shimmer h-64 rounded-md bg-[var(--muted)]"></div>
+              <div class="h-64 rounded-lg border border-[var(--border)] bg-[var(--card)] p-3">
+                <nz-skeleton [nzActive]="true" [nzAvatar]="{ shape: 'square' }" />
+              </div>
             }
           </div>
         }

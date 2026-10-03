@@ -1,6 +1,7 @@
 import { Component, computed, inject } from '@angular/core';
 import { rxResource, toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
+import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
 import { ApiService } from '../../core/api.service';
 import { DataRefreshService } from '../../core/data-refresh.service';
 import { Facets } from '../../core/models';
@@ -20,7 +21,7 @@ const NO_FACETS: Facets = { sources: [], countries: [] };
 // the query string so any view can be bookmarked or shared.
 @Component({
   selector: 'app-dashboard',
-  imports: [EmptyState, ErrorState, JobCard, Pagination, FiltersPanel],
+  imports: [NzSkeletonModule, EmptyState, ErrorState, JobCard, Pagination, FiltersPanel],
   templateUrl: './dashboard.html',
 })
 export class Dashboard {
@@ -53,6 +54,7 @@ export class Dashboard {
     return this.facets.hasValue() ? this.facets.value() : null;
   });
 
+  protected pageSize = PAGE_SIZE;
   protected page = computed(() => this.filters().page ?? 1);
   protected total = computed(() => (this.jobs.hasValue() ? this.jobs.value().total : 0));
   protected totalPages = computed(() => Math.max(1, Math.ceil(this.total() / PAGE_SIZE)));
