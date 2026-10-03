@@ -13,7 +13,7 @@
       routerLink="/"
       class="mb-4 inline-flex items-center gap-1 text-sm text-[var(--muted-foreground)] hover:text-[var(--foreground)]"
     >
-      <nz-icon nzType="arrow-left" /> Back to dashboard
+      <nz-icon aria-hidden="true" nzType="arrow-left" /> Back to dashboard
     </a>
 
     <header class="flex items-start gap-4">
@@ -45,22 +45,22 @@
       class="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-[var(--muted-foreground)]"
     >
       <span class="inline-flex items-center gap-1">
-        <nz-icon nzType="environment" /> {{ j.location || '—' }}
+        <nz-icon aria-hidden="true" nzType="environment" /> {{ j.location || '—' }}
       </span>
       @if (j.salary) {
         <span class="inline-flex items-center gap-1">
-          <nz-icon nzType="dollar" /> {{ j.salary }}
+          <nz-icon aria-hidden="true" nzType="dollar" /> {{ j.salary }}
         </span>
       }
       <span class="inline-flex items-center gap-1">
-        <nz-icon nzType="global" /> {{ j.source }}
+        <nz-icon aria-hidden="true" nzType="global" /> {{ j.source }}
       </span>
     </div>
 
     <div class="mt-3 flex flex-wrap gap-1.5">
       @if (j.visaSupport) {
         <nz-tag [class]="badge('success')">
-          <nz-icon nzType="send" class="text-[12px]" /> Visa sponsorship
+          <nz-icon aria-hidden="true" nzType="send" class="text-[12px]" /> Visa sponsorship
         </nz-tag>
       }
       @if (j.relocation) {
@@ -84,7 +84,7 @@
         rel="noopener noreferrer"
         [class]="primaryClass"
       >
-        Apply on {{ j.source }} <nz-icon nzType="export" />
+        Apply on {{ j.source }} <nz-icon aria-hidden="true" nzType="export" />
       </a>
       <app-bookmark-button [id]="j.id" />
     </div>
@@ -133,9 +133,13 @@
 
     <div class="mt-8 text-xs text-[var(--muted-foreground)]">
       Source:
-      <a [href]="j.sourceUrl" target="_blank" rel="noopener noreferrer" class="underline">{{
-        j.sourceUrl
-      }}</a>
+      <a
+        [href]="j.sourceUrl"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-inherit underline"
+        >{{ j.sourceUrl }}</a
+      >
     </div>
   </div>
 } @else {

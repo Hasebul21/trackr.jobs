@@ -18,7 +18,8 @@
   } @else if (jobs.hasValue()) {
     @if (jobs.value().jobs.length === 0) {
       <app-empty-state heading="No bookmarks yet">
-        Save jobs from the <a routerLink="/" class="underline">dashboard</a> to see them here.
+        Save jobs from the <a routerLink="/" class="text-inherit underline">dashboard</a> to see
+        them here.
       </app-empty-state>
     } @else {
       <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">

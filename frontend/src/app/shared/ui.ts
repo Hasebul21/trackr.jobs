@@ -9,13 +9,13 @@ export type ButtonSize = 'default' | 'sm' | 'xs' | 'lg' | 'icon';
 export type BadgeVariant = 'default' | 'outline' | 'accent' | 'success' | 'info' | 'warn';
 
 const BUTTON_BASE =
-  'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium shadow-none transition-colors disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)] [&_svg]:size-4 [&_svg]:shrink-0';
+  'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium shadow-none transition-colors disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)] [&_svg]:size-4 [&_svg]:shrink-0 [&>.anticon+span]:ms-0';
 
 const BUTTON_VARIANTS: Record<ButtonVariant, string> = {
   default: 'bg-[var(--primary)] text-[var(--primary-foreground)] hover:opacity-90',
   outline:
     'border border-[var(--border)] bg-transparent hover:bg-[var(--accent)] hover:text-[var(--accent-foreground)]',
-  ghost: 'text-inherit hover:bg-[var(--accent)] hover:text-[var(--accent-foreground)]',
+  ghost: 'border-0 text-inherit hover:bg-[var(--accent)] hover:text-[var(--accent-foreground)]',
   secondary: 'bg-[var(--muted)] text-[var(--foreground)] hover:bg-[var(--accent)]',
   destructive: 'bg-[var(--destructive)] text-[var(--destructive-foreground)] hover:opacity-90',
   // Green call-to-action used for the Apply button on job cards.

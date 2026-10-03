@@ -23,7 +23,7 @@
       <div class="min-w-0 flex-1">
         <a
           [routerLink]="['/jobs', j.id]"
-          class="line-clamp-2 leading-tight font-semibold text-[var(--foreground)] hover:underline"
+          class="line-clamp-2 leading-tight font-semibold text-[var(--foreground)] hover:text-[var(--foreground)] hover:underline"
         >
           {{ j.title }}
         </a>
@@ -42,11 +42,12 @@
   <div class="flex flex-1 flex-col gap-1.5 px-3 pt-0 pb-2">
     <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-[var(--muted-foreground)]">
       <span class="inline-flex items-center gap-1">
-        <nz-icon nzType="environment" class="text-[14px]" /> {{ j.location || '—' }}
+        <nz-icon aria-hidden="true" nzType="environment" class="text-[14px]" />
+        {{ j.location || '—' }}
       </span>
       @if (j.salary) {
         <span class="inline-flex items-center gap-1">
-          <nz-icon nzType="dollar" class="text-[14px]" /> {{ j.salary }}
+          <nz-icon aria-hidden="true" nzType="dollar" class="text-[14px]" /> {{ j.salary }}
         </span>
       }
       @if (j.postedAt) {
@@ -57,7 +58,7 @@
     <div class="flex flex-wrap gap-1.5">
       @if (j.visaSupport) {
         <nz-tag [class]="badge('success')"
-          ><nz-icon nzType="send" class="text-[12px]" /> Visa</nz-tag
+          ><nz-icon aria-hidden="true" nzType="send" class="text-[12px]" /> Visa</nz-tag
         >
       }
       @if (j.remote) {
