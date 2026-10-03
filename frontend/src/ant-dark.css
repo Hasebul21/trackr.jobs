@@ -1,0 +1,3 @@
+/* Ant Design dark theme. Loaded at runtime by ThemeService when the app
+ * switches to dark mode; same "antd" layer as the light theme. */
+@import "../node_modules/ng-zorro-antd/ng-zorro-antd.dark.min.css" layer(antd);
