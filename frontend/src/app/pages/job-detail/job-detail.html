@@ -27,13 +27,13 @@
         <div
           class="grid h-14 w-14 place-items-center rounded-lg bg-[var(--muted)] font-mono text-[var(--muted-foreground)]"
         >
-          {{ j.company.slice(0, 2).toUpperCase() }}
+          {{ companyName(j).slice(0, 2).toUpperCase() }}
         </div>
       }
       <div class="min-w-0 flex-1">
         <h1 class="text-2xl leading-tight font-semibold tracking-tight">{{ j.title }}</h1>
         <div class="mt-1 text-[var(--muted-foreground)]">
-          {{ j.company }}
+          {{ companyName(j) }}
           @if (j.postedAt) {
             <span class="ml-2 text-xs">· posted {{ j.postedAt | relativeTime }}</span>
           }
