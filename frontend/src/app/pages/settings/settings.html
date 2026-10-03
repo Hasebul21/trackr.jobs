@@ -1,1 +1,72 @@
-<p>settings works!</p>
+<div class="mx-auto w-full max-w-3xl space-y-8 px-4 py-6">
+  <header>
+    <h1 class="text-2xl font-semibold tracking-tight">Settings</h1>
+    <p class="text-sm text-[var(--muted-foreground)]">
+      The preference lists below drive scoring and filtering. Edit
+      <code class="font-mono text-xs">backend/src/config/preferences.ts</code> to change them.
+    </p>
+  </header>
+
+  @if (data.error()) {
+    <app-error-state [message]="errorText()" (retry)="data.reload()" />
+  } @else if (data.hasValue()) {
+    @let stats = data.value().stats;
+    <section>
+      <h2 class="mb-2 text-sm font-semibold tracking-wide text-[var(--muted-foreground)] uppercase">
+        Data
+      </h2>
+      <div class="grid grid-cols-2 gap-4 sm:grid-cols-4" [class]="statisticClass">
+        <nz-statistic nzTitle="Total jobs" [nzValue]="stats.total.toLocaleString()" />
+        <nz-statistic nzTitle="Visa-supported" [nzValue]="stats.withVisa.toLocaleString()" />
+        <nz-statistic nzTitle="Remote" [nzValue]="stats.remote.toLocaleString()" />
+        <nz-statistic nzTitle="Last refresh" [nzValue]="formatDate(stats.lastRunAt)" />
+      </div>
+    </section>
+
+    <nz-divider class="my-0 border-[var(--border)]" />
+
+    <section>
+      <h2 class="mb-3 text-sm font-semibold tracking-wide text-[var(--muted-foreground)] uppercase">
+        Providers
+      </h2>
+      <ul class="space-y-2">
+        @for (p of providers(); track p.name) {
+          <li
+            class="flex items-center justify-between rounded-md border border-[var(--border)] p-3"
+          >
+            <div>
+              <div class="text-sm font-medium">{{ p.label }}</div>
+              <div class="text-xs text-[var(--muted-foreground)]">
+                {{
+                  p.reliable
+                    ? 'Reliable scraper'
+                    : 'Best-effort — anti-bot defenses may return zero'
+                }}
+              </div>
+            </div>
+            <nz-tag [class]="badge(p.count ? 'default' : 'outline')">{{ p.count }} jobs</nz-tag>
+          </li>
+        }
+      </ul>
+    </section>
+
+    <nz-divider class="my-0 border-[var(--border)]" />
+
+    @for (list of preferenceLists(); track list.title) {
+      <section>
+        <h2
+          class="mb-2 text-sm font-semibold tracking-wide text-[var(--muted-foreground)] uppercase"
+        >
+          {{ list.title }}
+        </h2>
+        <div class="flex flex-wrap gap-1.5">
+          @for (item of list.items; track item) {
+            <nz-tag [class]="badge('outline')">{{ item }}</nz-tag>
+          }
+        </div>
+      </section>
+    }
+  } @else {
+    <nz-skeleton [nzActive]="true" [nzParagraph]="{ rows: 12 }" />
+  }
+</div>

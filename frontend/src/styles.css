@@ -68,8 +68,20 @@
   --font-mono: var(--font-jetbrains);
 }
 
-* {
-  border-color: var(--border);
+/* Kept in the base layer so Ant's component borders (which live in the
+ * later "antd" layer) aren't repainted with the token color. */
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+}
+
+/* Ant colors every <a> blue. Plain links should inherit their color like
+ * they did before; Ant's own anchors (nz-button etc.) keep theirs. */
+@layer components {
+  a:not([class*="ant-"]) {
+    color: inherit;
+  }
 }
 
 html,

@@ -1,0 +1,4 @@
+<button nz-button type="button" [class]="buttonClass" [disabled]="pending()" (click)="refresh()">
+  <nz-icon aria-hidden="true" nzType="reload" [nzSpin]="pending()" />
+  {{ pending() ? 'Refreshing…' : 'Refresh' }}
+</button>

@@ -1,1 +1,44 @@
-<p>remote works!</p>
+<div class="mx-auto w-full max-w-7xl px-4 py-4">
+  <header class="mb-4">
+    <h1 class="text-xl font-semibold tracking-tight">Remote</h1>
+    <p class="mt-1 text-sm text-[var(--muted-foreground)]">
+      Fully-remote software roles from global talent platforms — {{ platforms }} — that hire
+      worldwide with no relocation. These sources are anti-bot heavy, so listings may be incomplete;
+      always confirm on the original posting.
+    </p>
+  </header>
+
+  @if (jobs.error()) {
+    <app-error-state [message]="errorText()" (retry)="jobs.reload()" />
+  } @else if (jobs.hasValue()) {
+    @let result = jobs.value();
+    @if (result.jobs.length === 0) {
+      <app-empty-state />
+    } @else {
+      <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
+        @for (job of result.jobs; track job.id) {
+          <app-job-card [job]="job" />
+        }
+      </div>
+    }
+
+    @if (result.total > 0) {
+      <app-pagination
+        [page]="page()"
+        [pageSize]="pageSize"
+        [totalPages]="totalPages()"
+        [rangeStart]="rangeStart()"
+        [rangeEnd]="rangeEnd()"
+        [total]="result.total"
+      />
+    }
+  } @else {
+    <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
+      @for (i of skeletons; track i) {
+        <div class="h-64 rounded-lg border border-[var(--border)] bg-[var(--card)] p-3">
+          <nz-skeleton [nzActive]="true" [nzAvatar]="{ shape: 'square' }" />
+        </div>
+      }
+    </div>
+  }
+</div>

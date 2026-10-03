@@ -1,0 +1,10 @@
+<button
+  nz-button
+  nzType="text"
+  type="button"
+  [class]="buttonClass"
+  aria-label="Toggle theme"
+  (click)="theme.setTheme(isDark() ? 'light' : 'dark')"
+>
+  <nz-icon aria-hidden="true" [nzType]="isDark() ? 'sun' : 'moon'" />
+</button>

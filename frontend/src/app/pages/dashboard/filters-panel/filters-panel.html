@@ -1,0 +1,128 @@
+<!-- Sticks under the navbar on desktop and scrolls internally when the
+     source list is long. -->
+<aside class="w-full shrink-0 self-start lg:sticky lg:top-14 lg:w-60" [class]="antTheme">
+  <button
+    type="button"
+    (click)="mobileOpen.set(!mobileOpen())"
+    [attr.aria-expanded]="mobileOpen()"
+    class="mb-2 flex w-full items-center justify-between rounded-lg border border-[var(--border)] bg-[var(--card)] px-3 py-2.5 text-sm font-semibold lg:hidden"
+  >
+    <span class="flex items-center gap-2">
+      <nz-icon aria-hidden="true" nzType="filter" /> Filters
+      @if (totalCount() > 0) {
+        <span
+          class="rounded-full bg-[var(--gain-50)] px-1.5 py-0.5 text-[10px] font-medium text-[var(--gain-700)]"
+        >
+          {{ totalCount() }}
+        </span>
+      }
+    </span>
+    <nz-icon
+      aria-hidden="true"
+      aria-hidden="true"
+      nzType="down"
+      class="text-[var(--muted-foreground)]"
+      [nzRotate]="mobileOpen() ? 180 : 0"
+    />
+  </button>
+
+  <div
+    class="rounded-lg border border-[var(--border)] bg-[var(--card)] lg:block lg:max-h-[calc(100vh-4.5rem)] lg:overflow-y-auto"
+    [class]="mobileOpen() ? 'block' : 'hidden'"
+  >
+    <div class="flex items-center justify-between border-b border-[var(--border)] px-3 py-2">
+      <h2 class="text-xs font-semibold tracking-wider uppercase">Filters</h2>
+      @if (hasAny()) {
+        <button nz-button nzType="text" type="button" [class]="clearClass" (click)="clearAll()">
+          Clear all
+        </button>
+      }
+    </div>
+
+    <app-filter-group label="Country" [count]="countryCount()">
+      @for (c of countries; track c) {
+        <label
+          nz-checkbox
+          [class]="rowClass"
+          [nzChecked]="isSelected('country', c)"
+          (nzCheckedChange)="toggleValue('country', c)"
+        >
+          {{ c }}
+        </label>
+      }
+    </app-filter-group>
+
+    <app-filter-group label="Visa & remote" [count]="visaRemoteCount()">
+      <label [class]="switchRowClass">
+        <span class="truncate">Visa sponsorship</span>
+        <nz-switch
+          nzSize="small"
+          [ngModel]="isOn('visa')"
+          (ngModelChange)="setFlag('visa', $event)"
+        />
+      </label>
+      <label [class]="switchRowClass">
+        <span class="truncate">Remote only</span>
+        <nz-switch
+          nzSize="small"
+          [ngModel]="isOn('remote')"
+          (ngModelChange)="setFlag('remote', $event)"
+        />
+      </label>
+    </app-filter-group>
+
+    <app-filter-group label="Seniority" [count]="levelCount()">
+      <div class="flex flex-wrap gap-1.5">
+        @for (o of seniorities; track o.value) {
+          @let active = isSelected('level', o.value);
+          <button
+            nz-button
+            [nzType]="active ? 'primary' : 'default'"
+            type="button"
+            [class]="chipClass(active)"
+            (click)="toggleValue('level', o.value)"
+          >
+            {{ o.label }}
+          </button>
+        }
+      </div>
+    </app-filter-group>
+
+    <app-filter-group label="Posted" [count]="postedCount()">
+      <div class="flex flex-wrap gap-1.5">
+        @for (o of postedOptions; track o.value) {
+          @let active = days() === o.value;
+          <button
+            nz-button
+            [nzType]="active ? 'primary' : 'default'"
+            type="button"
+            [class]="chipClass(active)"
+            (click)="toggleDays(o.value)"
+          >
+            {{ o.label }}
+          </button>
+        }
+      </div>
+    </app-filter-group>
+
+    <app-filter-group label="Source" [count]="sourceCount()" [last]="true">
+      @for (s of facets().sources; track s.source) {
+        <div class="flex items-center justify-between gap-2">
+          <label
+            nz-checkbox
+            [class]="rowClass"
+            [nzChecked]="isSelected('source', s.source)"
+            (nzCheckedChange)="toggleValue('source', s.source)"
+          >
+            <span class="truncate">{{ s.source }}</span>
+          </label>
+          <span class="pr-1.5 text-[11px] text-[var(--muted-foreground)] tabular-nums">{{
+            s.count
+          }}</span>
+        </div>
+      } @empty {
+        <p class="text-[11px] text-[var(--muted-foreground)]">No data yet.</p>
+      }
+    </app-filter-group>
+  </div>
+</aside>

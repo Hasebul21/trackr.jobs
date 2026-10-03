@@ -1,0 +1,46 @@
+<header
+  class="sticky top-0 z-40 w-full border-b border-[var(--border)] bg-[var(--background)]/80 backdrop-blur supports-[backdrop-filter]:bg-[var(--background)]/60"
+>
+  <div class="mx-auto flex h-14 max-w-7xl items-center gap-3 px-4">
+    <a
+      routerLink="/"
+      class="shrink-0 font-semibold tracking-tight whitespace-nowrap text-[var(--foreground)] hover:opacity-80"
+    >
+      Trackr<span class="text-[var(--muted-foreground)]">.jobs</span>
+    </a>
+
+    <!-- min-w-0 lets the search box shrink on narrow screens instead of
+         widening the whole row. -->
+    <div class="min-w-0 flex-1 px-2 sm:px-4">
+      <app-search-input />
+    </div>
+
+    <!-- Desktop nav. Mobile uses the drawer instead. -->
+    <nav class="hidden items-center gap-1 sm:flex">
+      @for (link of links; track link.path) {
+        <a nz-button nzType="text" [routerLink]="link.path" [class]="linkClass">
+          <nz-icon aria-hidden="true" [nzType]="link.icon" />
+          <span class="hidden sm:inline">{{ link.label }}</span>
+        </a>
+      }
+      <app-refresh-button />
+      <app-theme-toggle />
+    </nav>
+
+    <div class="flex items-center sm:hidden">
+      <button
+        nz-button
+        nzType="text"
+        type="button"
+        [class]="iconButtonClass"
+        aria-label="Open menu"
+        [attr.aria-expanded]="menuOpen()"
+        (click)="menuOpen.set(true)"
+      >
+        <nz-icon aria-hidden="true" nzType="menu" />
+      </button>
+    </div>
+  </div>
+</header>
+
+<app-mobile-nav [open]="menuOpen()" (closed)="menuOpen.set(false)" />

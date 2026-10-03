@@ -5,7 +5,7 @@ import { NzEmptyModule } from 'ng-zorro-antd/empty';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import { NzTagModule } from 'ng-zorro-antd/tag';
-import { HiddenCompanies } from './hidden-companies';
+import { HiddenCompaniesService } from '../../core/hidden-companies.service';
 
 export interface Company {
   name: string;
@@ -23,7 +23,7 @@ const PAGE_SIZE = 12;
   templateUrl: './companies-grid.html',
 })
 export class CompaniesGrid {
-  private readonly hiddenStore = inject(HiddenCompanies);
+  private readonly hiddenStore = inject(HiddenCompaniesService);
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
 
@@ -34,7 +34,7 @@ export class CompaniesGrid {
   readonly enableCountryFilter = input(false);
 
   protected readonly pageSize = PAGE_SIZE;
-  protected readonly hiddenIds = this.hiddenStore.ids;
+  protected readonly hiddenIds = this.hiddenStore.ids.asReadonly();
   protected readonly hiddenCount = this.hiddenStore.count;
   protected readonly showHidden = signal(false);
   protected readonly country = signal('All');

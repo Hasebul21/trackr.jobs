@@ -1,0 +1,14 @@
+<div class="inline-flex items-center gap-2 text-sm">
+  <span class="text-[var(--muted-foreground)]">Sort:</span>
+  <nz-select
+    class="min-w-36"
+    nzSize="small"
+    [ngModel]="value()"
+    (ngModelChange)="onChange($event)"
+    aria-label="Sort jobs"
+  >
+    <nz-option nzValue="score" nzLabel="Relevance" />
+    <nz-option nzValue="recent" nzLabel="Most recent" />
+    <nz-option nzValue="country" nzLabel="By country" />
+  </nz-select>
+</div>
