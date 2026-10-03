@@ -1,3 +1,11 @@
+/*
+ * Ant Design (ng-zorro) goes in its own cascade layer, between Tailwind's
+ * base reset and its utilities. Ant still styles its components, but our
+ * Tailwind classes win when both set the same property.
+ */
+@layer theme, base, antd, components, utilities;
+
+@import "../node_modules/ng-zorro-antd/ng-zorro-antd.min.css" layer(antd);
 @import "tailwindcss";
 @import "./tokens.css";
 
